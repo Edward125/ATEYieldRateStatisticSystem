@@ -31,7 +31,6 @@ namespace ATEYieldRateStatisticSystem
 
         #endregion
 
-
         #region enum
 
 
@@ -91,7 +90,6 @@ namespace ATEYieldRateStatisticSystem
             return true;
         }
 
-
         /// <summary>
         /// create ini file
         /// </summary>
@@ -123,7 +121,16 @@ namespace ATEYieldRateStatisticSystem
             if (!string.IsNullOrEmpty(_tempValue))
                 AppStart = (AppStartModel)Enum.Parse(typeof(AppStartModel), _tempValue);
 
-         
+            SFCSWebservice  = IniFile.IniReadValue(IniSection.ATEConfig .ToString (),    "WebService", iniFilePath).Trim();
+            AutoLookLogPath = IniFile.IniReadValue(IniSection.ATEConfig .ToString (), "AutoLookLogPath", iniFilePath).Trim();
+            TestlogPath = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "TestlogPath", iniFilePath).Trim();
+            PassFlag = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "PassFlag", iniFilePath).Trim().ToUpper();
+            FileFrontFlag = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "FileFrontFlag", iniFilePath).Trim();
+            FaonFaoffBase = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "FaonFaoffBase", iniFilePath).Trim();
+            FileExtension = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "FileExtension", iniFilePath).Trim();
+            //(Colors)Enum.Parse(typeof(Colors), "Red")            
+            StartEndTime = (StartEndTimeType)Enum.Parse(typeof(StartEndTimeType), IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "StartEndTime", iniFilePath));
+
         }
 
 
