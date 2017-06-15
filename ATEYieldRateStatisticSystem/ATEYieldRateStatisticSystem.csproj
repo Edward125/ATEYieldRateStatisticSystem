@@ -213,7 +213,6 @@
     <None Include="Resources\IrisSkin4.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Splash.png" />
     <None Include="Web References\SFCS_ws\WebService.disco" />
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +233,9 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>ATEYieldRateStatisticSystem_SFCS_ws_WebService</CachedSettingsPropName>
     </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Splash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

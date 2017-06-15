@@ -79,6 +79,10 @@ namespace ATEYieldRateStatisticSystem
             Y = this.Height;
             setTag(this);
             Form1_Resize(new object(), new EventArgs());//x,y可在实例化时赋值,最后这句是新加的，在MDI时有用
+
+            //
+            txtAutoLookLogPath.Text = p.AutoLookLogPath;
+            txtTestlogPath.Text = p.TestlogPath;
         }
     }
 }

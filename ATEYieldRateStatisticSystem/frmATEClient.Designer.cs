@@ -32,9 +32,15 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnSetting = new System.Windows.Forms.Button();
-            this.btnRun = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.btnSetting = new System.Windows.Forms.Button();
+            this.txtAutoLookLogPath = new System.Windows.Forms.TextBox();
+            this.txtTestlogPath = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +73,12 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.textBox3);
+            this.groupBox3.Controls.Add(this.txtTestlogPath);
+            this.groupBox3.Controls.Add(this.txtAutoLookLogPath);
             this.groupBox3.Controls.Add(this.btnStop);
             this.groupBox3.Controls.Add(this.btnRun);
             this.groupBox3.Controls.Add(this.btnSetting);
@@ -77,14 +89,14 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "groupBox3";
             // 
-            // btnSetting
+            // btnStop
             // 
-            this.btnSetting.Location = new System.Drawing.Point(519, 21);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(75, 39);
-            this.btnSetting.TabIndex = 0;
-            this.btnSetting.Text = "Setting...";
-            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnStop.Location = new System.Drawing.Point(519, 111);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 39);
+            this.btnStop.TabIndex = 2;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
             // 
             // btnRun
             // 
@@ -95,14 +107,62 @@
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
             // 
-            // btnStop
+            // btnSetting
             // 
-            this.btnStop.Location = new System.Drawing.Point(519, 111);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 39);
-            this.btnStop.TabIndex = 2;
-            this.btnStop.Text = "Stop";
-            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnSetting.Location = new System.Drawing.Point(519, 21);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(75, 39);
+            this.btnSetting.TabIndex = 0;
+            this.btnSetting.Text = "Setting...";
+            this.btnSetting.UseVisualStyleBackColor = true;
+            // 
+            // txtAutoLookLogPath
+            // 
+            this.txtAutoLookLogPath.Location = new System.Drawing.Point(120, 27);
+            this.txtAutoLookLogPath.Name = "txtAutoLookLogPath";
+            this.txtAutoLookLogPath.Size = new System.Drawing.Size(342, 22);
+            this.txtAutoLookLogPath.TabIndex = 3;
+            // 
+            // txtTestlogPath
+            // 
+            this.txtTestlogPath.Location = new System.Drawing.Point(120, 60);
+            this.txtTestlogPath.Name = "txtTestlogPath";
+            this.txtTestlogPath.Size = new System.Drawing.Size(342, 22);
+            this.txtTestlogPath.TabIndex = 4;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(120, 92);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(342, 22);
+            this.textBox3.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 14);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "AutoLookLogPath";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(15, 63);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 14);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "TestlogPath";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(15, 95);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 14);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "label3";
             // 
             // frmATEClient
             // 
@@ -117,6 +177,7 @@
             this.Text = "frmATEClient";
             this.Load += new System.EventHandler(this.frmATEClient_Load);
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -130,5 +191,11 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Button btnSetting;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtTestlogPath;
+        private System.Windows.Forms.TextBox txtAutoLookLogPath;
     }
 }

@@ -49,13 +49,13 @@ namespace ATEYieldRateStatisticSystem
             ATEConfig
         }
 
-        enum StartEndTimeType
+       public  enum StartEndTimeType
         {
             Day800,
             Day830
         }
 
-        enum LogType
+       public  enum LogType
         {
             SystemLog,        //系统事件发生记录log
             SqlTempLog,       //无法连接到数据库时,需要上传到数据库的本地log
