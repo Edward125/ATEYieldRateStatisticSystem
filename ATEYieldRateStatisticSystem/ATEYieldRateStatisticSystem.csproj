@@ -49,11 +49,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DES.cs" />
+    <Compile Include="frmATEClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmATEClient.Designer.cs">
+      <DependentUpon>frmATEClient.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmYRServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmYRServer.Designer.cs">
+      <DependentUpon>frmYRServer.cs</DependentUpon>
     </Compile>
     <Compile Include="IniFile.cs" />
     <Compile Include="Other.cs" />
@@ -64,8 +76,14 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WaterTextBox.cs" />
+    <EmbeddedResource Include="frmATEClient.resx">
+      <DependentUpon>frmATEClient.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmYRServer.resx">
+      <DependentUpon>frmYRServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

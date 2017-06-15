@@ -23,9 +23,11 @@ namespace ATEYieldRateStatisticSystem
 
         public enum AppStartModel
         {
+            NotSet,
+            FTClient,//收集FT良率数据端,在FICT电脑上运行
             YRServer,//查看良率端
-            ATEClient,//收集ATE良率数据端,在ATE电脑上运行
-            FTClient//收集FT良率数据端,在FICT电脑上运行
+            ATEClient//收集ATE良率数据端,在ATE电脑上运行
+            
         }
 
         public enum IniSection
@@ -71,7 +73,7 @@ namespace ATEYieldRateStatisticSystem
         public static void createIniFile(string inifilepath)
         {
             IniFile.CreateIniFile(inifilepath);
-            File.SetAttributes(inifilepath, FileAttributes.Hidden);
+            //File.SetAttributes(inifilepath, FileAttributes.Hidden);
             IniFile.IniWriteValue(IniSection.SysConfig.ToString(), "AppStart", p.AppStart.ToString(), inifilepath);
 
         }

@@ -48,11 +48,26 @@ namespace ATEYieldRateStatisticSystem
                     Environment.Exit(0);
                 }
             }
+            //MessageBox.Show(p.AppStart.ToString());
+
+            //check ini file
+            if (!File.Exists(p.iniFilePath))
+                p.createIniFile(p.iniFilePath);
+            p.readIniValue(p.iniFilePath);//exits,read ini file
 
             System.Threading.Thread.Sleep(1000); 
             // close the splash screen'
             SplashForm.CloseSplash();
-            Application.Run(new frmMain());
+
+
+            //
+            if (p.AppStart == p.AppStartModel.ATEClient)
+                Application.Run(new frmATEClient());
+            else if (p.AppStart == p.AppStartModel.YRServer)
+                Application.Run(new frmYRServer());
+            else
+                Application.Run(new frmMain());
+           
         }
         
         /// <summary>

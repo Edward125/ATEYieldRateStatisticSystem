@@ -70,6 +70,7 @@
             this.btnYRServer.Text = "Y.R. Server";
             this.toolTip1.SetToolTip(this.btnYRServer, "查看整个良率状态，报表输出等");
             this.btnYRServer.UseVisualStyleBackColor = true;
+            this.btnYRServer.Click += new System.EventHandler(this.btnYRServer_Click);
             // 
             // btnATEClient
             // 
@@ -81,6 +82,7 @@
             this.btnATEClient.Text = "ATE Client";
             this.toolTip1.SetToolTip(this.btnATEClient, "监控ATE测试状态，将测试数据上抛到数据库");
             this.btnATEClient.UseVisualStyleBackColor = true;
+            this.btnATEClient.Click += new System.EventHandler(this.btnATEClient_Click);
             // 
             // btnFTClient
             // 

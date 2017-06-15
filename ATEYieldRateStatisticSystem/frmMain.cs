@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Edward;
 
 namespace ATEYieldRateStatisticSystem
 {
@@ -21,6 +22,24 @@ namespace ATEYieldRateStatisticSystem
         private void frmMain_Load(object sender, EventArgs e)
         {
             
+        }
+
+        private void btnYRServer_Click(object sender, EventArgs e)
+        {
+            p.AppStart = p.AppStartModel.YRServer;
+            IniFile.IniWriteValue(p.IniSection.SysConfig.ToString(), "AppStart", p.AppStart.ToString(), p.iniFilePath);
+            this.Hide();
+            Form f = new frmYRServer();
+            f.Show();
+        }
+
+        private void btnATEClient_Click(object sender, EventArgs e)
+        {
+            p.AppStart = p.AppStartModel.FTClient;
+            IniFile.IniWriteValue(p.IniSection.SysConfig.ToString(), "AppStart", p.AppStart.ToString(), p.iniFilePath);
+            this.Hide();
+            Form  f = new frmATEClient();
+            f.Show();
         }
     }
 }
