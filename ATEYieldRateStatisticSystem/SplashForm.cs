@@ -7,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Threading;
 
+
 namespace Edward
 {
     public delegate void DelegateCloseSplash();
@@ -24,11 +25,7 @@ namespace Edward
     {
         #region Constructor
 
-        public SplashForm()
-        {
-
-            InitializeComponent();
-        }
+  
 
 
         public SplashForm(String imageFile, Color col)
@@ -66,6 +63,7 @@ namespace Edward
 
             // thread handling
             m_delegateClose = new DelegateCloseSplash(InternalCloseSplash);
+      
         }
         #endregion // Constructor
 

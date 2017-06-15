@@ -28,7 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.SuspendLayout();
+            // 
+            // skinEngine1
+            // 
+            this.skinEngine1.@__DrawButtonFocusRectangle = true;
+            this.skinEngine1.DisabledButtonTextColor = System.Drawing.Color.Gray;
+            this.skinEngine1.DisabledMenuFontColor = System.Drawing.SystemColors.GrayText;
+            this.skinEngine1.InactiveCaptionColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.skinEngine1.SerialNumber = "";
+            this.skinEngine1.SkinFile = null;
             // 
             // frmATEClient
             // 
@@ -37,10 +47,13 @@
             this.ClientSize = new System.Drawing.Size(671, 394);
             this.Name = "frmATEClient";
             this.Text = "frmATEClient";
+            this.Load += new System.EventHandler(this.frmATEClient_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private Sunisoft.IrisSkin.SkinEngine skinEngine1;
     }
 }

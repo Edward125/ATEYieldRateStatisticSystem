@@ -14,6 +14,12 @@ namespace ATEYieldRateStatisticSystem
         public frmATEClient()
         {
             InitializeComponent();
+            skinEngine1.SkinFile =p.AppFolder + @"\MacOS.ssk";
+        }
+
+        private void frmATEClient_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
