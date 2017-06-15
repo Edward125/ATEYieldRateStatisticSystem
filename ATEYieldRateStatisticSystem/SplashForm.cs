@@ -23,6 +23,14 @@ namespace Edward
     public  class SplashForm:Form 
     {
         #region Constructor
+
+        public SplashForm()
+        {
+
+            InitializeComponent();
+        }
+
+
         public SplashForm(String imageFile, Color col)
         {
             Debug.Assert(imageFile != null && imageFile.Length > 0,
@@ -156,7 +164,7 @@ namespace Edward
 
         private void SplashForm_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }
