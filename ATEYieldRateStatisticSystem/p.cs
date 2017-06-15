@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Edward;
+using System.Windows.Forms;
 namespace ATEYieldRateStatisticSystem
 {
     public  class p
@@ -14,6 +15,19 @@ namespace ATEYieldRateStatisticSystem
         public static string AppFolder = @".\ATEYieldRate";
         public static string iniFilePath = AppFolder + @"\ATEYieldRate.ini";
         public static AppStartModel AppStart;
+
+        //ATE Client
+        public static string SFCSWebservice = @"http://10.62.201.100/Tester.WebService/WebService.asmx"; //default
+        public static string AutoLookLogPath = string.Empty;
+        public static string TestlogPath = string.Empty;
+        public static string PassFlag = "0000";//default
+        public static string FileFrontFlag = "log";
+        public static string FaonFaoffBase = "0";//default 
+        // public static string StartEndTime = "1";//default
+        public static string FileExtension = ".log";//default
+        public static StartEndTimeType StartEndTime = StartEndTimeType.Day830;
+        public static LogType Log = LogType.SystemLog; //default
+
 
         #endregion
 
@@ -35,7 +49,19 @@ namespace ATEYieldRateStatisticSystem
             SysConfig,
             ATEConfig
         }
-       
+
+        enum StartEndTimeType
+        {
+            Day800,
+            Day830
+        }
+
+        enum LogType
+        {
+            SystemLog,        //系统事件发生记录log
+            SqlTempLog,       //无法连接到数据库时,需要上传到数据库的本地log
+            BarcodeUploadLog  //检测到上抛未成功,手动上抛的log
+        }
 
         #endregion
 
@@ -75,7 +101,16 @@ namespace ATEYieldRateStatisticSystem
             IniFile.CreateIniFile(inifilepath);
             //File.SetAttributes(inifilepath, FileAttributes.Hidden);
             IniFile.IniWriteValue(IniSection.SysConfig.ToString(), "AppStart", p.AppStart.ToString(), inifilepath);
-
+            IniFile.IniWriteValue(IniSection.SysConfig.ToString(), "Version", Application.ProductVersion.ToString(), iniFilePath);
+            //
+            IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "SFCSWebService", SFCSWebservice , iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "AutoLookLogPath", AutoLookLogPath, iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "TestLogPath", TestlogPath, iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "PassFlag", PassFlag, iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "FileFrontFlag", FileFrontFlag, iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "FaonFaoffBase", FaonFaoffBase, iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "FileExtension", FileExtension, iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig.ToString(), "StartEndTime", StartEndTime.ToString(), iniFilePath);
         }
 
         /// <summary>

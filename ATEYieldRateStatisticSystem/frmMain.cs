@@ -35,7 +35,7 @@ namespace ATEYieldRateStatisticSystem
 
         private void btnATEClient_Click(object sender, EventArgs e)
         {
-            p.AppStart = p.AppStartModel.FTClient;
+            p.AppStart = p.AppStartModel.ATEClient;
             IniFile.IniWriteValue(p.IniSection.SysConfig.ToString(), "AppStart", p.AppStart.ToString(), p.iniFilePath);
             this.Hide();
             Form  f = new frmATEClient();
