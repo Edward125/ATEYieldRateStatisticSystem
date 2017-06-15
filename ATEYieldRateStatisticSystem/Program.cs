@@ -24,19 +24,28 @@ namespace ATEYieldRateStatisticSystem
             if (!p.checkFolder())
             {
                 MessageBox.Show("Create app folder fail,program will exit.", "Create Folder Fail", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                System.Threading.Thread.Sleep(2000);
-                //SplashForm.CloseSplash();
-                return;
+                System.Threading.Thread.Sleep(1000);
+                SplashForm.CloseSplash();
+                Environment.Exit(0);
             }
-
 
             if (!File.Exists(@".\IrisSkin4.dll"))
             {
                 if (!downloadIrisSkin4())
                 {
-                    System.Threading.Thread.Sleep(2000); 
-                    //SplashForm.CloseSplash();
-                    return;
+                    System.Threading.Thread.Sleep(1000); 
+                    SplashForm.CloseSplash();
+                    Environment.Exit(0);
+                }
+            }
+
+            if (!File.Exists (p.AppFolder + @"\MacOS.ssk"))
+            {
+                if (!downloadSkin ())
+                {
+                    System.Threading.Thread.Sleep(1000);
+                    SplashForm.CloseSplash();
+                    Environment.Exit(0);
                 }
             }
 
@@ -45,18 +54,7 @@ namespace ATEYieldRateStatisticSystem
             SplashForm.CloseSplash();
             Application.Run(new frmMain());
         }
-
-
-
-
-
-
-
-
-
-
-
-
+        
         /// <summary>
         /// download irisskin4.dll
         /// </summary>
@@ -86,12 +84,33 @@ namespace ATEYieldRateStatisticSystem
             return true;
         }
 
-
-
+        /// <summary>
+        /// download skin file
+        /// </summary>
+        /// <returns></returns>
         private static bool downloadSkin()
         {
+            string filePath = p.AppFolder + @"\MacOS.ssk";
 
+            if (!File.Exists(filePath))
+            {
+                byte[] template = Properties.Resources.MacOS;
+                FileStream stream = new FileStream(filePath, FileMode.Create);
+                try
+                {
+                    stream.Write(template, 0, template.Length);
+                    stream.Close();
+                    stream.Dispose();
+                    File.SetAttributes(filePath, FileAttributes.Hidden);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
             return true;
+
         }
     }
 }
