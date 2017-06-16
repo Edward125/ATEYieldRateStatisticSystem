@@ -107,7 +107,7 @@ namespace ATEYieldRateStatisticSystem
             IniFile.IniWriteValue(IniSection.SysConfig.ToString(), "AppStart", p.AppStart.ToString(), inifilepath);
             IniFile.IniWriteValue(IniSection.SysConfig.ToString(), "Version", Application.ProductVersion.ToString(), iniFilePath);
             //
-            IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "SFCSWebService", SFCSWebservice , iniFilePath);
+            //IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "SFCSWebService", SFCSWebservice , iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig.ToString(), "ATEPlant", ATEPlant , iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "AutoLookLogPath", AutoLookLogPath, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "TestLogPath", TestlogPath, iniFilePath);
@@ -134,7 +134,8 @@ namespace ATEYieldRateStatisticSystem
             if (!string.IsNullOrEmpty(_tempValue))
                 AppStart = (AppStartModel)Enum.Parse(typeof(AppStartModel), _tempValue);
 
-            SFCSWebservice  = IniFile.IniReadValue(IniSection.ATEConfig .ToString (),    "WebService", iniFilePath).Trim();
+            //SFCSWebservice  = IniFile.IniReadValue(IniSection.ATEConfig .ToString (), "WebService", iniFilePath).Trim();
+            ATEPlant = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "ATEPlant", iniFilePath).Trim();
             AutoLookLogPath = IniFile.IniReadValue(IniSection.ATEConfig .ToString (), "AutoLookLogPath", iniFilePath).Trim();
             TestlogPath = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "TestlogPath", iniFilePath).Trim();
             PassFlag = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "PassFlag", iniFilePath).Trim().ToUpper();
@@ -143,6 +144,12 @@ namespace ATEYieldRateStatisticSystem
             FileExtension = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "FileExtension", iniFilePath).Trim();
             //(Colors)Enum.Parse(typeof(Colors), "Red")            
             StartEndTime = (StartEndTimeType)Enum.Parse(typeof(StartEndTimeType), IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "StartEndTime", iniFilePath));
+            //
+            SFCS721Webservice = IniFile.IniReadValue(IniSection.WebService.ToString(), "SFCS721Webservice ", iniFilePath).Trim();
+            SFCS722Webservice = IniFile.IniReadValue(IniSection.WebService.ToString(), "SFCS722Webservice ", iniFilePath).Trim();
+            TEST721Webservice = IniFile.IniReadValue(IniSection.WebService.ToString(), "TEST721Webservice ", iniFilePath).Trim();
+            TEST721Webservice = IniFile.IniReadValue(IniSection.WebService.ToString(), "TEST721Webservice ", iniFilePath).Trim();
+
 
         }
 

@@ -83,6 +83,7 @@ namespace ATEYieldRateStatisticSystem
             //
             txtAutoLookLogPath.Text = p.AutoLookLogPath;
             txtTestlogPath.Text = p.TestlogPath;
+            txtCurrentWebService.Text = p.SFCSWebservice;
         }
 
         private void btnSetting_Click(object sender, EventArgs e)
