@@ -84,5 +84,11 @@ namespace ATEYieldRateStatisticSystem
             txtAutoLookLogPath.Text = p.AutoLookLogPath;
             txtTestlogPath.Text = p.TestlogPath;
         }
+
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+            Form f = new frmATEClientSetting();
+            f.ShowDialog();
+        }
     }
 }

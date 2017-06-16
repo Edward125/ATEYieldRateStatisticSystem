@@ -27,7 +27,11 @@ namespace ATEYieldRateStatisticSystem
         public static string FileExtension = ".log";//default
         public static StartEndTimeType StartEndTime = StartEndTimeType.Day830;
         public static LogType Log = LogType.SystemLog; //default
-
+        public static string ATEPlant = "721";
+        public static string SFCS721Webservice =  @"http://10.62.201.100/Tester.WebService/WebService.asmx"; //default
+        public static string SFCS722Webservice = @"http://10.62.201.77/Tester.WebService/WebService.asmx"; //default
+        public static string TEST721Webservice = @"http://172.0.1.172/Tester.WebService/WebService.asmx"; //default
+        public static string TEST722Webservice = @"http://172.0.1.171/Tester.WebService/WebService.asmx"; //default
 
         #endregion
 
@@ -40,13 +44,15 @@ namespace ATEYieldRateStatisticSystem
             FTClient,//收集FT良率数据端,在FICT电脑上运行
             YRServer,//查看良率端
             ATEClient//收集ATE良率数据端,在ATE电脑上运行
+          
             
         }
 
         public enum IniSection
         {
             SysConfig,
-            ATEConfig
+            ATEConfig,
+            WebService
         }
 
        public  enum StartEndTimeType
@@ -102,6 +108,7 @@ namespace ATEYieldRateStatisticSystem
             IniFile.IniWriteValue(IniSection.SysConfig.ToString(), "Version", Application.ProductVersion.ToString(), iniFilePath);
             //
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "SFCSWebService", SFCSWebservice , iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig.ToString(), "ATEPlant", ATEPlant , iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "AutoLookLogPath", AutoLookLogPath, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "TestLogPath", TestlogPath, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "PassFlag", PassFlag, iniFilePath);
@@ -109,6 +116,12 @@ namespace ATEYieldRateStatisticSystem
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "FaonFaoffBase", FaonFaoffBase, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "FileExtension", FileExtension, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig.ToString(), "StartEndTime", StartEndTime.ToString(), iniFilePath);
+            //
+            IniFile.IniWriteValue(IniSection.WebService.ToString(), "SFCS721Webservice", SFCS721Webservice, inifilepath);
+            IniFile.IniWriteValue(IniSection.WebService.ToString(), "SFCS722Webservice", SFCS722Webservice, inifilepath);
+            IniFile.IniWriteValue(IniSection.WebService.ToString(), "TEST721Webservice", TEST721Webservice, inifilepath);
+            IniFile.IniWriteValue(IniSection.WebService.ToString(), "TEST722Webservice", TEST722Webservice, inifilepath);
+
         }
 
         /// <summary>

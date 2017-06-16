@@ -32,15 +32,15 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtCurrentWebService = new System.Windows.Forms.TextBox();
+            this.txtTestlogPath = new System.Windows.Forms.TextBox();
+            this.txtAutoLookLogPath = new System.Windows.Forms.TextBox();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnSetting = new System.Windows.Forms.Button();
-            this.txtAutoLookLogPath = new System.Windows.Forms.TextBox();
-            this.txtTestlogPath = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,9 +55,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(12, 187);
+            this.groupBox1.Location = new System.Drawing.Point(18, 151);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(456, 232);
+            this.groupBox1.Size = new System.Drawing.Size(456, 268);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -76,7 +76,7 @@
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Controls.Add(this.textBox3);
+            this.groupBox3.Controls.Add(this.txtCurrentWebService);
             this.groupBox3.Controls.Add(this.txtTestlogPath);
             this.groupBox3.Controls.Add(this.txtAutoLookLogPath);
             this.groupBox3.Controls.Add(this.btnStop);
@@ -84,67 +84,19 @@
             this.groupBox3.Controls.Add(this.btnSetting);
             this.groupBox3.Location = new System.Drawing.Point(18, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(624, 169);
+            this.groupBox3.Size = new System.Drawing.Size(605, 133);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "groupBox3";
             // 
-            // btnStop
+            // label3
             // 
-            this.btnStop.Location = new System.Drawing.Point(519, 111);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 39);
-            this.btnStop.TabIndex = 2;
-            this.btnStop.Text = "Stop";
-            this.btnStop.UseVisualStyleBackColor = true;
-            // 
-            // btnRun
-            // 
-            this.btnRun.Location = new System.Drawing.Point(519, 66);
-            this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 39);
-            this.btnRun.TabIndex = 1;
-            this.btnRun.Text = "Run";
-            this.btnRun.UseVisualStyleBackColor = true;
-            // 
-            // btnSetting
-            // 
-            this.btnSetting.Location = new System.Drawing.Point(519, 21);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(75, 39);
-            this.btnSetting.TabIndex = 0;
-            this.btnSetting.Text = "Setting...";
-            this.btnSetting.UseVisualStyleBackColor = true;
-            // 
-            // txtAutoLookLogPath
-            // 
-            this.txtAutoLookLogPath.Location = new System.Drawing.Point(120, 27);
-            this.txtAutoLookLogPath.Name = "txtAutoLookLogPath";
-            this.txtAutoLookLogPath.Size = new System.Drawing.Size(342, 22);
-            this.txtAutoLookLogPath.TabIndex = 3;
-            // 
-            // txtTestlogPath
-            // 
-            this.txtTestlogPath.Location = new System.Drawing.Point(120, 60);
-            this.txtTestlogPath.Name = "txtTestlogPath";
-            this.txtTestlogPath.Size = new System.Drawing.Size(342, 22);
-            this.txtTestlogPath.TabIndex = 4;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(120, 92);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(342, 22);
-            this.textBox3.TabIndex = 5;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 14);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "AutoLookLogPath";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 96);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(109, 14);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "CurrentWebService";
             // 
             // label2
             // 
@@ -155,14 +107,66 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "TestlogPath";
             // 
-            // label3
+            // label1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 95);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 14);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "label3";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 14);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "AutoLookLogPath";
+            // 
+            // txtCurrentWebService
+            // 
+            this.txtCurrentWebService.Location = new System.Drawing.Point(125, 92);
+            this.txtCurrentWebService.Name = "txtCurrentWebService";
+            this.txtCurrentWebService.Size = new System.Drawing.Size(368, 22);
+            this.txtCurrentWebService.TabIndex = 5;
+            // 
+            // txtTestlogPath
+            // 
+            this.txtTestlogPath.Location = new System.Drawing.Point(125, 60);
+            this.txtTestlogPath.Name = "txtTestlogPath";
+            this.txtTestlogPath.Size = new System.Drawing.Size(368, 22);
+            this.txtTestlogPath.TabIndex = 4;
+            // 
+            // txtAutoLookLogPath
+            // 
+            this.txtAutoLookLogPath.Location = new System.Drawing.Point(125, 27);
+            this.txtAutoLookLogPath.Name = "txtAutoLookLogPath";
+            this.txtAutoLookLogPath.Size = new System.Drawing.Size(368, 22);
+            this.txtAutoLookLogPath.TabIndex = 3;
+            // 
+            // btnStop
+            // 
+            this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnStop.Location = new System.Drawing.Point(519, 87);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 31);
+            this.btnStop.TabIndex = 2;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            // 
+            // btnRun
+            // 
+            this.btnRun.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnRun.Location = new System.Drawing.Point(519, 55);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(75, 27);
+            this.btnRun.TabIndex = 1;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSetting.Location = new System.Drawing.Point(519, 21);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(75, 28);
+            this.btnSetting.TabIndex = 0;
+            this.btnSetting.Text = "Setting...";
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // frmATEClient
             // 
@@ -194,7 +198,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtCurrentWebService;
         private System.Windows.Forms.TextBox txtTestlogPath;
         private System.Windows.Forms.TextBox txtAutoLookLogPath;
     }
