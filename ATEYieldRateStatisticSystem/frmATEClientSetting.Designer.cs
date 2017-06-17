@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboPlantCode = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.rabDay830 = new System.Windows.Forms.RadioButton();
             this.rabDay800 = new System.Windows.Forms.RadioButton();
@@ -48,8 +50,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtTestlogPath = new System.Windows.Forms.TextBox();
             this.txtAutoLookLogPath = new System.Windows.Forms.TextBox();
-            this.comboPlantCode = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -81,6 +81,28 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Setting";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(489, 110);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(65, 17);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "PlantCode";
+            // 
+            // comboPlantCode
+            // 
+            this.comboPlantCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboPlantCode.FormattingEnabled = true;
+            this.comboPlantCode.Items.AddRange(new object[] {
+            "F721",
+            "F722"});
+            this.comboPlantCode.Location = new System.Drawing.Point(559, 105);
+            this.comboPlantCode.Name = "comboPlantCode";
+            this.comboPlantCode.Size = new System.Drawing.Size(59, 25);
+            this.comboPlantCode.TabIndex = 16;
+            this.comboPlantCode.SelectedIndexChanged += new System.EventHandler(this.comboPlantCode_SelectedIndexChanged);
             // 
             // groupBox3
             // 
@@ -155,6 +177,7 @@
             this.txtFileExtension.Size = new System.Drawing.Size(78, 25);
             this.txtFileExtension.TabIndex = 13;
             this.txtFileExtension.Text = ".log";
+            this.txtFileExtension.TextChanged += new System.EventHandler(this.txtFileExtension_TextChanged);
             // 
             // label6
             // 
@@ -172,6 +195,7 @@
             this.txtFileFrontFlag.Size = new System.Drawing.Size(121, 25);
             this.txtFileFrontFlag.TabIndex = 11;
             this.txtFileFrontFlag.Text = "Log";
+            this.txtFileFrontFlag.TextChanged += new System.EventHandler(this.txtFileFrontFlag_TextChanged);
             // 
             // label5
             // 
@@ -194,6 +218,7 @@
             this.combPassFlag.Name = "combPassFlag";
             this.combPassFlag.Size = new System.Drawing.Size(76, 25);
             this.combPassFlag.TabIndex = 9;
+            this.combPassFlag.SelectedIndexChanged += new System.EventHandler(this.combPassFlag_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -220,6 +245,7 @@
             this.txtWebService.Size = new System.Drawing.Size(346, 25);
             this.txtWebService.TabIndex = 6;
             this.txtWebService.Text = "http://10.62.201.100/Tester.WebService/WebService.asmx";
+            this.txtWebService.TextChanged += new System.EventHandler(this.txtWebService_TextChanged);
             // 
             // lblNote
             // 
@@ -255,6 +281,7 @@
             this.txtTestlogPath.Name = "txtTestlogPath";
             this.txtTestlogPath.Size = new System.Drawing.Size(474, 25);
             this.txtTestlogPath.TabIndex = 1;
+            this.txtTestlogPath.DoubleClick += new System.EventHandler(this.txtTestlogPath_DoubleClick);
             // 
             // txtAutoLookLogPath
             // 
@@ -262,27 +289,8 @@
             this.txtAutoLookLogPath.Name = "txtAutoLookLogPath";
             this.txtAutoLookLogPath.Size = new System.Drawing.Size(475, 25);
             this.txtAutoLookLogPath.TabIndex = 0;
-            // 
-            // comboPlantCode
-            // 
-            this.comboPlantCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboPlantCode.FormattingEnabled = true;
-            this.comboPlantCode.Items.AddRange(new object[] {
-            "721",
-            "722"});
-            this.comboPlantCode.Location = new System.Drawing.Point(559, 105);
-            this.comboPlantCode.Name = "comboPlantCode";
-            this.comboPlantCode.Size = new System.Drawing.Size(59, 25);
-            this.comboPlantCode.TabIndex = 16;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(489, 110);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 17);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "PlantCode";
+            this.txtAutoLookLogPath.TextChanged += new System.EventHandler(this.txtAutoLookLogPath_TextChanged);
+            this.txtAutoLookLogPath.DoubleClick += new System.EventHandler(this.txtAutoLookLogPath_DoubleClick);
             // 
             // frmATEClientSetting
             // 
@@ -293,6 +301,7 @@
             this.MaximizeBox = false;
             this.Name = "frmATEClientSetting";
             this.Text = "frmATEClientSetting";
+            this.Load += new System.EventHandler(this.frmATEClientSetting_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);

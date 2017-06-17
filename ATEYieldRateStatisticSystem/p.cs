@@ -17,7 +17,7 @@ namespace ATEYieldRateStatisticSystem
         public static AppStartModel AppStart;
 
         //ATE Client
-        public static string SFCSWebservice = @"http://10.62.201.100/Tester.WebService/WebService.asmx"; //default
+        //public static string SFCSWebservice = @"http://10.62.201.100/Tester.WebService/WebService.asmx"; //default
         public static string AutoLookLogPath = string.Empty;
         public static string TestlogPath = string.Empty;
         public static string PassFlag = "0000";//default
@@ -27,7 +27,7 @@ namespace ATEYieldRateStatisticSystem
         public static string FileExtension = ".log";//default
         public static StartEndTimeType StartEndTime = StartEndTimeType.Day830;
         public static LogType Log = LogType.SystemLog; //default
-        public static string ATEPlant = "721";
+        public static PlantCode ATEPlant = PlantCode.F721;
         public static string SFCS721Webservice =  @"http://10.62.201.100/Tester.WebService/WebService.asmx"; //default
         public static string SFCS722Webservice = @"http://10.62.201.77/Tester.WebService/WebService.asmx"; //default
         public static string TEST721Webservice = @"http://172.0.1.172/Tester.WebService/WebService.asmx"; //default
@@ -46,6 +46,13 @@ namespace ATEYieldRateStatisticSystem
             ATEClient//收集ATE良率数据端,在ATE电脑上运行
           
             
+        }
+
+
+        public enum PlantCode
+        {
+            F721,
+            F722
         }
 
         public enum IniSection
@@ -108,7 +115,7 @@ namespace ATEYieldRateStatisticSystem
             IniFile.IniWriteValue(IniSection.SysConfig.ToString(), "Version", Application.ProductVersion.ToString(), iniFilePath);
             //
             //IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "SFCSWebService", SFCSWebservice , iniFilePath);
-            IniFile.IniWriteValue(IniSection.ATEConfig.ToString(), "ATEPlant", ATEPlant , iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig.ToString(), "ATEPlant", ATEPlant.ToString() , iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "AutoLookLogPath", AutoLookLogPath, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "TestLogPath", TestlogPath, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "PassFlag", PassFlag, iniFilePath);
@@ -135,7 +142,11 @@ namespace ATEYieldRateStatisticSystem
                 AppStart = (AppStartModel)Enum.Parse(typeof(AppStartModel), _tempValue);
 
             //SFCSWebservice  = IniFile.IniReadValue(IniSection.ATEConfig .ToString (), "WebService", iniFilePath).Trim();
-            ATEPlant = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "ATEPlant", iniFilePath).Trim();
+           _tempValue =  IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "ATEPlant", iniFilePath).Trim();
+
+           if (!string.IsNullOrEmpty(_tempValue))
+               ATEPlant = (PlantCode)Enum.Parse(typeof(PlantCode), _tempValue);
+
             AutoLookLogPath = IniFile.IniReadValue(IniSection.ATEConfig .ToString (), "AutoLookLogPath", iniFilePath).Trim();
             TestlogPath = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "TestlogPath", iniFilePath).Trim();
             PassFlag = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "PassFlag", iniFilePath).Trim().ToUpper();
@@ -153,6 +164,14 @@ namespace ATEYieldRateStatisticSystem
 
         }
 
+
+        public static  void openFolder(TextBox textbox)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+                textbox.Text = fbd.SelectedPath;
+
+        }
 
     }
 }
