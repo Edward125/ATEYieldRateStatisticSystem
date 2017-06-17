@@ -125,6 +125,7 @@
             this.rabDay830.TabStop = true;
             this.rabDay830.Text = "0:00~08:30";
             this.rabDay830.UseVisualStyleBackColor = true;
+            this.rabDay830.CheckedChanged += new System.EventHandler(this.rabDay830_CheckedChanged);
             // 
             // rabDay800
             // 
@@ -136,6 +137,7 @@
             this.rabDay800.TabStop = true;
             this.rabDay800.Text = "0:00~08:00";
             this.rabDay800.UseVisualStyleBackColor = true;
+            this.rabDay800.CheckedChanged += new System.EventHandler(this.rabDay800_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -158,6 +160,7 @@
             this.rab1.TabStop = true;
             this.rab1.Text = "1 ";
             this.rab1.UseVisualStyleBackColor = true;
+            this.rab1.CheckedChanged += new System.EventHandler(this.rab1_CheckedChanged);
             // 
             // rab0
             // 
@@ -169,6 +172,7 @@
             this.rab0.TabStop = true;
             this.rab0.Text = "0 ";
             this.rab0.UseVisualStyleBackColor = true;
+            this.rab0.CheckedChanged += new System.EventHandler(this.rab0_CheckedChanged);
             // 
             // txtFileExtension
             // 
@@ -250,7 +254,7 @@
             // lblNote
             // 
             this.lblNote.AutoSize = true;
-            this.lblNote.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.lblNote.ForeColor = System.Drawing.Color.Blue;
             this.lblNote.Location = new System.Drawing.Point(73, 85);
             this.lblNote.Name = "lblNote";
             this.lblNote.Size = new System.Drawing.Size(320, 17);
@@ -281,6 +285,7 @@
             this.txtTestlogPath.Name = "txtTestlogPath";
             this.txtTestlogPath.Size = new System.Drawing.Size(474, 25);
             this.txtTestlogPath.TabIndex = 1;
+            this.txtTestlogPath.TextChanged += new System.EventHandler(this.txtTestlogPath_TextChanged);
             this.txtTestlogPath.DoubleClick += new System.EventHandler(this.txtTestlogPath_DoubleClick);
             // 
             // txtAutoLookLogPath

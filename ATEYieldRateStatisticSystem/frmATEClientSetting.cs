@@ -18,12 +18,14 @@ namespace ATEYieldRateStatisticSystem
             InitializeComponent();
         }
 
-
-
-
-
         private void LoadData2UI()
         {
+            //
+            this.Text = Application.ProductName + "-ATE Client Setting...(Ver:" + Application.ProductVersion + ")";
+            txtAutoLookLogPath.SetWatermark("DbClick here to select AutoLookIyet config file folder path...");
+            txtTestlogPath.SetWatermark("DbClick here to select ATE test program testlog file folder path...");
+
+            //
             this.txtAutoLookLogPath.Text = p.AutoLookLogPath.Trim();
             this.txtTestlogPath.Text = p.TestlogPath.Trim();
             //MessageBox.Show(p.ATEPlant.ToString());
@@ -52,6 +54,7 @@ namespace ATEYieldRateStatisticSystem
 
         private void frmATEClientSetting_Load(object sender, EventArgs e)
         {
+            
             LoadData2UI();
         }
 
@@ -93,7 +96,13 @@ namespace ATEYieldRateStatisticSystem
                         }
                     }
                     sr.Close();
-
+                }
+                else
+                {
+                    MessageBox.Show("Can't find 'path.ini' file,may be u select a wrong folder.", "Can't Find File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtAutoLookLogPath.SelectAll();
+                    this.txtAutoLookLogPath.Focus();
+                    return;
                 }
 
             }
@@ -156,6 +165,49 @@ namespace ATEYieldRateStatisticSystem
             if (p.ATEPlant == p.PlantCode.F722)
                 txtWebService.Text = p.SFCS722Webservice;
 
+        }
+
+        private void rab0_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab0.Checked)
+            {
+                p.FaonFaoffBase = "0";
+                IniFile.IniWriteValue(p.IniSection.ATEConfig.ToString(), "FaonFaoffBase", p.FaonFaoffBase, p.iniFilePath);
+            }
+
+        }
+
+        private void rab1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab1.Checked)
+            {
+                p.FaonFaoffBase = "1";
+                IniFile.IniWriteValue(p.IniSection.ATEConfig.ToString(), "FaonFaoffBase", p.FaonFaoffBase, p.iniFilePath);
+            }
+        }
+
+        private void rabDay800_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rabDay800.Checked)
+            {
+                p.StartEndTime = p.StartEndTimeType.Day800;
+                IniFile.IniWriteValue(p.IniSection.ATEConfig.ToString(), "StartEndTime", p.StartEndTime .ToString (), p.iniFilePath);
+            }
+        }
+
+        private void rabDay830_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rabDay830.Checked)
+            {
+                p.StartEndTime = p.StartEndTimeType.Day830;
+                IniFile.IniWriteValue(p.IniSection.ATEConfig.ToString(), "StartEndTime", p.StartEndTime.ToString(), p.iniFilePath);
+            }
+        }
+
+        private void txtTestlogPath_TextChanged(object sender, EventArgs e)
+        {
+            p.TestlogPath = this.txtTestlogPath.Text.Trim();
+            IniFile.IniWriteValue(p.IniSection.ATEConfig.ToString (), "TestlogPath", p.TestlogPath, p.iniFilePath);
         }
 
 
