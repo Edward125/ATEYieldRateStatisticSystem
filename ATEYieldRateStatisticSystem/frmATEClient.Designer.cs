@@ -44,9 +44,14 @@
             this.lstBarcode = new System.Windows.Forms.ListBox();
             this.lstStatus = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.fswTestlog = new System.IO.FileSystemWatcher();
+            this.fswAutoLook = new System.IO.FileSystemWatcher();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fswTestlog)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fswAutoLook)).BeginInit();
             this.SuspendLayout();
             // 
             // skinEngine1
@@ -208,6 +213,17 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "groupBox4";
             // 
+            // fswTestlog
+            // 
+            this.fswTestlog.EnableRaisingEvents = true;
+            this.fswTestlog.SynchronizingObject = this;
+            this.fswTestlog.Changed += new System.IO.FileSystemEventHandler(this.fswTestlog_Changed);
+            // 
+            // fswAutoLook
+            // 
+            this.fswAutoLook.EnableRaisingEvents = true;
+            this.fswAutoLook.SynchronizingObject = this;
+            // 
             // frmATEClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -226,6 +242,8 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fswTestlog)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fswAutoLook)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -248,5 +266,8 @@
         private System.Windows.Forms.ListBox lstBarcode;
         private System.Windows.Forms.ListBox lstStatus;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.IO.FileSystemWatcher fswTestlog;
+        private System.IO.FileSystemWatcher fswAutoLook;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

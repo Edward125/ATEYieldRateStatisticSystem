@@ -178,6 +178,10 @@ namespace ATEYieldRateStatisticSystem
                 txtTestlogPath.Focus();
                 return;
             }
+
+            if (!checkWebService(p.ATEPlant))
+                return;
+  
         }
 
 
@@ -190,19 +194,19 @@ namespace ATEYieldRateStatisticSystem
         /// </summary>
         /// <param name="website">WebService的地址</param>
         /// <returns>可連通返回true，不可連通返回false</returns>
-        public bool checkWebService(string website)
+        public bool checkWebService(p.PlantCode ateplant)
         {
             Stopwatch sw = new Stopwatch();
             TimeSpan ts = new TimeSpan();
             sw.Start();
             updateMsg(lstStatus, "Start Check WebService");
+           
             //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service");
-
             if (p.ATEPlant == p.PlantCode.F721)
                 ws.Url = p.SFCS721Webservice;
             if (p.ATEPlant == p.PlantCode.F722)
                 ws.Url = p.SFCS722Webservice;
-   
+            updateMsg(lstStatus, "Webservice:" + ws.Url);
             try
             {
                 Application.DoEvents();
@@ -212,9 +216,8 @@ namespace ATEYieldRateStatisticSystem
             {
                 sw.Stop();
                 ts = sw.Elapsed;
-                updateMsg(lstStatus, "Can't connect WebService,Used time(ms):" + ts.Milliseconds);
                 updateMsg(lstStatus, e.Message);
-
+                updateMsg(lstStatus, "Can't connect WebService,Used time(ms):" + ts.Milliseconds);
                 // SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service NG,Used time(ms):" + ts.Milliseconds + "\r\n" + "Message:".PadLeft(24) + e.Message);
 
                 return false;
@@ -288,5 +291,35 @@ namespace ATEYieldRateStatisticSystem
                 listbox.SetSelected(listbox.Items.Count - 1, true);
             }
         }
+
+        private void initTestLogFileSystemWatcher(FileSystemWatcher fsw)
+        {
+            fsw.IncludeSubdirectories = false;
+            // fsw.EnableRaisingEvents = false;
+            fsw.Path = p.TestlogPath;
+            fsw.Filter = p.FileFrontFlag + "*" + p.FileExtension;
+            fsw.NotifyFilter = NotifyFilters.LastWrite;
+            //MessageBox.Show(fsw.Filter);
+        }
+
+        private void initAutoLookFileSystemWatcher(FileSystemWatcher fsw)
+        {
+            fsw.IncludeSubdirectories = false;
+            // fsw.EnableRaisingEvents = false;
+            fsw.Path = p.AutoLookLogPath;
+            fsw.Filter = "Path.ini";
+            fsw.NotifyFilter = NotifyFilters.LastWrite;
+            //MessageBox.Show(fsw.Filter);
+
+        }
+
+        private void fswTestlog_Changed(object sender, FileSystemEventArgs e)
+        {
+            p.Delay(200);
+            updateMsg(lstStatus, "Detect File " + e.ChangeType + ":" + e.FullPath);
+            updateMsg(lstStatus, "The file name is:" + e.Name);
+        }
+
+
     }
 }
