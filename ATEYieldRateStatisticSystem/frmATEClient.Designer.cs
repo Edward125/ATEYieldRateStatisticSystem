@@ -41,6 +41,11 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnSetting = new System.Windows.Forms.Button();
+            this.lstBarcode = new System.Windows.Forms.ListBox();
+            this.lstStatus = new System.Windows.Forms.ListBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,18 +60,20 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lstBarcode);
             this.groupBox1.Location = new System.Drawing.Point(18, 151);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(456, 268);
+            this.groupBox1.Size = new System.Drawing.Size(463, 268);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
             // groupBox2
             // 
-            this.groupBox2.Location = new System.Drawing.Point(12, 425);
+            this.groupBox2.Controls.Add(this.lstStatus);
+            this.groupBox2.Location = new System.Drawing.Point(18, 418);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(630, 220);
+            this.groupBox2.Size = new System.Drawing.Size(624, 227);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
@@ -84,7 +91,7 @@
             this.groupBox3.Controls.Add(this.btnSetting);
             this.groupBox3.Location = new System.Drawing.Point(18, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(605, 133);
+            this.groupBox3.Size = new System.Drawing.Size(624, 133);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "groupBox3";
@@ -121,14 +128,14 @@
             this.txtCurrentWebService.Location = new System.Drawing.Point(125, 92);
             this.txtCurrentWebService.Name = "txtCurrentWebService";
             this.txtCurrentWebService.ReadOnly = true;
-            this.txtCurrentWebService.Size = new System.Drawing.Size(368, 22);
+            this.txtCurrentWebService.Size = new System.Drawing.Size(391, 22);
             this.txtCurrentWebService.TabIndex = 5;
             // 
             // txtTestlogPath
             // 
             this.txtTestlogPath.Location = new System.Drawing.Point(125, 60);
             this.txtTestlogPath.Name = "txtTestlogPath";
-            this.txtTestlogPath.Size = new System.Drawing.Size(368, 22);
+            this.txtTestlogPath.Size = new System.Drawing.Size(391, 22);
             this.txtTestlogPath.TabIndex = 4;
             this.txtTestlogPath.TextChanged += new System.EventHandler(this.txtTestlogPath_TextChanged);
             this.txtTestlogPath.DoubleClick += new System.EventHandler(this.txtTestlogPath_DoubleClick);
@@ -137,7 +144,7 @@
             // 
             this.txtAutoLookLogPath.Location = new System.Drawing.Point(125, 27);
             this.txtAutoLookLogPath.Name = "txtAutoLookLogPath";
-            this.txtAutoLookLogPath.Size = new System.Drawing.Size(368, 22);
+            this.txtAutoLookLogPath.Size = new System.Drawing.Size(391, 22);
             this.txtAutoLookLogPath.TabIndex = 3;
             this.txtAutoLookLogPath.TextChanged += new System.EventHandler(this.txtAutoLookLogPath_TextChanged);
             this.txtAutoLookLogPath.DoubleClick += new System.EventHandler(this.txtAutoLookLogPath_DoubleClick);
@@ -145,7 +152,7 @@
             // btnStop
             // 
             this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnStop.Location = new System.Drawing.Point(519, 87);
+            this.btnStop.Location = new System.Drawing.Point(534, 87);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 31);
             this.btnStop.TabIndex = 2;
@@ -155,17 +162,18 @@
             // btnRun
             // 
             this.btnRun.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnRun.Location = new System.Drawing.Point(519, 55);
+            this.btnRun.Location = new System.Drawing.Point(534, 55);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(75, 27);
             this.btnRun.TabIndex = 1;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // btnSetting
             // 
             this.btnSetting.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSetting.Location = new System.Drawing.Point(519, 21);
+            this.btnSetting.Location = new System.Drawing.Point(534, 21);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(75, 28);
             this.btnSetting.TabIndex = 0;
@@ -173,11 +181,39 @@
             this.btnSetting.UseVisualStyleBackColor = true;
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
+            // lstBarcode
+            // 
+            this.lstBarcode.FormattingEnabled = true;
+            this.lstBarcode.ItemHeight = 14;
+            this.lstBarcode.Location = new System.Drawing.Point(10, 19);
+            this.lstBarcode.Name = "lstBarcode";
+            this.lstBarcode.Size = new System.Drawing.Size(440, 242);
+            this.lstBarcode.TabIndex = 0;
+            // 
+            // lstStatus
+            // 
+            this.lstStatus.FormattingEnabled = true;
+            this.lstStatus.ItemHeight = 14;
+            this.lstStatus.Location = new System.Drawing.Point(6, 21);
+            this.lstStatus.Name = "lstStatus";
+            this.lstStatus.Size = new System.Drawing.Size(614, 200);
+            this.lstStatus.TabIndex = 1;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Location = new System.Drawing.Point(487, 151);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(155, 268);
+            this.groupBox4.TabIndex = 2;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "groupBox4";
+            // 
             // frmATEClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(695, 657);
+            this.ClientSize = new System.Drawing.Size(668, 657);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -186,6 +222,8 @@
             this.Text = "frmATEClient";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmATEClient_FormClosing);
             this.Load += new System.EventHandler(this.frmATEClient_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
@@ -207,5 +245,8 @@
         private System.Windows.Forms.TextBox txtCurrentWebService;
         private System.Windows.Forms.TextBox txtTestlogPath;
         private System.Windows.Forms.TextBox txtAutoLookLogPath;
+        private System.Windows.Forms.ListBox lstBarcode;
+        private System.Windows.Forms.ListBox lstStatus;
+        private System.Windows.Forms.GroupBox groupBox4;
     }
 }

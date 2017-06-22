@@ -164,7 +164,10 @@ namespace ATEYieldRateStatisticSystem
 
         }
 
-
+        /// <summary>
+        /// open folder
+        /// </summary>
+        /// <param name="textbox"></param>
         public static  void openFolder(TextBox textbox)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
@@ -173,5 +176,24 @@ namespace ATEYieldRateStatisticSystem
 
         }
 
+
+        #region 延時子程式
+
+        /// <summary>
+        /// 延時子程序
+        /// </summary>
+        /// <param name="interval">延時的時間，單位毫秒</param>
+        public static  void Delay(double interval)
+        {
+            DateTime time = DateTime.Now;
+            double span = interval * 10000;
+            while (DateTime.Now.Ticks - time.Ticks < span)
+            {
+                Application.DoEvents();
+            }
+
+        }
+
+        #endregion
     }
 }

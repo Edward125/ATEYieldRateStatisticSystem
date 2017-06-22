@@ -168,5 +168,125 @@ namespace ATEYieldRateStatisticSystem
                 e.Cancel = true;
             
         }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(p.TestlogPath.Trim()))
+            {
+                MessageBox.Show("TestlogPath 不能为空,请点击'Setting'按钮设置路径", "TestlogPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtTestlogPath.SelectAll();
+                txtTestlogPath.Focus();
+                return;
+            }
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// 檢測WebService的可連通性,可連通返回true，不可連通，返回false
+        /// </summary>
+        /// <param name="website">WebService的地址</param>
+        /// <returns>可連通返回true，不可連通返回false</returns>
+        public bool checkWebService(string website)
+        {
+            Stopwatch sw = new Stopwatch();
+            TimeSpan ts = new TimeSpan();
+            sw.Start();
+            updateMsg(lstStatus, "Start Check WebService");
+            //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service");
+
+            if (p.ATEPlant == p.PlantCode.F721)
+                ws.Url = p.SFCS721Webservice;
+            if (p.ATEPlant == p.PlantCode.F722)
+                ws.Url = p.SFCS722Webservice;
+   
+            try
+            {
+                Application.DoEvents();
+                ws.Discover();
+            }
+            catch (Exception e)
+            {
+                sw.Stop();
+                ts = sw.Elapsed;
+                updateMsg(lstStatus, "Can't connect WebService,Used time(ms):" + ts.Milliseconds);
+                updateMsg(lstStatus, e.Message);
+
+                // SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service NG,Used time(ms):" + ts.Milliseconds + "\r\n" + "Message:".PadLeft(24) + e.Message);
+
+                return false;
+            }
+            sw.Stop();
+            ts = sw.Elapsed;
+            //SubFunction.updateMessage(lstStatusCommand, "Check Web Service OK,Used time(ms):" + ts.Milliseconds);
+            updateMsg(lstStatus, "Connect WebService success,Used time(ms):" + ts.Milliseconds);
+            //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service OK,Used time(ms):" + ts.Milliseconds);
+            return true;
+        }
+
+        /// <summary>
+        /// 檢查USN站別是否在當前站別,在為true，不在為false
+        /// </summary>
+        /// <param name="usn">條碼</param>
+        /// <param name="stage">站別</param>
+        /// <returns>在當前站別為true，不在當前站別為false</returns>
+        private bool checkStage(string usn, string stage)
+        {
+
+            //  checkWebService(web_Site);
+
+            Stopwatch sw = new Stopwatch();
+            TimeSpan ts = new TimeSpan();
+            sw.Start();
+            //SubFunction.updateMessage(lstStatusCommand, "SFCS:" + usn + ",Stage:" + stage);
+            updateMsg(lstStatus, "SFCS:" + usn + ",Stage:" + stage);
+            // SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "SFCS:" + usn + ",Stage:" + stage);
+            string result = ws.CheckRoute(usn, stage);
+            sw.Stop();
+            ts = sw.Elapsed;
+            if (result.ToUpper() == "OK")
+            {
+                // SubFunction.updateMessage(lstStatusCommand, result + "Used time(ms):" + ts.Milliseconds);
+                updateMsg(lstStatus, result + "Used time(ms):" + ts.Milliseconds);
+                //  SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "usn:" + usn + "->" + stage);
+
+                return true;
+            }
+            else
+            {
+                // SubFunction.updateMessage(lstStatusCommand, result + "Used time(ms):" + ts.Milliseconds);
+                updateMsg(lstStatus, result + "Used time(ms):" + ts.Milliseconds);
+                //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), result + "Used time(ms):" + ts.Milliseconds);
+                // SubFunction.saveLog(Param.logType.SYSLOG.ToString(), result + "Used time(ms):" + ts.Milliseconds);
+                return false;
+            }
+        }
+
+        private void updateMsg(ListBox listbox, string message)
+        {
+            if (listbox.Items.Count > 1024)
+            {
+                //listbox.Items.Clear();
+                listbox.Items.RemoveAt(0);
+            }
+            //SkinListBoxItem item = new SkinListBoxItem();
+            string item = string.Empty;
+            item = DateTime.Now.ToString("HH:mm:ss") + "->" + @message;
+
+            this.Invoke((EventHandler)(delegate
+            {
+                listbox.Items.Add(item);
+            }));
+
+
+            if (listbox.Items.Count > 1)
+            {
+                listbox.TopIndex = listbox.Items.Count - 1;
+                listbox.SetSelected(listbox.Items.Count - 1, true);
+            }
+        }
     }
 }
