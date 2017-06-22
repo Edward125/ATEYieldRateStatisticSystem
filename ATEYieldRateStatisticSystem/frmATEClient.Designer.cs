@@ -46,7 +46,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.fswTestlog = new System.IO.FileSystemWatcher();
             this.fswAutoLook = new System.IO.FileSystemWatcher();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.bgwWebService = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -156,6 +156,7 @@
             // 
             // btnStop
             // 
+            this.btnStop.Enabled = false;
             this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnStop.Location = new System.Drawing.Point(534, 87);
             this.btnStop.Name = "btnStop";
@@ -163,6 +164,7 @@
             this.btnStop.TabIndex = 2;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // btnRun
             // 
@@ -224,6 +226,11 @@
             this.fswAutoLook.EnableRaisingEvents = true;
             this.fswAutoLook.SynchronizingObject = this;
             // 
+            // bgwWebService
+            // 
+            this.bgwWebService.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwWebService_DoWork);
+            this.bgwWebService.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwWebService_RunWorkerCompleted);
+            // 
             // frmATEClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -268,6 +275,6 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.IO.FileSystemWatcher fswTestlog;
         private System.IO.FileSystemWatcher fswAutoLook;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker bgwWebService;
     }
 }

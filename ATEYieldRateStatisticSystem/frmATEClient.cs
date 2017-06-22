@@ -23,6 +23,7 @@ namespace ATEYieldRateStatisticSystem
 
         SFCS_ws.WebService ws = new SFCS_ws.WebService();
 
+        bool _connnectWebservice = false; //connect web service result,success=true;fail = false;
 
         #region 窗体放大缩小
 
@@ -90,6 +91,8 @@ namespace ATEYieldRateStatisticSystem
                 txtCurrentWebService.Text = p.SFCS721Webservice;
             if (p.ATEPlant == p.PlantCode.F722)
                 txtCurrentWebService.Text = p.SFCS722Webservice;
+
+          
         }
 
         private void btnSetting_Click(object sender, EventArgs e)
@@ -162,7 +165,16 @@ namespace ATEYieldRateStatisticSystem
 
             if (dr == DialogResult.Yes)
             {
-                Environment.Exit(0);
+                try
+                {
+                    Environment.Exit(0);
+                }
+                catch (Exception)
+                {
+                    
+                   // throw;
+                }
+                
             }
             else
                 e.Cancel = true;
@@ -179,8 +191,10 @@ namespace ATEYieldRateStatisticSystem
                 return;
             }
 
-            if (!checkWebService(p.ATEPlant))
-                return;
+            if (!bgwWebService.IsBusy)
+               bgwWebService.RunWorkerAsync();
+            //if (!checkWebService(p.ATEPlant))
+            //    return;
   
         }
 
@@ -229,6 +243,65 @@ namespace ATEYieldRateStatisticSystem
             //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service OK,Used time(ms):" + ts.Milliseconds);
             return true;
         }
+
+
+        /// <summary>
+        /// 檢測WebService的可連通性,可連通返回true，不可連通，返回false
+        /// </summary>
+        /// <param name="website">WebService的地址</param>
+        /// <returns>可連通返回true，不可連通返回false</returns>
+        public bool checkWebService(BackgroundWorker bk)
+        {
+            Stopwatch sw = new Stopwatch();
+            TimeSpan ts = new TimeSpan();
+            sw.Start();
+            this.Invoke((EventHandler)delegate
+            {
+                updateMsg(lstStatus, "Start Check WebService");
+            });
+          
+
+            //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service");
+            if (p.ATEPlant == p.PlantCode.F721)
+                ws.Url = p.SFCS721Webservice;
+            if (p.ATEPlant == p.PlantCode.F722)
+                ws.Url = p.SFCS722Webservice;
+            this.Invoke((EventHandler)delegate
+            {
+                updateMsg(lstStatus, "Webservice:" + ws.Url);
+            });
+            
+            try
+            {
+                Application.DoEvents();
+                ws.Discover();
+            }
+            catch (Exception e)
+            {
+                sw.Stop();
+                ts = sw.Elapsed;
+                this.Invoke((EventHandler)delegate
+                {
+                    updateMsg(lstStatus, e.Message);
+                    updateMsg(lstStatus, "Can't connect WebService,Used time(ms):" + ts.Milliseconds);
+                });
+               
+                // SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service NG,Used time(ms):" + ts.Milliseconds + "\r\n" + "Message:".PadLeft(24) + e.Message);
+
+                return false;
+            }
+            sw.Stop();
+            ts = sw.Elapsed;
+            //SubFunction.updateMessage(lstStatusCommand, "Check Web Service OK,Used time(ms):" + ts.Milliseconds);
+            this.Invoke((EventHandler)delegate
+            {
+                updateMsg(lstStatus, "Connect WebService success,Used time(ms):" + ts.Milliseconds);
+            });
+            
+            //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service OK,Used time(ms):" + ts.Milliseconds);
+            return true;
+        }
+
 
         /// <summary>
         /// 檢查USN站別是否在當前站別,在為true，不在為false
@@ -318,6 +391,37 @@ namespace ATEYieldRateStatisticSystem
             p.Delay(200);
             updateMsg(lstStatus, "Detect File " + e.ChangeType + ":" + e.FullPath);
             updateMsg(lstStatus, "The file name is:" + e.Name);
+        }
+
+        private void bgwWebService_DoWork(object sender, DoWorkEventArgs e)
+        {
+            _connnectWebservice  = checkWebService(this.bgwWebService);
+
+        }
+
+        private void bgwWebService_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (_connnectWebservice)
+            {
+                //MessageBox.Show("OK");
+                btnRun.Enabled = false;
+                btnStop.Enabled = true;
+                btnSetting.Enabled = false;
+            }
+            else
+            {
+                //MessageBox.Show("NG");
+                btnRun.Enabled = true;
+                btnStop.Enabled = false;
+                btnSetting.Enabled = true;
+            }
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            btnSetting.Enabled = true;
+            btnRun.Enabled = true;
+            btnStop.Enabled = false;
         }
 
 
