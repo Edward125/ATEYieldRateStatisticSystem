@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Web.Services;
 using System.Diagnostics;
+using System.IO;
+using Edward;
 
 namespace ATEYieldRateStatisticSystem
 {
@@ -94,6 +96,77 @@ namespace ATEYieldRateStatisticSystem
         {
             Form f = new frmATEClientSetting();
             f.ShowDialog();
+        }
+
+        private void txtAutoLookLogPath_DoubleClick(object sender, EventArgs e)
+        {
+            p.openFolder(txtAutoLookLogPath);
+            if (string.IsNullOrEmpty(txtAutoLookLogPath.Text.Trim()))
+                return;
+            else
+            {
+                string inipath = txtAutoLookLogPath.Text.Trim() + @"\path.ini";
+                if (System.IO.File.Exists(inipath))
+                {
+                    string line = string.Empty;
+                    string boardpath = string.Empty;
+
+                    StreamReader sr = new StreamReader(inipath);
+                    while (!sr.EndOfStream)
+                    {
+                        line = sr.ReadLine();
+                        if (!line.StartsWith("!"))
+                        {
+                            if (line.ToUpper().Contains("#BoardPath#".ToUpper()))
+                            {
+                                boardpath = line.Replace("#BoardPath#:", "");
+                                p.TestlogPath = boardpath + @"testlog\";
+                                txtTestlogPath.Text = p.TestlogPath;
+
+                            }
+                        }
+                    }
+                    sr.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Can't find 'path.ini' file,may be u select a wrong folder.", "Can't Find File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtAutoLookLogPath.SelectAll();
+                    this.txtAutoLookLogPath.Focus();
+                    return;
+                }
+
+            }
+        }
+
+        private void txtAutoLookLogPath_TextChanged(object sender, EventArgs e)
+        {
+            p.AutoLookLogPath = this.txtAutoLookLogPath.Text.Trim();
+            IniFile.IniWriteValue(p.IniSection.ATEConfig.ToString(), "AutoLookLogPath", p.AutoLookLogPath, p.iniFilePath);
+        }
+
+        private void txtTestlogPath_TextChanged(object sender, EventArgs e)
+        {
+            p.TestlogPath = this.txtTestlogPath.Text.Trim();
+            IniFile.IniWriteValue(p.IniSection.ATEConfig.ToString(), "TestlogPath", p.TestlogPath, p.iniFilePath);
+        }
+
+        private void txtTestlogPath_DoubleClick(object sender, EventArgs e)
+        {
+            p.openFolder(txtTestlogPath);
+        }
+
+        private void frmATEClient_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Are you sure to exit the program?if YES,the test data will not be collected by the program...", "Exit or Not", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dr == DialogResult.Yes)
+            {
+                Environment.Exit(0);
+            }
+            else
+                e.Cancel = true;
+            
         }
     }
 }

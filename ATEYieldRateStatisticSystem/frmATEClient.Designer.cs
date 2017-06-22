@@ -120,6 +120,7 @@
             // 
             this.txtCurrentWebService.Location = new System.Drawing.Point(125, 92);
             this.txtCurrentWebService.Name = "txtCurrentWebService";
+            this.txtCurrentWebService.ReadOnly = true;
             this.txtCurrentWebService.Size = new System.Drawing.Size(368, 22);
             this.txtCurrentWebService.TabIndex = 5;
             // 
@@ -129,6 +130,8 @@
             this.txtTestlogPath.Name = "txtTestlogPath";
             this.txtTestlogPath.Size = new System.Drawing.Size(368, 22);
             this.txtTestlogPath.TabIndex = 4;
+            this.txtTestlogPath.TextChanged += new System.EventHandler(this.txtTestlogPath_TextChanged);
+            this.txtTestlogPath.DoubleClick += new System.EventHandler(this.txtTestlogPath_DoubleClick);
             // 
             // txtAutoLookLogPath
             // 
@@ -136,6 +139,8 @@
             this.txtAutoLookLogPath.Name = "txtAutoLookLogPath";
             this.txtAutoLookLogPath.Size = new System.Drawing.Size(368, 22);
             this.txtAutoLookLogPath.TabIndex = 3;
+            this.txtAutoLookLogPath.TextChanged += new System.EventHandler(this.txtAutoLookLogPath_TextChanged);
+            this.txtAutoLookLogPath.DoubleClick += new System.EventHandler(this.txtAutoLookLogPath_DoubleClick);
             // 
             // btnStop
             // 
@@ -179,6 +184,7 @@
             this.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "frmATEClient";
             this.Text = "frmATEClient";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmATEClient_FormClosing);
             this.Load += new System.EventHandler(this.frmATEClient_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
