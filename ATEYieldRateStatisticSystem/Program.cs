@@ -49,6 +49,30 @@ namespace ATEYieldRateStatisticSystem
                 }
             }
 
+
+            if (!File.Exists(@".\System.Data.SQLite.dll"))
+            {
+                if (!downloadSqliteDll ())
+                {
+                    System.Threading.Thread.Sleep(1000);
+                    SplashForm.CloseSplash();
+                    Environment.Exit(0);
+                }
+            }
+
+            if (!File.Exists(@".\SQLite.Interop.dll"))
+            {
+                if (!downloadSqliteInterop ())
+                {
+                    System.Threading.Thread.Sleep(1000);
+                    SplashForm.CloseSplash();
+                    Environment.Exit(0);
+                }
+            }
+
+
+
+
             if (!File.Exists (p.AppFolder + @"\MacOS.ssk"))
             {
                 if (!downloadSkin ())
@@ -90,7 +114,7 @@ namespace ATEYieldRateStatisticSystem
 
             if (!File.Exists(filePath))
             {
-                byte[] template = Properties.Resources.IrisSkin4 ;
+                byte[] template = Properties.Resources.IrisSkin4;
                 FileStream stream = new FileStream(filePath, FileMode.Create);
                 try
                 {
@@ -108,6 +132,57 @@ namespace ATEYieldRateStatisticSystem
             }
             return true;
         }
+
+        private static bool downloadSqliteDll()
+        {
+            string filePath = @".\System.Data.SQLite.dll";
+
+            if (!File.Exists(filePath))
+            {
+                byte[] template = Properties.Resources.System_Data_SQLite;
+                FileStream stream = new FileStream(filePath, FileMode.Create);
+                try
+                {
+                    stream.Write(template, 0, template.Length);
+                    stream.Close();
+                    stream.Dispose();
+                    //  File.SetAttributes(filePath, FileAttributes.Hidden);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+        private static bool downloadSqliteInterop()
+        {
+            string filePath = @".\SQLite.Interop.dll";
+
+            if (!File.Exists(filePath))
+            {
+                byte[] template = Properties.Resources.SQLite_Interop;
+                FileStream stream = new FileStream(filePath, FileMode.Create);
+                try
+                {
+                    stream.Write(template, 0, template.Length);
+                    stream.Close();
+                    stream.Dispose();
+                    //  File.SetAttributes(filePath, FileAttributes.Hidden);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
 
         /// <summary>
         /// download skin file
