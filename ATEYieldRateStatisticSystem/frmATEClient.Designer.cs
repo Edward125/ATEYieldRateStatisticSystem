@@ -30,7 +30,9 @@
         {
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lstBarcode = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lstStatus = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,17 +43,18 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnSetting = new System.Windows.Forms.Button();
-            this.lstBarcode = new System.Windows.Forms.ListBox();
-            this.lstStatus = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.fswTestlog = new System.IO.FileSystemWatcher();
             this.fswAutoLook = new System.IO.FileSystemWatcher();
             this.bgwWebService = new System.ComponentModel.BackgroundWorker();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fswTestlog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fswAutoLook)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // skinEngine1
@@ -73,6 +76,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
+            // lstBarcode
+            // 
+            this.lstBarcode.FormattingEnabled = true;
+            this.lstBarcode.ItemHeight = 14;
+            this.lstBarcode.Location = new System.Drawing.Point(10, 19);
+            this.lstBarcode.Name = "lstBarcode";
+            this.lstBarcode.Size = new System.Drawing.Size(440, 242);
+            this.lstBarcode.TabIndex = 0;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lstStatus);
@@ -82,6 +94,15 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
+            // 
+            // lstStatus
+            // 
+            this.lstStatus.FormattingEnabled = true;
+            this.lstStatus.ItemHeight = 14;
+            this.lstStatus.Location = new System.Drawing.Point(6, 21);
+            this.lstStatus.Name = "lstStatus";
+            this.lstStatus.Size = new System.Drawing.Size(614, 200);
+            this.lstStatus.TabIndex = 1;
             // 
             // groupBox3
             // 
@@ -188,26 +209,9 @@
             this.btnSetting.UseVisualStyleBackColor = true;
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
-            // lstBarcode
-            // 
-            this.lstBarcode.FormattingEnabled = true;
-            this.lstBarcode.ItemHeight = 14;
-            this.lstBarcode.Location = new System.Drawing.Point(10, 19);
-            this.lstBarcode.Name = "lstBarcode";
-            this.lstBarcode.Size = new System.Drawing.Size(440, 242);
-            this.lstBarcode.TabIndex = 0;
-            // 
-            // lstStatus
-            // 
-            this.lstStatus.FormattingEnabled = true;
-            this.lstStatus.ItemHeight = 14;
-            this.lstStatus.Location = new System.Drawing.Point(6, 21);
-            this.lstStatus.Name = "lstStatus";
-            this.lstStatus.Size = new System.Drawing.Size(614, 200);
-            this.lstStatus.TabIndex = 1;
-            // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.pictureBox1);
             this.groupBox4.Location = new System.Drawing.Point(487, 151);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(155, 268);
@@ -231,6 +235,14 @@
             this.bgwWebService.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwWebService_DoWork);
             this.bgwWebService.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwWebService_RunWorkerCompleted);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(6, 21);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(143, 240);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // frmATEClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -249,8 +261,10 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fswTestlog)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fswAutoLook)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -276,5 +290,6 @@
         private System.IO.FileSystemWatcher fswTestlog;
         private System.IO.FileSystemWatcher fswAutoLook;
         private System.ComponentModel.BackgroundWorker bgwWebService;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

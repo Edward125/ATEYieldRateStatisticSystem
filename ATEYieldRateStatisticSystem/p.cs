@@ -5,6 +5,10 @@ using System.Linq;
 using System.Text;
 using Edward;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Reflection;
+
+
 namespace ATEYieldRateStatisticSystem
 {
     public  class p
@@ -195,5 +199,50 @@ namespace ATEYieldRateStatisticSystem
         }
 
         #endregion
+
+
+
+        private static  string PublicResourceFileName = Application.ProductName + ".Resources";
+        /// <summary>
+        /// 从资源文件中读取一个资源 
+        /// </summary>
+        /// <param name="resFile">资源文件名称 命名空间+文件名称</param>
+        /// <param name="resName">要读取的资源名称</param>
+        /// <returns>返回一个资源 读取失败返回NULL</returns>
+        public static  System.Object ReadFromResourceFile(String resName)
+        {
+            try
+            {
+                Assembly myAssembly;
+                myAssembly = Assembly.GetExecutingAssembly();
+                System.Resources.ResourceManager rm = new
+                  System.Resources.ResourceManager(PublicResourceFileName, myAssembly);
+                return rm.GetObject(resName);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
+
+        /// <summary>
+        /// 获取资源图片
+        /// </summary>
+        /// <param name="name">文件名</param>
+        /// <returns>资源图片</returns>
+        public static  Bitmap GetResourceImage(String name)
+        {
+            Object tempbitmap = null;
+            tempbitmap = ReadFromResourceFile(name);
+            if (tempbitmap.GetType().Equals(typeof(Bitmap)))
+            {
+                return (Bitmap)tempbitmap;
+            }
+            return null;
+        }
+
+
     }
 }

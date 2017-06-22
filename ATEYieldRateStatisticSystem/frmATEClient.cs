@@ -10,6 +10,8 @@ using System.Web.Services;
 using System.Diagnostics;
 using System.IO;
 using Edward;
+using System.Resources;
+using System.Reflection;
 
 namespace ATEYieldRateStatisticSystem
 {
@@ -193,15 +195,7 @@ namespace ATEYieldRateStatisticSystem
 
             if (!bgwWebService.IsBusy)
                bgwWebService.RunWorkerAsync();
-            //if (!checkWebService(p.ATEPlant))
-            //    return;
-  
         }
-
-
-
-
-
 
         /// <summary>
         /// 檢測WebService的可連通性,可連通返回true，不可連通，返回false

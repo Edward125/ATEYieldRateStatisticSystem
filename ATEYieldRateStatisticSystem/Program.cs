@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Edward;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 
 namespace ATEYieldRateStatisticSystem
 {
@@ -18,6 +19,15 @@ namespace ATEYieldRateStatisticSystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            if (!File.Exists(@".\splash.png"))
+            {
+                //Assembly assem = this.GetType().Assembly;
+                Assembly assem = System.Reflection.Assembly.GetEntryAssembly();
+                Stream stream = assem.GetManifestResourceStream("ATEYieldRateStatisticSystem.Resources.Splash.png");
+                System.Drawing.Image.FromStream(stream).Save("splash.png");
+            }
+
             SplashForm.StartSplash(@".\splash.png", Color.FromArgb(128, 128, 128));
             //Application.Run (new SplashForm());
             // simulating operations at startup '
@@ -87,7 +97,7 @@ namespace ATEYieldRateStatisticSystem
                     stream.Write(template, 0, template.Length);
                     stream.Close();
                     stream.Dispose();
-                    File.SetAttributes(filePath, FileAttributes.Hidden);
+                  //  File.SetAttributes(filePath, FileAttributes.Hidden);
                 }
                 catch (Exception ex)
                 {
