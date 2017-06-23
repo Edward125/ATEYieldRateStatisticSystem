@@ -337,7 +337,9 @@
             // fswAutoLook
             // 
             this.fswAutoLook.EnableRaisingEvents = true;
+            this.fswAutoLook.NotifyFilter = System.IO.NotifyFilters.LastWrite;
             this.fswAutoLook.SynchronizingObject = this;
+            this.fswAutoLook.Changed += new System.IO.FileSystemEventHandler(this.fswAutoLook_Changed);
             // 
             // bgwWebService
             // 

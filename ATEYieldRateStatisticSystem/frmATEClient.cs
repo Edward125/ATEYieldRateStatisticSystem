@@ -12,6 +12,7 @@ using System.IO;
 using Edward;
 using System.Resources;
 using System.Reflection;
+using System.Threading;
 
 namespace ATEYieldRateStatisticSystem
 {
@@ -26,6 +27,10 @@ namespace ATEYieldRateStatisticSystem
         SFCS_ws.WebService ws = new SFCS_ws.WebService();
 
         bool _connnectWebservice = false; //connect web service result,success=true;fail = false;
+
+        private int TimeoutMillis = 1000; //定时器触发间隔
+        System.Threading.Timer m_timer = null;
+        List<String> files = new List<string>(); //记录待处理文件的队列
 
         #region 窗体放大缩小
 
@@ -122,6 +127,7 @@ namespace ATEYieldRateStatisticSystem
             loadConfig();
             tsslStartTime.Text = "StartTime:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ",";
 
+            //lblModelFPY.ForeColor = Color.Red;
         }
 
         private void btnSetting_Click(object sender, EventArgs e)
@@ -143,25 +149,7 @@ namespace ATEYieldRateStatisticSystem
                 string inipath = txtAutoLookLogPath.Text.Trim() + @"\path.ini";
                 if (System.IO.File.Exists(inipath))
                 {
-                    string line = string.Empty;
-                    string boardpath = string.Empty;
-
-                    StreamReader sr = new StreamReader(inipath);
-                    while (!sr.EndOfStream)
-                    {
-                        line = sr.ReadLine();
-                        if (!line.StartsWith("!"))
-                        {
-                            if (line.ToUpper().Contains("#BoardPath#".ToUpper()))
-                            {
-                                boardpath = line.Replace("#BoardPath#:", "");
-                                p.TestlogPath = boardpath + @"testlog\";
-                                txtTestlogPath.Text = p.TestlogPath;
-
-                            }
-                        }
-                    }
-                    sr.Close();
+                    getTestlogPathFromAutoLog(inipath);
                 }
                 else
                 {
@@ -173,6 +161,36 @@ namespace ATEYieldRateStatisticSystem
 
             }
         }
+
+        private void getTestlogPathFromAutoLog(string inipath)
+        {
+           
+  
+                string line = string.Empty;
+                string boardpath = string.Empty;
+
+                StreamReader sr = new StreamReader(inipath);
+                while (!sr.EndOfStream)
+                {
+                    line = sr.ReadLine();
+                    if (!line.StartsWith("!"))
+                    {
+                        if (line.ToUpper().Contains("#BoardPath#".ToUpper()))
+                        {
+                            boardpath = line.Replace("#BoardPath#:", "");
+                            if (boardpath.EndsWith(@"\"))    
+                                p.TestlogPath = boardpath + @"testlog\";
+                            else
+                                p.TestlogPath = boardpath + @"\testlog\";
+                            txtTestlogPath.Text = p.TestlogPath;
+                        }
+                    }
+                }
+                sr.Close();
+
+        }
+
+
 
         private void txtAutoLookLogPath_TextChanged(object sender, EventArgs e)
         {
@@ -467,6 +485,41 @@ namespace ATEYieldRateStatisticSystem
             fsw.Filter = "Path.ini";
             fsw.NotifyFilter = NotifyFilters.LastWrite;
             //MessageBox.Show(fsw.Filter);
+            if (m_timer == null)
+            {
+                //设置定时器的回调函数。此时定时器未启动
+                m_timer = new System.Threading.Timer(new TimerCallback(OnWatchedFileChange),
+                                             null, Timeout.Infinite, Timeout.Infinite);
+            }
+
+        }
+
+
+        private void OnWatchedFileChange(object state)
+        {
+            List<String> backup = new List<string>();
+            Mutex mutex = new Mutex(false, "FSW");
+            mutex.WaitOne();
+            backup.AddRange(files);
+            files.Clear();
+            mutex.ReleaseMutex();
+            foreach (string file in backup)
+            {
+                //MessageBox.Show("File Change", file + " changed");
+                this.Invoke((EventHandler)delegate
+                {
+                    updateMsg(lstStatus, "File Change" + file + " changed");
+                    string inipath = txtAutoLookLogPath.Text.Trim() + @"\path.ini";
+                    if (System.IO.File.Exists(inipath))
+                    {
+                        getTestlogPathFromAutoLog(inipath);
+                    }
+                });
+               
+
+            }
+
+
 
         }
 
@@ -492,6 +545,18 @@ namespace ATEYieldRateStatisticSystem
                 btnSetting.Enabled = false;
                 txtAutoLookLogPath.ReadOnly = true;
                 txtTestlogPath.ReadOnly = true;
+
+                initTestLogFileSystemWatcher(fswTestlog);    
+                   //
+                fswTestlog.EnableRaisingEvents = true;
+                updateMsg(lstStatus, "Start to watch :" + p.TestlogPath);
+                updateMsg(lstStatus, "监控以" + p.FileFrontFlag + "开头，以" + p.FileExtension + "为扩展名的文件");
+                //
+                initAutoLookFileSystemWatcher(fswAutoLook);
+                //
+                fswAutoLook.EnableRaisingEvents = true;
+                updateMsg(lstStatus, "Start to watch :" + p.AutoLookLogPath + ",the file is Path.ini");
+
             }
             else
             {
@@ -501,11 +566,16 @@ namespace ATEYieldRateStatisticSystem
                 btnSetting.Enabled = true;
                 txtAutoLookLogPath.ReadOnly = false;
                 txtTestlogPath.ReadOnly = false;
+              
             }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
+            fswAutoLook.EnableRaisingEvents = true;
+            updateMsg(lstStatus, "Stop watch:" + p.AutoLookLogPath);
+            fswTestlog.EnableRaisingEvents = true;
+            updateMsg(lstStatus, "Stop watch:" + p.TestlogPath);
             btnSetting.Enabled = true;
             btnRun.Enabled = true;
             btnStop.Enabled = false;
@@ -534,7 +604,31 @@ namespace ATEYieldRateStatisticSystem
 
         }
 
+        private void fswAutoLook_Changed(object sender, FileSystemEventArgs e)
+        {
 
-    
+
+
+            //p.Delay(200);
+            //updateMsg(lstStatus, "Detect File " + e.ChangeType + ":" + e.FullPath);
+            //updateMsg(lstStatus, "The file name is:" + e.Name);
+            //string inipath = txtAutoLookLogPath.Text.Trim() + @"\path.ini";
+            //if (System.IO.File.Exists(inipath))
+            //{
+            //    getTestlogPathFromAutoLog(inipath);
+            //}
+
+            Mutex mutex = new Mutex(false, "FSW");
+            mutex.WaitOne();
+            if (!files.Contains(e.Name))
+            {
+                files.Add(e.Name);
+            }
+            mutex.ReleaseMutex();
+            //重新设置定时器的触发间隔，并且仅仅触发一次
+            m_timer.Change(TimeoutMillis, Timeout.Infinite);
+
+        }
+
     }
 }
