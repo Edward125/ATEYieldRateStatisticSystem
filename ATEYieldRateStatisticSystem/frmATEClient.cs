@@ -100,7 +100,7 @@ namespace ATEYieldRateStatisticSystem
                 txtCurrentWebService.Text = p.SFCS721Webservice;
             if (p.ATEPlant == p.PlantCode.F722)
                 txtCurrentWebService.Text = p.SFCS722Webservice;
-
+            InitListviewBarcode(lstviewBarcode);
           
         }
 
@@ -179,8 +179,7 @@ namespace ATEYieldRateStatisticSystem
                     Environment.Exit(0);
                 }
                 catch (Exception)
-                {
-                    
+                {  
                    // throw;
                 }
                 
@@ -192,6 +191,9 @@ namespace ATEYieldRateStatisticSystem
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+
+
+            
             if (string.IsNullOrEmpty(p.TestlogPath.Trim()))
             {
                 MessageBox.Show("TestlogPath can't be empty,press'Setting' to set the config...", "TestlogPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -215,6 +217,13 @@ namespace ATEYieldRateStatisticSystem
             }
             if (!bgwWebService.IsBusy)
                bgwWebService.RunWorkerAsync();
+
+#if DEBUG
+            p.Delay(200);
+            SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
+            GetUUData("CN041D5Y7620667P0BQCA00", out rq);
+#endif
+           
         }
 
         /// <summary>
@@ -325,7 +334,6 @@ namespace ATEYieldRateStatisticSystem
         /// <returns>在當前站別為true，不在當前站別為false</returns>
         private bool checkStage(string usn, string stage)
         {
-
             //  checkWebService(web_Site);
 
             Stopwatch sw = new Stopwatch();
@@ -354,6 +362,37 @@ namespace ATEYieldRateStatisticSystem
                 return false;
             }
         }
+
+
+        private bool GetUUData(string usn, out SFCS_ws.clsRequestData _rqd)
+        {
+            _rqd = new SFCS_ws.clsRequestData();
+            Stopwatch sw = new Stopwatch();
+            TimeSpan ts = new TimeSpan();
+            sw.Start();
+            updateMsg(lstStatus, "SFCS:" + usn + ",get model info from sfcs...");
+            _rqd = ws.GetUUTData(usn, "TA", _rqd, 1);
+
+            sw.Stop();
+            ts = sw.Elapsed;
+            if (_rqd  != null)
+            {
+               updateMsg  (lstStatus , usn  + ",get model info success ,Used time(ms):" + ts.Milliseconds);
+               updateMsg(lstStatus, usn +",Model:" +_rqd.Model);
+               updateMsg(lstStatus, usn+",ModelFamily:"+ _rqd.ModelFamily);
+               updateMsg(lstStatus, usn +",UPN(Config):"+_rqd.UPN);
+               updateMsg(lstStatus, usn +",MO:"+ _rqd.MO);
+
+            }
+            else
+            {
+                updateMsg  (lstStatus , "Warning:"+usn +",get model info fail," + "Used time(ms):" + ts.Milliseconds);
+            }
+            
+            return true;
+        }
+
+
 
         private void updateMsg(ListBox listbox, string message)
         {
@@ -410,7 +449,6 @@ namespace ATEYieldRateStatisticSystem
         private void bgwWebService_DoWork(object sender, DoWorkEventArgs e)
         {
             _connnectWebservice  = checkWebService(this.bgwWebService);
-
         }
 
         private void bgwWebService_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -421,6 +459,8 @@ namespace ATEYieldRateStatisticSystem
                 btnRun.Enabled = false;
                 btnStop.Enabled = true;
                 btnSetting.Enabled = false;
+                txtAutoLookLogPath.ReadOnly = true;
+                txtTestlogPath.ReadOnly = true;
             }
             else
             {
@@ -428,6 +468,8 @@ namespace ATEYieldRateStatisticSystem
                 btnRun.Enabled = true;
                 btnStop.Enabled = false;
                 btnSetting.Enabled = true;
+                txtAutoLookLogPath.ReadOnly = false;
+                txtTestlogPath.ReadOnly = false;
             }
         }
 
@@ -436,8 +478,29 @@ namespace ATEYieldRateStatisticSystem
             btnSetting.Enabled = true;
             btnRun.Enabled = true;
             btnStop.Enabled = false;
+            txtAutoLookLogPath.ReadOnly = false;
+            txtTestlogPath.ReadOnly = false;
+            _connnectWebservice = false;
+            
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listview"></param>
+        private void InitListviewBarcode(ListView listview)
+        {
+            listview.Items.Clear();
+            listview.MultiSelect = false;
+            listview.AutoArrange = true;
+            listview.GridLines = true;
+            listview.FullRowSelect = true;
+            listview.Columns.Add("USN", 200, HorizontalAlignment.Center);
+            listview.Columns.Add ("TestResult",80,HorizontalAlignment.Center);
+            listview.Columns.Add("Stage", 80,HorizontalAlignment.Center);
+            listview.Columns.Add("Upload", 80, HorizontalAlignment.Center);
+
+        }
     }
 }
