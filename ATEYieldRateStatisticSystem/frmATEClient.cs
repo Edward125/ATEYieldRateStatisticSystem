@@ -43,25 +43,34 @@ namespace ATEYieldRateStatisticSystem
         }
         private void setControls(float newx, float newy, Control cons)
         {
-            foreach (Control con in cons.Controls)
+            try
             {
-
-                string[] mytag = con.Tag.ToString().Split(new char[] { ':' });
-                float a = Convert.ToSingle(mytag[0]) * newx;
-                con.Width = (int)a;
-                a = Convert.ToSingle(mytag[1]) * newy;
-                con.Height = (int)(a);
-                a = Convert.ToSingle(mytag[2]) * newx;
-                con.Left = (int)(a);
-                a = Convert.ToSingle(mytag[3]) * newy;
-                con.Top = (int)(a);
-                Single currentSize = Convert.ToSingle(mytag[4]) * Math.Min(newx, newy);
-                con.Font = new Font(con.Font.Name, currentSize, con.Font.Style, con.Font.Unit);
-                if (con.Controls.Count > 0)
+                foreach (Control con in cons.Controls)
                 {
-                    setControls(newx, newy, con);
+
+                    string[] mytag = con.Tag.ToString().Split(new char[] { ':' });
+                    float a = Convert.ToSingle(mytag[0]) * newx;
+                    con.Width = (int)a;
+                    a = Convert.ToSingle(mytag[1]) * newy;
+                    con.Height = (int)(a);
+                    a = Convert.ToSingle(mytag[2]) * newx;
+                    con.Left = (int)(a);
+                    a = Convert.ToSingle(mytag[3]) * newy;
+                    con.Top = (int)(a);
+                    Single currentSize = Convert.ToSingle(mytag[4]) * Math.Min(newx, newy);
+                    con.Font = new Font(con.Font.Name, currentSize, con.Font.Style, con.Font.Unit);
+                    if (con.Controls.Count > 0)
+                    {
+                        setControls(newx, newy, con);
+                    }
                 }
             }
+            catch (Exception)
+            {
+                
+                //throw;
+            }
+           
 
         }
 
@@ -78,6 +87,27 @@ namespace ATEYieldRateStatisticSystem
 
         private void frmATEClient_Load(object sender, EventArgs e)
         {
+            loadUI();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void loadConfig()
+        {
+            //
+            txtAutoLookLogPath.Text = p.AutoLookLogPath;
+            txtTestlogPath.Text = p.TestlogPath;
+            if (p.ATEPlant == p.PlantCode.F721)
+                txtCurrentWebService.Text = p.SFCS721Webservice;
+            if (p.ATEPlant == p.PlantCode.F722)
+                txtCurrentWebService.Text = p.SFCS722Webservice;
+        }
+
+
+
+        private void loadUI()
+        {
             //窗体放大缩小
             this.Resize += new EventHandler(Form1_Resize);
             X = this.Width;
@@ -85,29 +115,22 @@ namespace ATEYieldRateStatisticSystem
             setTag(this);
             Form1_Resize(new object(), new EventArgs());//x,y可在实例化时赋值,最后这句是新加的，在MDI时有用
 
-
             this.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")";
             txtAutoLookLogPath.SetWatermark("DbClick here to select AutoLookIyet config file folder path...");
             txtTestlogPath.SetWatermark("DbClick here to select ATE test program testlog file folder path...");
-
-            //
-            txtAutoLookLogPath.Text = p.AutoLookLogPath;
-            txtTestlogPath.Text = p.TestlogPath;
-
-            
-
-            if (p.ATEPlant == p.PlantCode.F721)
-                txtCurrentWebService.Text = p.SFCS721Webservice;
-            if (p.ATEPlant == p.PlantCode.F722)
-                txtCurrentWebService.Text = p.SFCS722Webservice;
             InitListviewBarcode(lstviewBarcode);
-          
+            loadConfig();
+            tsslStartTime.Text = "StartTime:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ",";
+
         }
 
         private void btnSetting_Click(object sender, EventArgs e)
         {
             Form f = new frmATEClientSetting();
-            f.ShowDialog();
+            //f.ShowDialog();
+            if (f.ShowDialog(this) != DialogResult.OK)
+                loadConfig();
+
         }
 
         private void txtAutoLookLogPath_DoubleClick(object sender, EventArgs e)
@@ -222,6 +245,14 @@ namespace ATEYieldRateStatisticSystem
             p.Delay(200);
             SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
             GetUUData("CN041D5Y7620667P0BQCA00", out rq);
+            txtModel.Text = rq.Model;
+            tsslModel.Text = "Model:" + rq.Model;
+            txtProjectCode.Text = rq.ModelFamily;
+            tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
+            txtMO.Text = rq.MO;
+            tsslMO.Text = "MO:" + rq.MO;
+            txtUPN.Text = rq.UPN;
+            tsslUPN.Text = "UPN:" + rq.UPN;
 #endif
            
         }
@@ -502,5 +533,8 @@ namespace ATEYieldRateStatisticSystem
             listview.Columns.Add("Upload", 80, HorizontalAlignment.Center);
 
         }
+
+
+    
     }
 }
