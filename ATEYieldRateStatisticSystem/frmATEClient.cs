@@ -85,9 +85,16 @@ namespace ATEYieldRateStatisticSystem
             setTag(this);
             Form1_Resize(new object(), new EventArgs());//x,y可在实例化时赋值,最后这句是新加的，在MDI时有用
 
+
+            this.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")";
+            txtAutoLookLogPath.SetWatermark("DbClick here to select AutoLookIyet config file folder path...");
+            txtTestlogPath.SetWatermark("DbClick here to select ATE test program testlog file folder path...");
+
             //
             txtAutoLookLogPath.Text = p.AutoLookLogPath;
             txtTestlogPath.Text = p.TestlogPath;
+
+            
 
             if (p.ATEPlant == p.PlantCode.F721)
                 txtCurrentWebService.Text = p.SFCS721Webservice;
@@ -187,12 +194,25 @@ namespace ATEYieldRateStatisticSystem
         {
             if (string.IsNullOrEmpty(p.TestlogPath.Trim()))
             {
-                MessageBox.Show("TestlogPath 不能为空,请点击'Setting'按钮设置路径", "TestlogPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("TestlogPath can't be empty,press'Setting' to set the config...", "TestlogPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                updateMsg(lstStatus, "Error:TestlogPath can't be empty,press'Setting' to set the config...");
                 txtTestlogPath.SelectAll();
                 txtTestlogPath.Focus();
                 return;
             }
-
+            if (!Directory.Exists(p.TestlogPath.Trim()))
+            {
+                MessageBox.Show("TestlogPath is not exist,pls check...", "TestlogPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                updateMsg(lstStatus, "Error:TestlogPath is not exist,pls check...");
+                txtTestlogPath.SelectAll();
+                txtTestlogPath.Focus();
+                return;
+            }
+            if (!File.Exists(p.AutoLookLogPath.Trim () + @"\Path.ini"))
+            {
+                updateMsg(lstStatus, "Warning:Not find 'path.ini',can't dynamic wather testlog folder change...");
+                updateMsg(lstStatus, "Warning:plsese check the folder:" + p.AutoLookLogPath );
+            }
             if (!bgwWebService.IsBusy)
                bgwWebService.RunWorkerAsync();
         }
