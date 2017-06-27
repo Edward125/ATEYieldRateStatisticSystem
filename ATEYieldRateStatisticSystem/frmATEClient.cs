@@ -30,7 +30,8 @@ namespace ATEYieldRateStatisticSystem
 
         private int TimeoutMillis = 1000; //定时器触发间隔
         System.Threading.Timer m_timer = null;
-        List<String> files = new List<string>(); //记录待处理文件的队列
+        List<String> files = new List<string>(); //AutoLog记录待处理文件的队列
+
 
         #region 窗体放大缩小
 
@@ -475,6 +476,12 @@ namespace ATEYieldRateStatisticSystem
             fsw.Filter = p.FileFrontFlag + "*" + p.FileExtension;
             fsw.NotifyFilter = NotifyFilters.LastWrite;
             //MessageBox.Show(fsw.Filter);
+            if (m_timer == null)
+            {
+                //设置定时器的回调函数。此时定时器未启动
+                m_timer = new System.Threading.Timer(new TimerCallback(OnWatchedTestLogFileChange),
+                                             null, Timeout.Infinite, Timeout.Infinite);
+            }
         }
 
         private void initAutoLookFileSystemWatcher(FileSystemWatcher fsw)
@@ -488,14 +495,14 @@ namespace ATEYieldRateStatisticSystem
             if (m_timer == null)
             {
                 //设置定时器的回调函数。此时定时器未启动
-                m_timer = new System.Threading.Timer(new TimerCallback(OnWatchedFileChange),
+                m_timer = new System.Threading.Timer(new TimerCallback(OnWatchedAutoLookFileChange),
                                              null, Timeout.Infinite, Timeout.Infinite);
             }
 
         }
 
 
-        private void OnWatchedFileChange(object state)
+        private void OnWatchedAutoLookFileChange(object state)
         {
             List<String> backup = new List<string>();
             Mutex mutex = new Mutex(false, "FSW");
@@ -523,11 +530,42 @@ namespace ATEYieldRateStatisticSystem
 
         }
 
+        private void OnWatchedTestLogFileChange(object state)
+        {
+            List<String> backup = new List<string>();
+            Mutex mutex = new Mutex(false, "TestLog");
+            mutex.WaitOne();
+            backup.AddRange(files);
+            files.Clear();
+            mutex.ReleaseMutex();
+            foreach (string file in backup)
+            {
+                //MessageBox.Show("File Change", file + " changed");
+                this.Invoke((EventHandler)delegate
+                {
+                    updateMsg(lstStatus, "File Change," + file + " changed");
+                
+                });
+
+            }
+
+        }
+
         private void fswTestlog_Changed(object sender, FileSystemEventArgs e)
         {
-            p.Delay(200);
-            updateMsg(lstStatus, "Detect File " + e.ChangeType + ":" + e.FullPath);
-            updateMsg(lstStatus, "The file name is:" + e.Name);
+            //p.Delay(200);
+            //updateMsg(lstStatus, "Detect File " + e.ChangeType + ":" + e.FullPath);
+            //updateMsg(lstStatus, "The file name is:" + e.Name);
+            Mutex mutex = new Mutex(false, "TestLog");
+            mutex.WaitOne();
+            if (!files.Contains(e.Name))
+            {
+                //AutoLogfiles.Add(e.Name);
+                files.Add(e.Name);
+            }
+            mutex.ReleaseMutex();
+            //重新设置定时器的触发间隔，并且仅仅触发一次
+            m_timer.Change(TimeoutMillis, Timeout.Infinite);
         }
 
         private void bgwWebService_DoWork(object sender, DoWorkEventArgs e)
@@ -606,9 +644,6 @@ namespace ATEYieldRateStatisticSystem
 
         private void fswAutoLook_Changed(object sender, FileSystemEventArgs e)
         {
-
-
-
             //p.Delay(200);
             //updateMsg(lstStatus, "Detect File " + e.ChangeType + ":" + e.FullPath);
             //updateMsg(lstStatus, "The file name is:" + e.Name);

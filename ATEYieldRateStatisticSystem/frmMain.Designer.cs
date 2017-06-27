@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnYRServer = new System.Windows.Forms.Button();
-            this.btnATEClient = new System.Windows.Forms.Button();
             this.btnFTClient = new System.Windows.Forms.Button();
+            this.btnATEClient = new System.Windows.Forms.Button();
+            this.btnYRServer = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -60,17 +60,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "pls select the application run model";
             // 
-            // btnYRServer
+            // btnFTClient
             // 
-            this.btnYRServer.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnYRServer.Location = new System.Drawing.Point(37, 48);
-            this.btnYRServer.Name = "btnYRServer";
-            this.btnYRServer.Size = new System.Drawing.Size(141, 65);
-            this.btnYRServer.TabIndex = 0;
-            this.btnYRServer.Text = "Y.R. Server";
-            this.toolTip1.SetToolTip(this.btnYRServer, "查看整个良率状态，报表输出等");
-            this.btnYRServer.UseVisualStyleBackColor = true;
-            this.btnYRServer.Click += new System.EventHandler(this.btnYRServer_Click);
+            this.btnFTClient.Enabled = false;
+            this.btnFTClient.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFTClient.Location = new System.Drawing.Point(370, 48);
+            this.btnFTClient.Name = "btnFTClient";
+            this.btnFTClient.Size = new System.Drawing.Size(141, 65);
+            this.btnFTClient.TabIndex = 2;
+            this.btnFTClient.Text = "FT Client";
+            this.btnFTClient.UseVisualStyleBackColor = true;
+            this.btnFTClient.Click += new System.EventHandler(this.btnFTClient_Click);
             // 
             // btnATEClient
             // 
@@ -84,16 +84,17 @@
             this.btnATEClient.UseVisualStyleBackColor = true;
             this.btnATEClient.Click += new System.EventHandler(this.btnATEClient_Click);
             // 
-            // btnFTClient
+            // btnYRServer
             // 
-            this.btnFTClient.Enabled = false;
-            this.btnFTClient.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFTClient.Location = new System.Drawing.Point(370, 48);
-            this.btnFTClient.Name = "btnFTClient";
-            this.btnFTClient.Size = new System.Drawing.Size(141, 65);
-            this.btnFTClient.TabIndex = 2;
-            this.btnFTClient.Text = "FT Client";
-            this.btnFTClient.UseVisualStyleBackColor = true;
+            this.btnYRServer.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnYRServer.Location = new System.Drawing.Point(37, 48);
+            this.btnYRServer.Name = "btnYRServer";
+            this.btnYRServer.Size = new System.Drawing.Size(141, 65);
+            this.btnYRServer.TabIndex = 0;
+            this.btnYRServer.Text = "Y.R. Server";
+            this.toolTip1.SetToolTip(this.btnYRServer, "查看整个良率状态，报表输出等");
+            this.btnYRServer.UseVisualStyleBackColor = true;
+            this.btnYRServer.Click += new System.EventHandler(this.btnYRServer_Click);
             // 
             // frmMain
             // 

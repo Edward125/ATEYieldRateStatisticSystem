@@ -41,5 +41,10 @@ namespace ATEYieldRateStatisticSystem
             Form  f = new frmATEClient();
             f.Show();
         }
+
+        private void btnFTClient_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
