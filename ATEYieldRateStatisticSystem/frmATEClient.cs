@@ -545,10 +545,7 @@ namespace ATEYieldRateStatisticSystem
                     t.Start(file);
                     //t.Join();
 
-                    while (t.ThreadState == System.Threading.ThreadState.Stopped )
-                    {
-                        updateMsg(lstStatus, t.Name + ",thread is complete...");
-                    }
+                    updateMsg(lstStatus, t.Name + ",start...");
 
                 });
 
@@ -709,6 +706,7 @@ namespace ATEYieldRateStatisticSystem
                         {
                             if (temp[i] == "0000")
                             {
+                                p.Delay(1000);
                                 lt.ForeColor = Color.Green;
                                 lt.SubItems.Add("PASS");
                                 //p.SetListItemFont(lt, 9);
