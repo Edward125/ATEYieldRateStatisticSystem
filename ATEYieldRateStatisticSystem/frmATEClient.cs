@@ -32,7 +32,6 @@ namespace ATEYieldRateStatisticSystem
         System.Threading.Timer m_timer = null;
         List<String> files = new List<string>(); //AutoLog记录待处理文件的队列
 
-
         #region 窗体放大缩小
 
         private float X;
@@ -544,7 +543,11 @@ namespace ATEYieldRateStatisticSystem
                 this.Invoke((EventHandler)delegate
                 {
                     updateMsg(lstStatus, "File Change," + file + " changed");
-                
+                    //readTestLogContent(file);
+                    Thread  t = new Thread(readTestLogContent);
+                    //t.IsBackground = true;
+                    t.Start(file);
+                    //t.Join();
                 });
 
             }
@@ -558,10 +561,10 @@ namespace ATEYieldRateStatisticSystem
             //updateMsg(lstStatus, "The file name is:" + e.Name);
             Mutex mutex = new Mutex(false, "TestLog");
             mutex.WaitOne();
-            if (!files.Contains(e.Name))
+            if (!files.Contains(e.FullPath)) 
             {
                 //AutoLogfiles.Add(e.Name);
-                files.Add(e.Name);
+                files.Add(e.FullPath );
             }
             mutex.ReleaseMutex();
             //重新设置定时器的触发间隔，并且仅仅触发一次
@@ -665,5 +668,26 @@ namespace ATEYieldRateStatisticSystem
 
         }
 
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        private void readTestLogContent(object file)
+        {
+            StreamReader sr = new StreamReader((string)file);
+            string st = string.Empty;
+            while (!sr.EndOfStream)
+            {
+                st = sr.ReadLine();
+               
+            }
+            this.Invoke((EventHandler)delegate
+            {
+                updateMsg(lstStatus, st);
+            });
+            sr.Close();
+        }
     }
 }
