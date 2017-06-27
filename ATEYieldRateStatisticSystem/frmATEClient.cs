@@ -520,13 +520,8 @@ namespace ATEYieldRateStatisticSystem
                     {
                         getTestlogPathFromAutoLog(inipath);
                     }
-                });
-               
-
+                });              
             }
-
-
-
         }
 
         private void OnWatchedTestLogFileChange(object state)
@@ -545,9 +540,16 @@ namespace ATEYieldRateStatisticSystem
                     updateMsg(lstStatus, "File Change," + file + " changed");
                     //readTestLogContent(file);
                     Thread  t = new Thread(readTestLogContent);
+                    t.Name = "ReadTestLog";
                     //t.IsBackground = true;
                     t.Start(file);
                     //t.Join();
+
+                    while (t.ThreadState == System.Threading.ThreadState.Stopped )
+                    {
+                        updateMsg(lstStatus, t.Name + ",thread is complete...");
+                    }
+
                 });
 
             }
@@ -683,11 +685,50 @@ namespace ATEYieldRateStatisticSystem
                 st = sr.ReadLine();
                
             }
+            sr.Close();
             this.Invoke((EventHandler)delegate
             {
                 updateMsg(lstStatus, st);
-            });
-            sr.Close();
+                string[] temp = st.Trim().Split(' ');
+                int icount = 0;
+                ListViewItem lt = new ListViewItem();
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    if (!string.IsNullOrEmpty(temp[i].Trim()))
+                    {
+                        icount++;
+                        updateMsg(lstStatus, temp[i]);
+
+                        if (icount == 1)
+                            lt = lstviewBarcode.Items.Add(temp[i]);
+                        if (icount == 2)
+                        {
+                            
+                        }
+                        if (icount == 3)
+                        {
+                            if (temp[i] == "0000")
+                            {
+                                lt.ForeColor = Color.Green;
+                                lt.SubItems.Add("PASS");
+                                //p.SetListItemFont(lt, 9);
+                            }
+                            else
+                            {
+                                lt.ForeColor = Color.Red;
+                                lt.SubItems.Add("FAIL");
+                            }
+                        }
+
+                    }
+                }
+
+               
+               
+                //lt.SubItems.Add ()
+
+
+            });        
         }
     }
 }

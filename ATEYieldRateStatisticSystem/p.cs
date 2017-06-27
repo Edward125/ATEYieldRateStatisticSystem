@@ -244,5 +244,32 @@ namespace ATEYieldRateStatisticSystem
         }
 
 
+        /// <summary>
+        /// 设置ListItem的字体大小,颜色
+        /// </summary>
+        /// <param name="li">需要设置的那一项</param>
+        /// <param name="fontSize">字体大小,如9</param>
+        public static void SetListItemFont(ListViewItem li, int fontSize)//Color fontColor)
+        {
+            System.Drawing.Font myFont;
+            string strName = "Calibri";
+            FontStyle myFontStyle;
+            int sngSize;
+            sngSize = fontSize;
+            //int intColorR = 255;
+            //int intColorG = 0;
+            //int intColorB = 0;
+            myFontStyle = FontStyle.Bold;
+            Color myColor;
+            myColor = Color.Red;
+            //myColor = fontColo
+
+            FontFamily myFontFamily;
+            myFontFamily = new FontFamily(strName);
+            myFont = new Font(myFontFamily, sngSize, myFontStyle, GraphicsUnit.Point);
+            li.Font = myFont;
+        }
+
+
     }
 }
