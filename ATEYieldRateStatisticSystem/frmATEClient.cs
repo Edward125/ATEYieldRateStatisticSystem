@@ -262,7 +262,7 @@ namespace ATEYieldRateStatisticSystem
 #if DEBUG
             p.Delay(200);
             SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
-            GetUUData("CN041D5Y7620667P0BQCA00", out rq);
+            GetUUData("CN063JCXWSC0076Q08LCA01", out rq);
             txtModel.Text = rq.Model;
             tsslModel.Text = "Model:" + rq.Model;
             txtProjectCode.Text = rq.ModelFamily;
@@ -271,6 +271,23 @@ namespace ATEYieldRateStatisticSystem
             tsslMO.Text = "MO:" + rq.MO;
             txtUPN.Text = rq.UPN;
             tsslUPN.Text = "UPN:" + rq.UPN;
+
+            //
+            string result, bara, barb;
+            result = bara = barb = "";
+
+            getLinkUsn("CN0RY2Y1WSC0076Q0DTIA01", out result, out bara, out barb);
+            updateMsg(lstStatus, "result:" + result);
+            updateMsg(lstStatus, "bara:" + bara);
+            updateMsg(lstStatus, "barb:" + barb);
+
+            result = bara = barb = "";
+            getLinkUsn("CN063JCXWSC0076Q08LCA00", out result, out bara, out barb);
+            updateMsg(lstStatus, "result:" + result);
+            updateMsg(lstStatus, "bara:" + bara);
+            updateMsg(lstStatus, "barb:" + barb);
+
+
 #endif
            
         }
@@ -759,10 +776,39 @@ namespace ATEYieldRateStatisticSystem
                             testresult = "FAIL";
 
                     }
-
+                    if (icount == 4)
+         
+                        testtime = temp[i];
                 }
             }
 
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usn"></param>
+        /// <param name="result"></param>
+        /// <param name="bara"></param>
+        /// <param name="barb"></param>
+        private void getLinkUsn(string usn,out string result,out string bara,out string barb)
+        {
+            result  = bara = barb = "";
+            string[] bar = ws.GetLinkUSN(usn, ref result);
+            
+            if (result == "OK")
+            {
+                if (bar.Length == 2)
+                {
+                    bara = bar[0];
+                    barb = bar[1];
+                }
+
+                if (bar .Length == 1)
+                    bara =bar [0];
+            }
+          
         }
     }
 }

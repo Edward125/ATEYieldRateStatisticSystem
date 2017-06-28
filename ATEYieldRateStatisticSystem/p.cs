@@ -26,7 +26,7 @@ namespace ATEYieldRateStatisticSystem
         public static string TestlogPath = string.Empty;
         public static string PassFlag = "0000";//default
         public static string FileFrontFlag = "log";
-        public static string FaonFaoffBase = "0";//default 
+        public static string FaonFaoffBase = "1";//default 
         // public static string StartEndTime = "1";//default
         public static string FileExtension = ".log";//default
         public static StartEndTimeType StartEndTime = StartEndTimeType.Day830;
