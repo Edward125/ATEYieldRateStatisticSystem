@@ -545,7 +545,7 @@ namespace ATEYieldRateStatisticSystem
                     t.Start(file);
                     //t.Join();
 
-                    updateMsg(lstStatus, t.Name + ",start...");
+                    //updateMsg(lstStatus, t.Name + ",start...");
 
                 });
 
@@ -637,10 +637,15 @@ namespace ATEYieldRateStatisticSystem
             listview.AutoArrange = true;
             listview.GridLines = true;
             listview.FullRowSelect = true;
-            listview.Columns.Add("USN", 200, HorizontalAlignment.Center);
+            //listview.Columns.Add("ID", 30, HorizontalAlignment.Center);
+            //listview.Columns.Add("Plant", 50, HorizontalAlignment.Center);
+            listview.Columns.Add("USN", 160, HorizontalAlignment.Center);
+            listview.Columns.Add("Model", 80, HorizontalAlignment.Center);
+            listview.Columns.Add("MO", 80, HorizontalAlignment.Center);
             listview.Columns.Add ("TestResult",80,HorizontalAlignment.Center);
-            listview.Columns.Add("Stage", 80,HorizontalAlignment.Center);
-            listview.Columns.Add("Upload", 80, HorizontalAlignment.Center);
+            listview.Columns.Add("TestTime", 80, HorizontalAlignment.Center);
+            listview.Columns.Add("1stPass", 80,HorizontalAlignment.Center);
+            listview.Columns.Add("UploadFlag", 80, HorizontalAlignment.Center);
 
         }
 
@@ -679,54 +684,85 @@ namespace ATEYieldRateStatisticSystem
             string st = string.Empty;
             while (!sr.EndOfStream)
             {
-                st = sr.ReadLine();
-               
+                st = sr.ReadLine();               
             }
             sr.Close();
             this.Invoke((EventHandler)delegate
             {
                 updateMsg(lstStatus, st);
-                string[] temp = st.Trim().Split(' ');
-                int icount = 0;
+                string usn, testresult, testtime, firstpass;
+                usn = testresult = testtime = firstpass = string.Empty;
+                dealWithTestLogContent(st, out usn, out testresult, out firstpass, out testtime);
+                SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
+                GetUUData(usn, out rq);
                 ListViewItem lt = new ListViewItem();
-                for (int i = 0; i < temp.Length; i++)
-                {
-                    if (!string.IsNullOrEmpty(temp[i].Trim()))
-                    {
-                        icount++;
-                        updateMsg(lstStatus, temp[i]);
+                lt = lstviewBarcode.Items.Add(usn);
+                lt.SubItems.Add(rq.Model);
+                lt.SubItems.Add(rq.MO);
+                if (testresult == "PASS")     
+                    lt.ForeColor = Color.Green;
+                if (testresult == "FAIL")
+                    lt.ForeColor = Color.Red;
+                lt.SubItems.Add(testresult);
+                lt.SubItems.Add(testtime);
+                lt.SubItems.Add(firstpass);
 
-                        if (icount == 1)
-                            lt = lstviewBarcode.Items.Add(temp[i]);
-                        if (icount == 2)
-                        {
-                            
-                        }
-                        if (icount == 3)
-                        {
-                            if (temp[i] == "0000")
-                            {
-                                p.Delay(1000);
-                                lt.ForeColor = Color.Green;
-                                lt.SubItems.Add("PASS");
-                                //p.SetListItemFont(lt, 9);
-                            }
-                            else
-                            {
-                                lt.ForeColor = Color.Red;
-                                lt.SubItems.Add("FAIL");
-                            }
-                        }
-
-                    }
-                }
-
-               
-               
+                txtModel.Text = rq.Model;
+                tsslModel.Text = "Model:" + rq.Model;
+                txtProjectCode.Text = rq.ModelFamily;
+                tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
+                txtMO.Text = rq.MO;
+                tsslMO.Text = "MO:" + rq.MO;
+                txtUPN.Text = rq.UPN;
+                tsslUPN.Text = "UPN:" + rq.UPN;
                 //lt.SubItems.Add ()
 
 
             });        
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loglinestring"></param>
+        /// <param name="usn"></param>
+        /// <param name="testresult"></param>
+        /// <param name="firstpass"></param>
+        /// <param name="testtime"></param>
+        private void dealWithTestLogContent(string loglinestring, out string usn, out string testresult, out string firstpass, out string testtime)
+        {
+            usn = testresult = firstpass = testtime = string.Empty;
+            string[] temp = loglinestring .Trim().Split(' ');
+            int icount = 0;
+            ListViewItem lt = new ListViewItem();
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(temp[i].Trim()))
+                {
+                    icount++;
+                    //updateMsg(lstStatus, temp[i]);
+
+                    if (icount == 1)
+                        usn = temp[i];
+                    if (icount == 2)
+                    {
+                        if (temp[i] == p.FaonFaoffBase)
+                            firstpass = "YES";
+                        else
+                            firstpass = "NO";
+                    }
+                    if (icount == 3)
+                    {
+                        if (temp[i] == p.PassFlag  )
+                            testresult = "PASS";       
+                        else
+                            testresult = "FAIL";
+
+                    }
+
+                }
+            }
+
         }
     }
 }
