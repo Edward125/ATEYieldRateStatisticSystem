@@ -93,6 +93,7 @@ namespace ATEYieldRateStatisticSystem
         private void frmATEClient_Load(object sender, EventArgs e)
         {
             loadUI();
+            PressStartButton();
         }
 
         /// <summary>
@@ -232,32 +233,9 @@ namespace ATEYieldRateStatisticSystem
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-
-
-            
-            if (string.IsNullOrEmpty(p.TestlogPath.Trim()))
-            {
-                MessageBox.Show("TestlogPath can't be empty,press'Setting' to set the config...", "TestlogPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                updateMsg(lstStatus, "Error:TestlogPath can't be empty,press'Setting' to set the config...");
-                txtTestlogPath.SelectAll();
-                txtTestlogPath.Focus();
+            if (!PressStartButton()) 
                 return;
-            }
-            if (!Directory.Exists(p.TestlogPath.Trim()))
-            {
-                MessageBox.Show("TestlogPath is not exist,pls check...", "TestlogPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                updateMsg(lstStatus, "Error:TestlogPath is not exist,pls check...");
-                txtTestlogPath.SelectAll();
-                txtTestlogPath.Focus();
-                return;
-            }
-            if (!File.Exists(p.AutoLookLogPath.Trim () + @"\Path.ini"))
-            {
-                updateMsg(lstStatus, "Warning:Not find 'path.ini',can't dynamic wather testlog folder change...");
-                updateMsg(lstStatus, "Warning:plsese check the folder:" + p.AutoLookLogPath );
-            }
-            if (!bgwWebService.IsBusy)
-               bgwWebService.RunWorkerAsync();
+           
 
 #if DEBUG
             //string file1 = @"D:\Edward\ATEYieldRateStatisticSystem\log_140517.log";
@@ -296,6 +274,37 @@ namespace ATEYieldRateStatisticSystem
 #endif
            
         }
+
+
+        private bool PressStartButton()
+        {
+            if (string.IsNullOrEmpty(p.TestlogPath.Trim()))
+            {
+                MessageBox.Show("TestlogPath can't be empty,press'Setting' to set the config...", "TestlogPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                updateMsg(lstStatus, "Error:TestlogPath can't be empty,press'Setting' to set the config...");
+                txtTestlogPath.SelectAll();
+                txtTestlogPath.Focus();
+                return false;
+            }
+            if (!Directory.Exists(p.TestlogPath.Trim()))
+            {
+                MessageBox.Show("TestlogPath is not exist,pls check...", "TestlogPath Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                updateMsg(lstStatus, "Error:TestlogPath is not exist,pls check...");
+                txtTestlogPath.SelectAll();
+                txtTestlogPath.Focus();
+                return false;
+            }
+            if (!File.Exists(p.AutoLookLogPath.Trim() + @"\Path.ini"))
+            {
+                updateMsg(lstStatus, "Warning:Not find 'path.ini',can't dynamic wather testlog folder change...");
+                updateMsg(lstStatus, "Warning:plsese check the folder:" + p.AutoLookLogPath);
+            }
+            if (!bgwWebService.IsBusy)
+                bgwWebService.RunWorkerAsync();
+
+            return true;
+        }
+
 
         /// <summary>
         /// 檢測WebService的可連通性,可連通返回true，不可連通，返回false
@@ -827,7 +836,7 @@ namespace ATEYieldRateStatisticSystem
                                 lt.SubItems.Add(testtime);
                                 lt.SubItems.Add(firstpass);
                             }
-                            //                           
+                            //                          
 
                             txtModel.Text = rq.Model;
                             tsslModel.Text = "Model:" + rq.Model;
