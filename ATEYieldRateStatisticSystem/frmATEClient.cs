@@ -712,12 +712,12 @@ namespace ATEYieldRateStatisticSystem
 
             string[] temp = File.ReadAllLines((string)file);
             int _lastline = -1; //获取实际最后一行,防止文本最后有空格
-            string st = string.Empty;
+            string lastlinestr = string.Empty;
             for (int i = temp.Length-1; i>0 ; i--)
             {
                 if (!string.IsNullOrEmpty(temp[i]))
                 {
-                    st = temp[i];
+                    lastlinestr = temp[i];
                     _lastline = i;      
                     break;
                 }               
@@ -726,31 +726,148 @@ namespace ATEYieldRateStatisticSystem
             this.Invoke((EventHandler)delegate
             {
                 //updateMsg(lstStatus, st);
-                string usn, testresult, testtime, firstpass;
-                usn = testresult = testtime = firstpass = string.Empty;
-                dealWithTestLogContent(st, out usn, out testresult, out firstpass, out testtime);
-                SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
-                GetUUData(usn, out rq);
-                ListViewItem lt = new ListViewItem();
-                lt = lstviewBarcode.Items.Add(usn);
-                lt.SubItems.Add(rq.Model);
-                lt.SubItems.Add(rq.MO);
-                if (testresult == "PASS")     
-                    lt.ForeColor = Color.Green;
-                if (testresult == "FAIL")
-                    lt.ForeColor = Color.Red;
-                lt.SubItems.Add(testresult);
-                lt.SubItems.Add(testtime);
-                lt.SubItems.Add(firstpass);
+                string usn, testresult, testtime, firstpass, getlinkresult;
+                usn = testresult = testtime = firstpass =getlinkresult = string.Empty;
+                dealWithTestLogContent(lastlinestr, out usn, out testresult, out firstpass, out testtime);
+                Barcode lastlinebar = new Barcode();
+                getLinkUsn(usn, out getlinkresult, out lastlinebar);
+                if (getlinkresult == "OK")
+                {
+                    //判断是单板还是双板
+                    if (lastlinebar.BarType == p.BoardType.Single) //单板
+                    {
+                        SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
+                        GetUUData(usn, out rq);
+                        //
+                        ListViewItem lt = new ListViewItem();
+                        lt = lstviewBarcode.Items.Add(usn);
+                        lt.SubItems.Add(rq.Model);
+                        lt.SubItems.Add(rq.MO);
+                        if (testresult == "PASS")
+                            lt.ForeColor = Color.Green;
+                        if (testresult == "FAIL")
+                            lt.ForeColor = Color.Red;
+                        lt.SubItems.Add(testresult);
+                        lt.SubItems.Add(testtime);
+                        lt.SubItems.Add(firstpass);
 
-                txtModel.Text = rq.Model;
-                tsslModel.Text = "Model:" + rq.Model;
-                txtProjectCode.Text = rq.ModelFamily;
-                tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
-                txtMO.Text = rq.MO;
-                tsslMO.Text = "MO:" + rq.MO;
-                txtUPN.Text = rq.UPN;
-                tsslUPN.Text = "UPN:" + rq.UPN;
+                        txtModel.Text = rq.Model;
+                        tsslModel.Text = "Model:" + rq.Model;
+                        txtProjectCode.Text = rq.ModelFamily;
+                        tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
+                        txtMO.Text = rq.MO;
+                        tsslMO.Text = "MO:" + rq.MO;
+                        txtUPN.Text = rq.UPN;
+                        tsslUPN.Text = "UPN:" + rq.UPN;
+                    }
+
+                    if (lastlinebar.BarType == p.BoardType.Panel)
+                    {
+                        //先查询单板
+                        if (usn == lastlinebar.BarA)
+                        {
+                            SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
+                            GetUUData(usn, out rq);
+                            if (testresult == "FAIL")
+                            {
+                                ListViewItem lt = new ListViewItem();
+                                lt = lstviewBarcode.Items.Add(usn);
+                                lt.SubItems.Add(rq.Model);
+                                lt.SubItems.Add(rq.MO);
+                                if (testresult == "PASS")
+                                    lt.ForeColor = Color.Green;
+                                if (testresult == "FAIL")
+                                    lt.ForeColor = Color.Red;
+                                lt.SubItems.Add(testresult);
+                                lt.SubItems.Add(testtime);
+                                lt.SubItems.Add(firstpass);
+                            }
+                            else //"PASS"
+                            {
+                                dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
+                                //
+                                ListViewItem lt = new ListViewItem();
+                                lt = lstviewBarcode.Items.Add(lastlinebar.BarB);
+                                lt.SubItems.Add(rq.Model);
+                                lt.SubItems.Add(rq.MO);
+                                if (testresult == "PASS")
+                                    lt.ForeColor = Color.Green;
+                                if (testresult == "FAIL")
+                                    lt.ForeColor = Color.Red;
+                                lt.SubItems.Add(testresult);
+                                lt.SubItems.Add(testtime);
+                                lt.SubItems.Add(firstpass);
+                            }
+                            //                           
+
+                            txtModel.Text = rq.Model;
+                            tsslModel.Text = "Model:" + rq.Model;
+                            txtProjectCode.Text = rq.ModelFamily;
+                            tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
+                            txtMO.Text = rq.MO;
+                            tsslMO.Text = "MO:" + rq.MO;
+                            txtUPN.Text = rq.UPN;
+                            tsslUPN.Text = "UPN:" + rq.UPN;
+
+                            //
+                                               
+                        }
+
+                        if (usn == lastlinebar.BarB)
+                        {
+                            SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
+                            GetUUData(usn, out rq);
+
+                            if (testresult == "FAIL")
+                            {
+                                ListViewItem lt = new ListViewItem();
+                                lt = lstviewBarcode.Items.Add(usn);
+                                lt.SubItems.Add(rq.Model);
+                                lt.SubItems.Add(rq.MO);
+                                if (testresult == "PASS")
+                                    lt.ForeColor = Color.Green;
+                                if (testresult == "FAIL")
+                                    lt.ForeColor = Color.Red;
+                                lt.SubItems.Add(testresult);
+                                lt.SubItems.Add(testtime);
+                                lt.SubItems.Add(firstpass);
+                            }
+                            else //PASS
+                            {
+                                dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
+
+                                updateMsg(lstStatus, temp[_lastline - 1]);
+                                //
+                                ListViewItem lt = new ListViewItem();
+                                lt = lstviewBarcode.Items.Add(lastlinebar.BarA);
+                                lt.SubItems.Add(rq.Model);
+                                lt.SubItems.Add(rq.MO);
+                                if (testresult == "PASS")
+                                    lt.ForeColor = Color.Green;
+                                if (testresult == "FAIL")
+                                    lt.ForeColor = Color.Red;
+                                lt.SubItems.Add(testresult);
+                                lt.SubItems.Add(testtime);
+                                lt.SubItems.Add(firstpass);
+                            }
+
+                            txtModel.Text = rq.Model;
+                            tsslModel.Text = "Model:" + rq.Model;
+                            txtProjectCode.Text = rq.ModelFamily;
+                            tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
+                            txtMO.Text = rq.MO;
+                            tsslMO.Text = "MO:" + rq.MO;
+                            txtUPN.Text = rq.UPN;
+                            tsslUPN.Text = "UPN:" + rq.UPN;
+                        }
+                    }
+                }
+                else
+                {
+                    updateMsg(lstStatus, getlinkresult);
+                    return;
+                }
+
                 //lt.SubItems.Add ()
 
 
