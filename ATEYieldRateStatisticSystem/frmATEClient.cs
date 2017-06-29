@@ -725,7 +725,9 @@ namespace ATEYieldRateStatisticSystem
             
             this.Invoke((EventHandler)delegate
             {
-                //updateMsg(lstStatus, st);
+#if DEBUG
+                updateMsg(lstStatus, lastlinestr);
+#endif
                 string usn, testresult, testtime, firstpass, getlinkresult;
                 usn = testresult = testtime = firstpass =getlinkresult = string.Empty;
                 dealWithTestLogContent(lastlinestr, out usn, out testresult, out firstpass, out testtime);
@@ -771,7 +773,12 @@ namespace ATEYieldRateStatisticSystem
                             if (testresult == "FAIL")
                             {
                                 ListViewItem lt = new ListViewItem();
+#if DEBUG
+                                lt = lstviewBarcode.Items.Add(usn+"-A");
+#else
                                 lt = lstviewBarcode.Items.Add(usn);
+#endif
+
                                 lt.SubItems.Add(rq.Model);
                                 lt.SubItems.Add(rq.MO);
                                 if (testresult == "PASS")
@@ -784,10 +791,32 @@ namespace ATEYieldRateStatisticSystem
                             }
                             else //"PASS"
                             {
+
+                                ListViewItem lt = new ListViewItem();
+#if DEBUG
+                                lt = lstviewBarcode.Items.Add(usn + "-A");
+#else
+                                lt = lstviewBarcode.Items.Add(usn);
+#endif
+                                lt.SubItems.Add(rq.Model);
+                                lt.SubItems.Add(rq.MO);
+                                if (testresult == "PASS")
+                                    lt.ForeColor = Color.Green;
+                                if (testresult == "FAIL")
+                                    lt.ForeColor = Color.Red;
+                                lt.SubItems.Add(testresult);
+                                lt.SubItems.Add(testtime);
+                                lt.SubItems.Add(firstpass);
+
                                 dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
                                 //
-                                ListViewItem lt = new ListViewItem();
-                                lt = lstviewBarcode.Items.Add(lastlinebar.BarB);
+                                lt = new ListViewItem();
+#if DEBUG
+                                lt = lstviewBarcode.Items.Add(lastlinebar.BarB + "-B");
+#else
+                                 lt = lstviewBarcode.Items.Add(lastlinebar.BarB);
+#endif
+                                
                                 lt.SubItems.Add(rq.Model);
                                 lt.SubItems.Add(rq.MO);
                                 if (testresult == "PASS")
@@ -821,7 +850,12 @@ namespace ATEYieldRateStatisticSystem
                             if (testresult == "FAIL")
                             {
                                 ListViewItem lt = new ListViewItem();
+#if DEBUG
+                                lt = lstviewBarcode.Items.Add(usn + "-B");
+#else
                                 lt = lstviewBarcode.Items.Add(usn);
+#endif
+
                                 lt.SubItems.Add(rq.Model);
                                 lt.SubItems.Add(rq.MO);
                                 if (testresult == "PASS")
@@ -834,12 +868,20 @@ namespace ATEYieldRateStatisticSystem
                             }
                             else //PASS
                             {
-                                dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
 
-                                updateMsg(lstStatus, temp[_lastline - 1]);
-                                //
                                 ListViewItem lt = new ListViewItem();
-                                lt = lstviewBarcode.Items.Add(lastlinebar.BarA);
+                                //处理A
+                                dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
+#if DEBUG
+                                updateMsg(lstStatus, temp[_lastline - 1]);
+#endif
+                                //
+                                lt = new ListViewItem();
+#if DEBUG
+                                lt = lstviewBarcode.Items.Add(usn+ "-A");
+#else
+                                lt = lstviewBarcode.Items.Add(usn);
+#endif
                                 lt.SubItems.Add(rq.Model);
                                 lt.SubItems.Add(rq.MO);
                                 if (testresult == "PASS")
@@ -849,6 +891,26 @@ namespace ATEYieldRateStatisticSystem
                                 lt.SubItems.Add(testresult);
                                 lt.SubItems.Add(testtime);
                                 lt.SubItems.Add(firstpass);
+                                //处理B
+                                dealWithTestLogContent(lastlinestr, out usn, out testresult, out firstpass, out testtime);
+
+#if DEBUG
+                                lt = lstviewBarcode.Items.Add(lastlinebar.BarB  + "-B");
+#else
+                                lt = lstviewBarcode.Items.Add(usn); 
+#endif
+                                
+                                lt.SubItems.Add(rq.Model);
+                                lt.SubItems.Add(rq.MO);
+                                if (testresult == "PASS")
+                                    lt.ForeColor = Color.Green;
+                                if (testresult == "FAIL")
+                                    lt.ForeColor = Color.Red;
+                                lt.SubItems.Add(testresult);
+                                lt.SubItems.Add(testtime);
+                                lt.SubItems.Add(firstpass);
+
+
                             }
 
                             txtModel.Text = rq.Model;
@@ -966,6 +1028,14 @@ namespace ATEYieldRateStatisticSystem
                     _bar.BarA  = bar[0];
                     _bar.BarB = bar[1];
                     _bar.BarType = p.BoardType.Panel;
+
+
+#if DEBUG
+                    updateMsg(lstStatus, "BarA:" + _bar.BarA);
+                    updateMsg(lstStatus, "BarB:" + _bar.BarB);
+#endif
+
+
                 }
 
                 if (bar.Length == 1)
