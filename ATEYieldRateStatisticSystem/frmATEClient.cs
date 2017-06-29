@@ -24,7 +24,7 @@ namespace ATEYieldRateStatisticSystem
             skinEngine1.SkinFile =p.AppFolder + @"\MacOS.ssk";
         }
 
-        SFCS_ws.WebService ws = new SFCS_ws.WebService();
+        public  SFCS_ws.WebService ws = new SFCS_ws.WebService();
 
         bool _connnectWebservice = false; //connect web service result,success=true;fail = false;
 
@@ -811,11 +811,12 @@ namespace ATEYieldRateStatisticSystem
         /// <param name="result"></param>
         /// <param name="bara"></param>
         /// <param name="barb"></param>
-        private void getLinkUsn(string usn,out string result,out string bara,out string barb)
+        private void getLinkUsn(string usn, out string result, out string bara, out string barb)
         {
-            result  = bara = barb = "";
+            result = bara = barb = "";
+
             string[] bar = ws.GetLinkUSN(usn, ref result);
-            
+
             if (result == "OK")
             {
                 if (bar.Length == 2)
@@ -824,10 +825,44 @@ namespace ATEYieldRateStatisticSystem
                     barb = bar[1];
                 }
 
-                if (bar .Length == 1)
-                    bara =bar [0];
+                if (bar.Length == 1)
+                    bara = bar[0];
             }
-          
+
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usn"></param>
+        /// <param name="result"></param>
+        /// <param name="_bar"></param>
+        private void getLinkUsn(string usn, out string result, out Barcode _bar)
+        {
+            result ="";
+            _bar = new Barcode();
+            string[] bar = ws.GetLinkUSN(usn, ref result);
+            if (result == "OK")
+            {
+                if (bar.Length == 2)
+                {
+                    _bar.BarA  = bar[0];
+                    _bar.BarB = bar[1];
+                    _bar.BarType = p.BoardType.Panel;
+                }
+
+                if (bar.Length == 1)
+                {
+                    _bar.BarType = p.BoardType.Single;
+                    _bar.BarA = bar[0];
+                    _bar.BarB = string.Empty;
+                }
+            }
+
+        }
+       
     }
+
+
+        
 }

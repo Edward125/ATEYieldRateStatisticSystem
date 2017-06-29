@@ -79,6 +79,13 @@ namespace ATEYieldRateStatisticSystem
             BarcodeUploadLog  //检测到上抛未成功,手动上抛的log
         }
 
+      public  enum BoardType
+       {
+           Single,
+           Panel
+       }
+
+
 
         #endregion
 
