@@ -260,6 +260,11 @@ namespace ATEYieldRateStatisticSystem
                bgwWebService.RunWorkerAsync();
 
 #if DEBUG
+            //string file1 = @"D:\Edward\ATEYieldRateStatisticSystem\log_140517.log";
+            //string[] temp = File.ReadAllLines(file1);
+            //MessageBox.Show(temp[temp.Length - 1]);
+
+            return;
             p.Delay(200);
             SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
             GetUUData("CN063JCXWSC0076Q08LCA01", out rq);
@@ -697,16 +702,30 @@ namespace ATEYieldRateStatisticSystem
         /// <param name="file"></param>
         private void readTestLogContent(object file)
         {
-            StreamReader sr = new StreamReader((string)file);
+            //StreamReader sr = new StreamReader((string)file);
+            //string st = string.Empty;
+            //while (!sr.EndOfStream)
+            //{
+            //    st = sr.ReadLine();
+            //}
+            //sr.Close();
+
+            string[] temp = File.ReadAllLines((string)file);
+            int _lastline = -1; //获取实际最后一行,防止文本最后有空格
             string st = string.Empty;
-            while (!sr.EndOfStream)
+            for (int i = temp.Length-1; i>0 ; i--)
             {
-                st = sr.ReadLine();               
+                if (!string.IsNullOrEmpty(temp[i]))
+                {
+                    st = temp[i];
+                    _lastline = i;      
+                    break;
+                }               
             }
-            sr.Close();
+            
             this.Invoke((EventHandler)delegate
             {
-                updateMsg(lstStatus, st);
+                //updateMsg(lstStatus, st);
                 string usn, testresult, testtime, firstpass;
                 usn = testresult = testtime = firstpass = string.Empty;
                 dealWithTestLogContent(st, out usn, out testresult, out firstpass, out testtime);
