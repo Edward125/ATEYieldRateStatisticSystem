@@ -129,6 +129,8 @@ namespace ATEYieldRateStatisticSystem
             tsslStartTime.Text = "StartTime:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ",";
 
             //lblModelFPY.ForeColor = Color.Red;
+            //
+            p.InitATEStageInfo();
         }
 
         private void btnSetting_Click(object sender, EventArgs e)
@@ -164,8 +166,7 @@ namespace ATEYieldRateStatisticSystem
         }
 
         private void getTestlogPathFromAutoLog(string inipath)
-        {
-           
+        {          
   
                 string line = string.Empty;
                 string boardpath = string.Empty;
@@ -233,11 +234,27 @@ namespace ATEYieldRateStatisticSystem
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            if (!PressStartButton()) 
-                return;
-           
 
+            if (!PressStartButton())
+                return;
 #if DEBUG
+            return;
+            string message = @"SFCF00002: Route error, Please go to PA - PACKING";
+            message = @"SFCF01434: Unit: CN0HWGWKWSC007750NASA01 already StoreIn!";
+            string stage = p.GetStage(message);
+            updateMsg(lstStatus, message + "-->" + stage);
+            foreach (var item in p.ATEAfterStage )
+            {
+                updateMsg(lstStatus, item.StageName + ":" + item.StageValue);
+                if (stage == item.StageName)
+                {
+                    MessageBox.Show("Stage:" + stage + "," + item.StageValue);
+                    break;
+                }
+            }
+
+
+
             //string file1 = @"D:\Edward\ATEYieldRateStatisticSystem\log_140517.log";
             //string[] temp = File.ReadAllLines(file1);
             //MessageBox.Show(temp[temp.Length - 1]);
@@ -272,7 +289,7 @@ namespace ATEYieldRateStatisticSystem
 
 
 #endif
-           
+          
         }
 
 
@@ -412,7 +429,7 @@ namespace ATEYieldRateStatisticSystem
         /// <param name="usn">條碼</param>
         /// <param name="stage">站別</param>
         /// <returns>在當前站別為true，不在當前站別為false</returns>
-        private bool checkStage(string usn, string stage)
+        private bool checkSFCSStage(string usn, string stage)
         {
             //  checkWebService(web_Site);
 
@@ -444,6 +461,57 @@ namespace ATEYieldRateStatisticSystem
         }
 
 
+        /// <summary>
+        /// 檢查USN站別是否在當前站別,在為true，不在為false
+        /// </summary>
+        /// <param name="usn">條碼</param>
+        /// <param name="stage">站別</param>
+        /// <returns>在當前站別為true，不在當前站別為false</returns>
+        private bool checkSFCSStage(string usn, string stage,out string sfcsresult)
+        {
+            //  checkWebService(web_Site);
+
+            sfcsresult = string.Empty;
+
+            Stopwatch sw = new Stopwatch();
+            TimeSpan ts = new TimeSpan();
+            sw.Start();
+            //SubFunction.updateMessage(lstStatusCommand, "SFCS:" + usn + ",Stage:" + stage);
+            updateMsg(lstStatus, "SFCS:" + usn + ",Stage:" + stage);
+            // SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "SFCS:" + usn + ",Stage:" + stage);
+            string result = ws.CheckRoute(usn, stage);
+            sw.Stop();
+            ts = sw.Elapsed;
+            if (result.ToUpper() == "OK")
+            {
+                // SubFunction.updateMessage(lstStatusCommand, result + "Used time(ms):" + ts.Milliseconds);
+                updateMsg(lstStatus, result + "Used time(ms):" + ts.Milliseconds);
+                sfcsresult = result;
+                //  SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "usn:" + usn + "->" + stage);
+
+                return true;
+            }
+            else
+            {
+                // SubFunction.updateMessage(lstStatusCommand, result + "Used time(ms):" + ts.Milliseconds);
+                updateMsg(lstStatus, result + "Used time(ms):" + ts.Milliseconds);
+                //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), result + "Used time(ms):" + ts.Milliseconds);
+                // SubFunction.saveLog(Param.logType.SYSLOG.ToString(), result + "Used time(ms):" + ts.Milliseconds);
+                sfcsresult = result;
+                return false;
+            }
+        }
+
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usn"></param>
+        /// <param name="_rqd"></param>
+        /// <returns></returns>
         private bool GetUUData(string usn, out SFCS_ws.clsRequestData _rqd)
         {
             _rqd = new SFCS_ws.clsRequestData();
@@ -671,6 +739,7 @@ namespace ATEYieldRateStatisticSystem
             //listview.Columns.Add("ID", 30, HorizontalAlignment.Center);
             //listview.Columns.Add("Plant", 50, HorizontalAlignment.Center);
             listview.Columns.Add("USN", 160, HorizontalAlignment.Center);
+            listview.Columns.Add("SEQ", 30, HorizontalAlignment.Center);
             listview.Columns.Add("Model", 80, HorizontalAlignment.Center);
             listview.Columns.Add("MO", 80, HorizontalAlignment.Center);
             listview.Columns.Add ("TestResult",80,HorizontalAlignment.Center);
@@ -744,118 +813,122 @@ namespace ATEYieldRateStatisticSystem
                 getLinkUsn(usn, out getlinkresult, out lastlinebar);
                 if (getlinkresult == "OK")
                 {
+
+                    SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
+                    GetUUData(usn, out rq);
+
                     //判断是单板还是双板
                     if (lastlinebar.BarType == p.BoardType.Single) //单板
                     {
-                        SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
-                        GetUUData(usn, out rq);
+                        //SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
+                        //GetUUData(usn, out rq);
                         //
                         ListViewItem lt = new ListViewItem();
                         lt = lstviewBarcode.Items.Add(usn);
+                        lt.SubItems.Add("A");
                         lt.SubItems.Add(rq.Model);
                         lt.SubItems.Add(rq.MO);
                         if (testresult == "PASS")
+                        {
                             lt.ForeColor = Color.Green;
+                            //check stage
+                            string sfcsresult = string.Empty;//check stage sfcs result
+                            if (!checkSFCSStage(usn, p.ATEStage.StageName, out sfcsresult))
+                            {
+                                string _stage = p.GetStage(sfcsresult);
+                                if (_stage == p.ATEStage.StageName)
+                                {
+                                    //
+                                    //add upload stage
+                                    updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                }
+
+                            }        
+                            
+                        }
                         if (testresult == "FAIL")
                             lt.ForeColor = Color.Red;
                         lt.SubItems.Add(testresult);
                         lt.SubItems.Add(testtime);
                         lt.SubItems.Add(firstpass);
-
-                        txtModel.Text = rq.Model;
-                        tsslModel.Text = "Model:" + rq.Model;
-                        txtProjectCode.Text = rq.ModelFamily;
-                        tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
-                        txtMO.Text = rq.MO;
-                        tsslMO.Text = "MO:" + rq.MO;
-                        txtUPN.Text = rq.UPN;
-                        tsslUPN.Text = "UPN:" + rq.UPN;
+                       
                     }
 
                     if (lastlinebar.BarType == p.BoardType.Panel)
                     {
-                        //先查询单板
+                        ////先获取机种信息,无论单双板,机种信息是一样的
+                        //SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
+                        //GetUUData(usn, out rq);
                         if (usn == lastlinebar.BarA)
                         {
-                            SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
-                            GetUUData(usn, out rq);
-                            if (testresult == "FAIL")
-                            {
-                                ListViewItem lt = new ListViewItem();
+                            ListViewItem lt = new ListViewItem();
 #if DEBUG
-                                lt = lstviewBarcode.Items.Add(usn+"-A");
+                            lt = lstviewBarcode.Items.Add(usn+"-A");
 #else
-                                lt = lstviewBarcode.Items.Add(usn);
+                            lt = lstviewBarcode.Items.Add(usn);                           
 #endif
-
-                                lt.SubItems.Add(rq.Model);
-                                lt.SubItems.Add(rq.MO);
-                                if (testresult == "PASS")
-                                    lt.ForeColor = Color.Green;
-                                if (testresult == "FAIL")
-                                    lt.ForeColor = Color.Red;
-                                lt.SubItems.Add(testresult);
-                                lt.SubItems.Add(testtime);
-                                lt.SubItems.Add(firstpass);
+                            lt.SubItems.Add("A");
+                            lt.SubItems.Add(rq.Model);
+                            lt.SubItems.Add(rq.MO);
+                            if (testresult == "PASS")
+                            {
+                                lt.ForeColor = Color.Green;
+                                string sfcsresult = string.Empty;//check stage sfcs result
+                                if (!checkSFCSStage(usn, p.ATEStage.StageName, out sfcsresult))
+                                {
+                                    string _stage = p.GetStage(sfcsresult);
+                                    if (_stage == p.ATEStage.StageName)
+                                    {
+                                        //
+                                        //add upload stage
+                                        updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                    }
+                                }  
                             }
-                            else //"PASS"
+                            if (testresult == "FAIL")
+                                lt.ForeColor = Color.Red;
+                            lt.SubItems.Add(testresult);
+                            lt.SubItems.Add(testtime);
+                            lt.SubItems.Add(firstpass);
+
+                            if (testresult == "PASS") // PASS，才去testlog中去获取另外1个条码的信息
                             {
-
-                                ListViewItem lt = new ListViewItem();
-#if DEBUG
-                                lt = lstviewBarcode.Items.Add(usn + "-A");
-#else
-                                lt = lstviewBarcode.Items.Add(usn);
-#endif
-                                lt.SubItems.Add(rq.Model);
-                                lt.SubItems.Add(rq.MO);
-                                if (testresult == "PASS")
-                                    lt.ForeColor = Color.Green;
-                                if (testresult == "FAIL")
-                                    lt.ForeColor = Color.Red;
-                                lt.SubItems.Add(testresult);
-                                lt.SubItems.Add(testtime);
-                                lt.SubItems.Add(firstpass);
-
                                 dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
                                 //
                                 lt = new ListViewItem();
 #if DEBUG
                                 lt = lstviewBarcode.Items.Add(lastlinebar.BarB + "-B");
 #else
-                                 lt = lstviewBarcode.Items.Add(lastlinebar.BarB);
+                                lt = lstviewBarcode.Items.Add(lastlinebar.BarB);
 #endif
-                                
+                                lt.SubItems.Add("B");
                                 lt.SubItems.Add(rq.Model);
                                 lt.SubItems.Add(rq.MO);
                                 if (testresult == "PASS")
+                                {
                                     lt.ForeColor = Color.Green;
+                                    string sfcsresult = string.Empty;//check stage sfcs result
+                                    if (!checkSFCSStage(lastlinebar.BarB, p.ATEStage.StageName, out sfcsresult))
+                                    {
+                                        string _stage = p.GetStage(sfcsresult);
+                                        if (_stage == p.ATEStage.StageName)
+                                        {
+                                            //
+                                            //add upload stage
+                                            updateMsg(lstStatus, lastlinebar.BarB + " test pass,router not upload sfcs,need add...");
+                                        }
+                                    }
+                                }
                                 if (testresult == "FAIL")
                                     lt.ForeColor = Color.Red;
                                 lt.SubItems.Add(testresult);
                                 lt.SubItems.Add(testtime);
                                 lt.SubItems.Add(firstpass);
                             }
-                            //                          
 
-                            txtModel.Text = rq.Model;
-                            tsslModel.Text = "Model:" + rq.Model;
-                            txtProjectCode.Text = rq.ModelFamily;
-                            tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
-                            txtMO.Text = rq.MO;
-                            tsslMO.Text = "MO:" + rq.MO;
-                            txtUPN.Text = rq.UPN;
-                            tsslUPN.Text = "UPN:" + rq.UPN;
-
-                            //
-                                               
                         }
-
-                        if (usn == lastlinebar.BarB)
+                        else // usn = lastlinebar.BarB,需要交换顺序
                         {
-                            SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
-                            GetUUData(usn, out rq);
-
                             if (testresult == "FAIL")
                             {
                                 ListViewItem lt = new ListViewItem();
@@ -864,7 +937,7 @@ namespace ATEYieldRateStatisticSystem
 #else
                                 lt = lstviewBarcode.Items.Add(usn);
 #endif
-
+                                lt.SubItems.Add("B");
                                 lt.SubItems.Add(rq.Model);
                                 lt.SubItems.Add(rq.MO);
                                 if (testresult == "PASS")
@@ -877,9 +950,8 @@ namespace ATEYieldRateStatisticSystem
                             }
                             else //PASS
                             {
-
-                                ListViewItem lt = new ListViewItem();
-                                //处理A
+                                //先处理A
+                                ListViewItem lt = new ListViewItem();                   
                                 dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
 #if DEBUG
                                 updateMsg(lstStatus, temp[_lastline - 1]);
@@ -891,10 +963,25 @@ namespace ATEYieldRateStatisticSystem
 #else
                                 lt = lstviewBarcode.Items.Add(usn);
 #endif
+                                lt.SubItems.Add("A");
                                 lt.SubItems.Add(rq.Model);
                                 lt.SubItems.Add(rq.MO);
                                 if (testresult == "PASS")
+                                {
                                     lt.ForeColor = Color.Green;
+                                    string sfcsresult = string.Empty;//check stage sfcs result
+                                    if (!checkSFCSStage(usn, p.ATEStage.StageName, out sfcsresult))
+                                    {
+                                        string _stage = p.GetStage(sfcsresult);
+                                        if (_stage == p.ATEStage.StageName)
+                                        {
+                                            //
+                                            //add upload stage
+                                            updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                        }
+
+                                    }
+                                }
                                 if (testresult == "FAIL")
                                     lt.ForeColor = Color.Red;
                                 lt.SubItems.Add(testresult);
@@ -902,36 +989,49 @@ namespace ATEYieldRateStatisticSystem
                                 lt.SubItems.Add(firstpass);
                                 //处理B
                                 dealWithTestLogContent(lastlinestr, out usn, out testresult, out firstpass, out testtime);
-
 #if DEBUG
                                 lt = lstviewBarcode.Items.Add(lastlinebar.BarB  + "-B");
 #else
-                                lt = lstviewBarcode.Items.Add(usn); 
+                                lt = lstviewBarcode.Items.Add(lastlinebar.BarB);
 #endif
-                                
+                                lt.SubItems.Add("B");
                                 lt.SubItems.Add(rq.Model);
                                 lt.SubItems.Add(rq.MO);
                                 if (testresult == "PASS")
+                                {
                                     lt.ForeColor = Color.Green;
+                                    string sfcsresult = string.Empty;//check stage sfcs result
+                                    if (!checkSFCSStage(usn, p.ATEStage.StageName, out sfcsresult))
+                                    {
+                                        string _stage = p.GetStage(sfcsresult);
+                                        if (_stage == p.ATEStage.StageName)
+                                        {
+                                            //
+                                            //add upload stage
+                                            updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                        }
+                                    }
+                                }
                                 if (testresult == "FAIL")
                                     lt.ForeColor = Color.Red;
                                 lt.SubItems.Add(testresult);
                                 lt.SubItems.Add(testtime);
                                 lt.SubItems.Add(firstpass);
-
-
                             }
-
-                            txtModel.Text = rq.Model;
-                            tsslModel.Text = "Model:" + rq.Model;
-                            txtProjectCode.Text = rq.ModelFamily;
-                            tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
-                            txtMO.Text = rq.MO;
-                            tsslMO.Text = "MO:" + rq.MO;
-                            txtUPN.Text = rq.UPN;
-                            tsslUPN.Text = "UPN:" + rq.UPN;
                         }
                     }
+
+                    txtModel.Text = rq.Model;
+                    tsslModel.Text = "Model:" + rq.Model;
+                    txtProjectCode.Text = rq.ModelFamily;
+                    tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
+                    txtMO.Text = rq.MO;
+                    tsslMO.Text = "MO:" + rq.MO;
+                    txtUPN.Text = rq.UPN;
+                    tsslUPN.Text = "UPN:" + rq.UPN;
+
+
+
                 }
                 else
                 {
@@ -940,17 +1040,39 @@ namespace ATEYieldRateStatisticSystem
                 }
 
                 //lt.SubItems.Add ()
-
-
             });        
         }
+
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="loglinestring"></param>
-        /// <param name="usn"></param>
-        /// <param name="testresult"></param>
+        /// <param name="stagelist"></param>
+        /// <param name="_stage"></param>
+        /// <param name="stageresult"></param>
+        /// <returns></returns>
+        private bool checkATEStage(List<p.STAGE> stagelist, string _stage, out p.STAGE stageresult)
+        {
+            stageresult = new p.STAGE("");
+            foreach (var item in stagelist )
+            {
+                if (_stage == item.StageName)
+                {
+                    stageresult = item;
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loglinestring">testlog 中的一行记录</param>
+        /// <param name="usn">该行记录的USN</param>
+        /// <param name="testresult">该行记录的测试结果</param>
         /// <param name="firstpass"></param>
         /// <param name="testtime"></param>
         private void dealWithTestLogContent(string loglinestring, out string usn, out string testresult, out string firstpass, out string testtime)

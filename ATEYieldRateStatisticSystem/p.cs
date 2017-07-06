@@ -340,7 +340,7 @@ namespace ATEYieldRateStatisticSystem
         /// <summary>
         /// 
         /// </summary>
-        private void InitATEStageInfo()
+        public static  void InitATEStageInfo()
         {
             //AA
            AA.StageValue = @"SMT_input(BOT)";
@@ -470,6 +470,7 @@ namespace ATEYieldRateStatisticSystem
           ATEAfterStage.Add(IC);
           ATEAfterStage.Add(QD);
           ATEAfterStage.Add(PA);
+          ATEAfterStage.Add(ZM);
 
             //
            ATEOtherStage.Add(AO);
@@ -517,7 +518,7 @@ namespace ATEYieldRateStatisticSystem
            ATEOtherStage.Add(TJ);
            ATEOtherStage.Add(TY);
            ATEOtherStage.Add(ZL);
-           ATEOtherStage.Add(ZM);
+          // ATEOtherStage.Add(ZM);
         }
         
 
@@ -591,7 +592,38 @@ namespace ATEYieldRateStatisticSystem
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sfcsresult"></param>
+        /// <returns></returns>
+        public static string  GetStage(string sfcsresult)
+        {
+            string _stage = string.Empty;
+            if (!string.IsNullOrEmpty(sfcsresult))
+            {
+                if (sfcsresult.ToLower().Contains(@"already StoreIn".ToLower()))
+                    _stage = "ZM";
+                else
+                {
+                    string[] s = sfcsresult.Split(' ');
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        if (s[i].ToLower().Trim() == "to")
+                        {
+                            _stage = s[i + 1];
+                            break;
+                        }
+                    }
+                }               
+            }
+            return _stage;
+        }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public class STAGE
         {
             //private readonly string _name = "";
