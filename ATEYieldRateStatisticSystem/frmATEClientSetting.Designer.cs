@@ -50,6 +50,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtTestlogPath = new System.Windows.Forms.TextBox();
             this.txtAutoLookLogPath = new System.Windows.Forms.TextBox();
+            this.txtATEBackupPath = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -57,6 +59,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.txtATEBackupPath);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.comboPlantCode);
             this.groupBox1.Controls.Add(this.groupBox3);
@@ -77,7 +81,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(635, 238);
+            this.groupBox1.Size = new System.Drawing.Size(635, 265);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Setting";
@@ -85,7 +89,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(489, 110);
+            this.label7.Location = new System.Drawing.Point(489, 143);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 17);
             this.label7.TabIndex = 17;
@@ -98,7 +102,7 @@
             this.comboPlantCode.Items.AddRange(new object[] {
             "F721",
             "F722"});
-            this.comboPlantCode.Location = new System.Drawing.Point(559, 105);
+            this.comboPlantCode.Location = new System.Drawing.Point(559, 138);
             this.comboPlantCode.Name = "comboPlantCode";
             this.comboPlantCode.Size = new System.Drawing.Size(59, 25);
             this.comboPlantCode.TabIndex = 16;
@@ -108,7 +112,7 @@
             // 
             this.groupBox3.Controls.Add(this.rabDay830);
             this.groupBox3.Controls.Add(this.rabDay800);
-            this.groupBox3.Location = new System.Drawing.Point(250, 173);
+            this.groupBox3.Location = new System.Drawing.Point(250, 206);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(370, 49);
             this.groupBox3.TabIndex = 15;
@@ -143,7 +147,7 @@
             // 
             this.groupBox2.Controls.Add(this.rab1);
             this.groupBox2.Controls.Add(this.rab0);
-            this.groupBox2.Location = new System.Drawing.Point(27, 173);
+            this.groupBox2.Location = new System.Drawing.Point(27, 206);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(217, 48);
             this.groupBox2.TabIndex = 14;
@@ -176,7 +180,7 @@
             // 
             // txtFileExtension
             // 
-            this.txtFileExtension.Location = new System.Drawing.Point(542, 139);
+            this.txtFileExtension.Location = new System.Drawing.Point(542, 172);
             this.txtFileExtension.Name = "txtFileExtension";
             this.txtFileExtension.Size = new System.Drawing.Size(78, 25);
             this.txtFileExtension.TabIndex = 13;
@@ -186,7 +190,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(445, 143);
+            this.label6.Location = new System.Drawing.Point(445, 176);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(84, 17);
             this.label6.TabIndex = 12;
@@ -194,7 +198,7 @@
             // 
             // txtFileFrontFlag
             // 
-            this.txtFileFrontFlag.Location = new System.Drawing.Point(308, 139);
+            this.txtFileFrontFlag.Location = new System.Drawing.Point(308, 172);
             this.txtFileFrontFlag.Name = "txtFileFrontFlag";
             this.txtFileFrontFlag.Size = new System.Drawing.Size(121, 25);
             this.txtFileFrontFlag.TabIndex = 11;
@@ -204,7 +208,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(225, 143);
+            this.label5.Location = new System.Drawing.Point(225, 176);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(80, 17);
             this.label5.TabIndex = 10;
@@ -218,7 +222,7 @@
             "0000",
             "PASS",
             "OK"});
-            this.combPassFlag.Location = new System.Drawing.Point(129, 142);
+            this.combPassFlag.Location = new System.Drawing.Point(129, 175);
             this.combPassFlag.Name = "combPassFlag";
             this.combPassFlag.Size = new System.Drawing.Size(76, 25);
             this.combPassFlag.TabIndex = 9;
@@ -227,7 +231,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(36, 148);
+            this.label4.Location = new System.Drawing.Point(36, 181);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(58, 17);
             this.label4.TabIndex = 8;
@@ -236,7 +240,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 113);
+            this.label3.Location = new System.Drawing.Point(28, 146);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 17);
             this.label3.TabIndex = 7;
@@ -244,7 +248,7 @@
             // 
             // txtWebService
             // 
-            this.txtWebService.Location = new System.Drawing.Point(128, 108);
+            this.txtWebService.Location = new System.Drawing.Point(128, 141);
             this.txtWebService.Name = "txtWebService";
             this.txtWebService.Size = new System.Drawing.Size(346, 25);
             this.txtWebService.TabIndex = 6;
@@ -255,7 +259,7 @@
             // 
             this.lblNote.AutoSize = true;
             this.lblNote.ForeColor = System.Drawing.Color.Blue;
-            this.lblNote.Location = new System.Drawing.Point(73, 85);
+            this.lblNote.Location = new System.Drawing.Point(73, 118);
             this.lblNote.Name = "lblNote";
             this.lblNote.Size = new System.Drawing.Size(320, 17);
             this.lblNote.TabIndex = 5;
@@ -297,11 +301,27 @@
             this.txtAutoLookLogPath.TextChanged += new System.EventHandler(this.txtAutoLookLogPath_TextChanged);
             this.txtAutoLookLogPath.DoubleClick += new System.EventHandler(this.txtAutoLookLogPath_DoubleClick);
             // 
+            // txtATEBackupPath
+            // 
+            this.txtATEBackupPath.Location = new System.Drawing.Point(129, 83);
+            this.txtATEBackupPath.Name = "txtATEBackupPath";
+            this.txtATEBackupPath.Size = new System.Drawing.Size(474, 25);
+            this.txtATEBackupPath.TabIndex = 18;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(24, 87);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(96, 17);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "ATEBackupPath";
+            // 
             // frmATEClientSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(659, 257);
+            this.ClientSize = new System.Drawing.Size(659, 286);
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
             this.Name = "frmATEClientSetting";
@@ -341,5 +361,7 @@
         private System.Windows.Forms.TextBox txtAutoLookLogPath;
         private System.Windows.Forms.ComboBox comboPlantCode;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtATEBackupPath;
     }
 }

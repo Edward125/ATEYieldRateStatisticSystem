@@ -24,6 +24,7 @@ namespace ATEYieldRateStatisticSystem
         //public static string SFCSWebservice = @"http://10.62.201.100/Tester.WebService/WebService.asmx"; //default
         public static string AutoLookLogPath = string.Empty;
         public static string TestlogPath = string.Empty;
+        public static string BackupPath = string.Empty;
         public static string PassFlag = "0000";//default
         public static string FileFrontFlag = "log";
         public static string FaonFaoffBase = "1";//default 
@@ -42,6 +43,7 @@ namespace ATEYieldRateStatisticSystem
         public static List<STAGE> ATEBeforeStage = new List<STAGE>();
         public static List<STAGE> ATEAfterStage = new List<STAGE>();
         public static List<STAGE> ATEOtherStage = new List<STAGE>();
+        public string ATEFixtureID = string.Empty;
         
         #endregion
 

@@ -32,6 +32,8 @@ namespace ATEYieldRateStatisticSystem
         System.Threading.Timer m_timer = null;
         List<String> files = new List<string>(); //AutoLog记录待处理文件的队列
 
+        
+
         #region 窗体放大缩小
 
         private float X;
@@ -121,7 +123,7 @@ namespace ATEYieldRateStatisticSystem
             setTag(this);
             Form1_Resize(new object(), new EventArgs());//x,y可在实例化时赋值,最后这句是新加的，在MDI时有用
 
-            this.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")";
+            this.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")" + "-" + Environment.MachineName;
             txtAutoLookLogPath.SetWatermark("DbClick here to select AutoLookIyet config file folder path...");
             txtTestlogPath.SetWatermark("DbClick here to select ATE test program testlog file folder path...");
             InitListviewBarcode(lstviewBarcode);
