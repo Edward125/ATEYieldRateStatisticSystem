@@ -262,6 +262,7 @@ namespace ATEYieldRateStatisticSystem
             IniFile.IniWriteValue(IniSection.ATEConfig.ToString(), "ATEPlant", ATEPlant.ToString() , iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "AutoLookLogPath", AutoLookLogPath, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "TestLogPath", TestlogPath, iniFilePath);
+            IniFile.IniWriteValue(IniSection.ATEConfig.ToString(), "BackupPath", BackupPath, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "PassFlag", PassFlag, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "FileFrontFlag", FileFrontFlag, iniFilePath);
             IniFile.IniWriteValue(IniSection.ATEConfig .ToString(), "FaonFaoffBase", FaonFaoffBase, iniFilePath);
@@ -293,6 +294,7 @@ namespace ATEYieldRateStatisticSystem
 
             AutoLookLogPath = IniFile.IniReadValue(IniSection.ATEConfig .ToString (), "AutoLookLogPath", iniFilePath).Trim();
             TestlogPath = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "TestlogPath", iniFilePath).Trim();
+            BackupPath = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "BackupPath", inifilepath).Trim();
             PassFlag = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "PassFlag", iniFilePath).Trim().ToUpper();
             FileFrontFlag = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "FileFrontFlag", iniFilePath).Trim();
             FaonFaoffBase = IniFile.IniReadValue(IniSection.ATEConfig.ToString(), "FaonFaoffBase", iniFilePath).Trim();

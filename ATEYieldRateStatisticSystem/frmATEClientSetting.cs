@@ -24,10 +24,11 @@ namespace ATEYieldRateStatisticSystem
             this.Text = Application.ProductName + "-ATE Client Setting...(Ver:" + Application.ProductVersion + ")";
             txtAutoLookLogPath.SetWatermark("DbClick here to select AutoLookIyet config file folder path...");
             txtTestlogPath.SetWatermark("DbClick here to select ATE test program testlog file folder path...");
-
+            txtATEBackupPath.SetWatermark("DbClick here to select ATE BBB file backup folder path...");
             //
             this.txtAutoLookLogPath.Text = p.AutoLookLogPath.Trim();
             this.txtTestlogPath.Text = p.TestlogPath.Trim();
+            this.txtATEBackupPath.Text = p.BackupPath.Trim();
             //MessageBox.Show(p.ATEPlant.ToString());
 
             comboPlantCode.Text = p.ATEPlant.ToString();
@@ -53,8 +54,7 @@ namespace ATEYieldRateStatisticSystem
         }
 
         private void frmATEClientSetting_Load(object sender, EventArgs e)
-        {
-            
+        {            
             LoadData2UI();
         }
 
@@ -208,6 +208,17 @@ namespace ATEYieldRateStatisticSystem
         {
             p.TestlogPath = this.txtTestlogPath.Text.Trim();
             IniFile.IniWriteValue(p.IniSection.ATEConfig.ToString (), "TestlogPath", p.TestlogPath, p.iniFilePath);
+        }
+
+        private void txtATEBackupPath_DoubleClick(object sender, EventArgs e)
+        {
+            p.openFolder(txtATEBackupPath);
+        }
+
+        private void txtATEBackupPath_TextChanged(object sender, EventArgs e)
+        {
+            p.BackupPath = this.txtATEBackupPath.Text.Trim();
+            IniFile.IniWriteValue(p.IniSection.ATEConfig.ToString(), "BackupPath",p.BackupPath, p.iniFilePath);
         }
 
 

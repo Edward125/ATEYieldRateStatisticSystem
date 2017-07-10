@@ -307,6 +307,8 @@
             this.txtATEBackupPath.Name = "txtATEBackupPath";
             this.txtATEBackupPath.Size = new System.Drawing.Size(474, 25);
             this.txtATEBackupPath.TabIndex = 18;
+            this.txtATEBackupPath.TextChanged += new System.EventHandler(this.txtATEBackupPath_TextChanged);
+            this.txtATEBackupPath.DoubleClick += new System.EventHandler(this.txtATEBackupPath_DoubleClick);
             // 
             // label8
             // 

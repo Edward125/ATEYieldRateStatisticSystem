@@ -318,6 +318,22 @@ namespace ATEYieldRateStatisticSystem
                 updateMsg(lstStatus, "Warning:Not find 'path.ini',can't dynamic wather testlog folder change...");
                 updateMsg(lstStatus, "Warning:plsese check the folder:" + p.AutoLookLogPath);
             }
+
+            if (string.IsNullOrEmpty(p.BackupPath.Trim()))
+            {
+                MessageBox.Show("Backup Path can't be empty,press'Setting' to set the config...", "Backup Path Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                updateMsg(lstStatus, "Error:Backup Path can't be empty,press'Setting' to set the config...");             
+                return false;
+            }
+
+            if (!Directory.Exists(p.BackupPath.Trim()))
+            {
+                MessageBox.Show("Backup Path is not exist,pls check...", "Backup Path Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                updateMsg(lstStatus, "Error:Backup Path  is not exist,press'Setting' to set the config...");
+                return false;
+            }
+
+
             if (!bgwWebService.IsBusy)
                 bgwWebService.RunWorkerAsync();
 
