@@ -396,8 +396,7 @@ namespace ATEYieldRateStatisticSystem
             this.Invoke((EventHandler)delegate
             {
                 updateMsg(lstStatus, "Start Check WebService");
-            });
-          
+            });          
 
             //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service");
             if (p.ATEPlant == p.PlantCode.F721)
@@ -1195,6 +1194,45 @@ namespace ATEYieldRateStatisticSystem
                 }
             }
 
+        }
+
+
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="usn"></param>
+        /// <param name="backup"></param>
+        /// <returns></returns>
+        private string getFixtureID(string usn, string backup)
+        {
+            string _fixtreuid = string.Empty;
+            bool _isNullEmpty = string.IsNullOrEmpty(usn);
+            bool _isExist = Directory.Exists(backup);
+
+            if (!_isNullEmpty && !_isExist)
+            {
+                if (!backup.EndsWith(@"\"))
+                    backup = backup + @"\";
+                string bbbfile = backup + usn + ".BBB";
+                bool _bbbIsExist = File.Exists(bbbfile);
+                if (_bbbIsExist)
+                {
+                    StreamReader sr = new StreamReader(bbbfile);
+                    string sLine = sr.ReadLine();
+                    while (!sr.EndOfStream)
+                    {
+                        sLine = sr.ReadLine();
+                        if (sLine .ToUpper ().StartsWith ("FIXTUREID"))
+                            _fixtreuid = sLine.Trim().ToUpper().Replace("FIXTUREID=", "");
+                    }
+                    sr.Close ();
+                }
+                else
+                    updateMsg(lstStatus, usn + ".BBB is not exist in " + backup);
+            }
+            updateMsg(lstStatus, "USN:" + usn + ",FixtureID:" + _fixtreuid);
+            return _fixtreuid;
         }
        
     }
