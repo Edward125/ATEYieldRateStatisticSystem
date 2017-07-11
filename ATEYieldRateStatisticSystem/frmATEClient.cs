@@ -837,6 +837,9 @@ namespace ATEYieldRateStatisticSystem
                     //判断是单板还是双板
                     if (lastlinebar.BarType == p.BoardType.Single) //单板
                     {
+                        //Get fixture id
+
+                        string _FixtureID = getFixtureID(usn, p.BackupPath);
                         //SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
                         //GetUUData(usn, out rq);
                         //
@@ -873,6 +876,7 @@ namespace ATEYieldRateStatisticSystem
 
                     if (lastlinebar.BarType == p.BoardType.Panel)
                     {
+                        string _FixtureID = getFixtureID(usn, p.BackupPath); //双板也只获取一次
                         ////先获取机种信息,无论单双板,机种信息是一样的
                         //SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
                         //GetUUData(usn, out rq);
@@ -911,6 +915,7 @@ namespace ATEYieldRateStatisticSystem
                             if (testresult == "PASS") // PASS，才去testlog中去获取另外1个条码的信息
                             {
                                 dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
+                                                                
                                 //
                                 lt = new ListViewItem();
 #if DEBUG
