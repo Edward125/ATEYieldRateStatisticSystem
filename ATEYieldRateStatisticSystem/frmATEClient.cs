@@ -1215,7 +1215,7 @@ namespace ATEYieldRateStatisticSystem
             bool _isNullEmpty = string.IsNullOrEmpty(usn);
             bool _isExist = Directory.Exists(backup);
 
-            if (!_isNullEmpty && !_isExist)
+            if (!_isNullEmpty && _isExist)
             {
                 if (!backup.EndsWith(@"\"))
                     backup = backup + @"\";
@@ -1228,8 +1228,11 @@ namespace ATEYieldRateStatisticSystem
                     while (!sr.EndOfStream)
                     {
                         sLine = sr.ReadLine();
-                        if (sLine .ToUpper ().StartsWith ("FIXTUREID"))
+                        if (sLine.ToUpper().StartsWith("FIXTUREID"))
+                        {
                             _fixtreuid = sLine.Trim().ToUpper().Replace("FIXTUREID=", "");
+                            break;
+                        }
                     }
                     sr.Close ();
                 }
