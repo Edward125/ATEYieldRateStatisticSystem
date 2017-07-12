@@ -21,10 +21,10 @@ namespace ATEYieldRateStatisticSystem
         public frmATEClient()
         {
             InitializeComponent();
-            skinEngine1.SkinFile =p.AppFolder + @"\MacOS.ssk";
+            skinEngine1.SkinFile = p.AppFolder + @"\MacOS.ssk";
         }
 
-        public  SFCS_ws.WebService ws = new SFCS_ws.WebService();
+        public SFCS_ws.WebService ws = new SFCS_ws.WebService();
 
         bool _connnectWebservice = false; //connect web service result,success=true;fail = false;
 
@@ -32,7 +32,7 @@ namespace ATEYieldRateStatisticSystem
         System.Threading.Timer m_timer = null;
         List<String> files = new List<string>(); //AutoLog记录待处理文件的队列
 
-        
+
 
         #region 窗体放大缩小
 
@@ -74,10 +74,10 @@ namespace ATEYieldRateStatisticSystem
             }
             catch (Exception)
             {
-                
+
                 //throw;
             }
-           
+
 
         }
 
@@ -123,7 +123,15 @@ namespace ATEYieldRateStatisticSystem
             setTag(this);
             Form1_Resize(new object(), new EventArgs());//x,y可在实例化时赋值,最后这句是新加的，在MDI时有用
 
-            this.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")" + "-" + Environment.MachineName;
+            string username = Environment.MachineName;
+
+            if (username.Contains('-'))
+                p.PCBLine = username.Substring(0, username.LastIndexOf('-'));
+            this.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")" + "-" + username + "(Line:" + p.PCBLine + ")";
+
+
+
+
             txtAutoLookLogPath.SetWatermark("DbClick here to select AutoLookIyet config file folder path...");
             txtTestlogPath.SetWatermark("DbClick here to select ATE test program testlog file folder path...");
             InitListviewBarcode(lstviewBarcode);
@@ -168,29 +176,29 @@ namespace ATEYieldRateStatisticSystem
         }
 
         private void getTestlogPathFromAutoLog(string inipath)
-        {          
-  
-                string line = string.Empty;
-                string boardpath = string.Empty;
+        {
 
-                StreamReader sr = new StreamReader(inipath);
-                while (!sr.EndOfStream)
+            string line = string.Empty;
+            string boardpath = string.Empty;
+
+            StreamReader sr = new StreamReader(inipath);
+            while (!sr.EndOfStream)
+            {
+                line = sr.ReadLine();
+                if (!line.StartsWith("!"))
                 {
-                    line = sr.ReadLine();
-                    if (!line.StartsWith("!"))
+                    if (line.ToUpper().Contains("#BoardPath#".ToUpper()))
                     {
-                        if (line.ToUpper().Contains("#BoardPath#".ToUpper()))
-                        {
-                            boardpath = line.Replace("#BoardPath#:", "");
-                            if (boardpath.EndsWith(@"\"))    
-                                p.TestlogPath = boardpath + @"testlog\";
-                            else
-                                p.TestlogPath = boardpath + @"\testlog\";
-                            txtTestlogPath.Text = p.TestlogPath;
-                        }
+                        boardpath = line.Replace("#BoardPath#:", "");
+                        if (boardpath.EndsWith(@"\"))
+                            p.TestlogPath = boardpath + @"testlog\";
+                        else
+                            p.TestlogPath = boardpath + @"\testlog\";
+                        txtTestlogPath.Text = p.TestlogPath;
                     }
                 }
-                sr.Close();
+            }
+            sr.Close();
 
         }
 
@@ -224,14 +232,14 @@ namespace ATEYieldRateStatisticSystem
                     Environment.Exit(0);
                 }
                 catch (Exception)
-                {  
-                   // throw;
+                {
+                    // throw;
                 }
-                
+
             }
             else
                 e.Cancel = true;
-            
+
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -291,7 +299,7 @@ namespace ATEYieldRateStatisticSystem
 
 
 #endif
-          
+
         }
 
 
@@ -322,7 +330,7 @@ namespace ATEYieldRateStatisticSystem
             if (string.IsNullOrEmpty(p.BackupPath.Trim()))
             {
                 MessageBox.Show("Backup Path can't be empty,press'Setting' to set the config...", "Backup Path Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                updateMsg(lstStatus, "Error:Backup Path can't be empty,press'Setting' to set the config...");             
+                updateMsg(lstStatus, "Error:Backup Path can't be empty,press'Setting' to set the config...");
                 return false;
             }
 
@@ -352,7 +360,7 @@ namespace ATEYieldRateStatisticSystem
             TimeSpan ts = new TimeSpan();
             sw.Start();
             updateMsg(lstStatus, "Start Check WebService");
-           
+
             //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service");
             if (p.ATEPlant == p.PlantCode.F721)
                 ws.Url = p.SFCS721Webservice;
@@ -396,7 +404,7 @@ namespace ATEYieldRateStatisticSystem
             this.Invoke((EventHandler)delegate
             {
                 updateMsg(lstStatus, "Start Check WebService");
-            });          
+            });
 
             //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service");
             if (p.ATEPlant == p.PlantCode.F721)
@@ -407,7 +415,7 @@ namespace ATEYieldRateStatisticSystem
             {
                 updateMsg(lstStatus, "Webservice:" + ws.Url);
             });
-            
+
             try
             {
                 Application.DoEvents();
@@ -422,7 +430,7 @@ namespace ATEYieldRateStatisticSystem
                     updateMsg(lstStatus, e.Message);
                     updateMsg(lstStatus, "Can't connect WebService,Used time(ms):" + ts.Milliseconds);
                 });
-               
+
                 // SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service NG,Used time(ms):" + ts.Milliseconds + "\r\n" + "Message:".PadLeft(24) + e.Message);
 
                 return false;
@@ -434,7 +442,7 @@ namespace ATEYieldRateStatisticSystem
             {
                 updateMsg(lstStatus, "Connect WebService success,Used time(ms):" + ts.Milliseconds);
             });
-            
+
             //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "Check Web Service OK,Used time(ms):" + ts.Milliseconds);
             return true;
         }
@@ -484,7 +492,7 @@ namespace ATEYieldRateStatisticSystem
         /// <param name="usn">條碼</param>
         /// <param name="stage">站別</param>
         /// <returns>在當前站別為true，不在當前站別為false</returns>
-        private bool checkSFCSStage(string usn, string stage,out string sfcsresult)
+        private bool checkSFCSStage(string usn, string stage, out string sfcsresult)
         {
             //  checkWebService(web_Site);
 
@@ -540,20 +548,20 @@ namespace ATEYieldRateStatisticSystem
 
             sw.Stop();
             ts = sw.Elapsed;
-            if (_rqd  != null)
+            if (_rqd != null)
             {
-               updateMsg  (lstStatus , usn  + ",get model info success ,Used time(ms):" + ts.Milliseconds);
-               updateMsg(lstStatus, usn +",Model:" +_rqd.Model);
-               updateMsg(lstStatus, usn+",ModelFamily:"+ _rqd.ModelFamily);
-               updateMsg(lstStatus, usn +",UPN(Config):"+_rqd.UPN);
-               updateMsg(lstStatus, usn +",MO:"+ _rqd.MO);
+                updateMsg(lstStatus, usn + ",get model info success ,Used time(ms):" + ts.Milliseconds);
+                updateMsg(lstStatus, usn + ",Model:" + _rqd.Model);
+                updateMsg(lstStatus, usn + ",ModelFamily:" + _rqd.ModelFamily);
+                updateMsg(lstStatus, usn + ",UPN(Config):" + _rqd.UPN);
+                updateMsg(lstStatus, usn + ",MO:" + _rqd.MO);
 
             }
             else
             {
-                updateMsg  (lstStatus , "Warning:"+usn +",get model info fail," + "Used time(ms):" + ts.Milliseconds);
+                updateMsg(lstStatus, "Warning:" + usn + ",get model info fail," + "Used time(ms):" + ts.Milliseconds);
             }
-            
+
             return true;
         }
 
@@ -636,7 +644,7 @@ namespace ATEYieldRateStatisticSystem
                     {
                         getTestlogPathFromAutoLog(inipath);
                     }
-                });              
+                });
             }
         }
 
@@ -655,7 +663,7 @@ namespace ATEYieldRateStatisticSystem
                 {
                     updateMsg(lstStatus, "File Change," + file + " changed");
                     //readTestLogContent(file);
-                    Thread  t = new Thread(readTestLogContent);
+                    Thread t = new Thread(readTestLogContent);
                     t.Name = "ReadTestLog";
                     //t.IsBackground = true;
                     t.Start(file);
@@ -676,10 +684,10 @@ namespace ATEYieldRateStatisticSystem
             //updateMsg(lstStatus, "The file name is:" + e.Name);
             Mutex mutex = new Mutex(false, "TestLog");
             mutex.WaitOne();
-            if (!files.Contains(e.FullPath)) 
+            if (!files.Contains(e.FullPath))
             {
                 //AutoLogfiles.Add(e.Name);
-                files.Add(e.FullPath );
+                files.Add(e.FullPath);
             }
             mutex.ReleaseMutex();
             //重新设置定时器的触发间隔，并且仅仅触发一次
@@ -688,7 +696,7 @@ namespace ATEYieldRateStatisticSystem
 
         private void bgwWebService_DoWork(object sender, DoWorkEventArgs e)
         {
-            _connnectWebservice  = checkWebService(this.bgwWebService);
+            _connnectWebservice = checkWebService(this.bgwWebService);
         }
 
         private void bgwWebService_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -702,8 +710,8 @@ namespace ATEYieldRateStatisticSystem
                 txtAutoLookLogPath.ReadOnly = true;
                 txtTestlogPath.ReadOnly = true;
 
-                initTestLogFileSystemWatcher(fswTestlog);    
-                   //
+                initTestLogFileSystemWatcher(fswTestlog);
+                //
                 fswTestlog.EnableRaisingEvents = true;
                 updateMsg(lstStatus, "Start to watch :" + p.TestlogPath);
                 updateMsg(lstStatus, "监控以" + p.FileFrontFlag + "开头，以" + p.FileExtension + "为扩展名的文件");
@@ -722,7 +730,7 @@ namespace ATEYieldRateStatisticSystem
                 btnSetting.Enabled = true;
                 txtAutoLookLogPath.ReadOnly = false;
                 txtTestlogPath.ReadOnly = false;
-              
+
             }
         }
 
@@ -738,7 +746,7 @@ namespace ATEYieldRateStatisticSystem
             txtAutoLookLogPath.ReadOnly = false;
             txtTestlogPath.ReadOnly = false;
             _connnectWebservice = false;
-            
+
         }
 
 
@@ -759,9 +767,9 @@ namespace ATEYieldRateStatisticSystem
             listview.Columns.Add("SEQ", 30, HorizontalAlignment.Center);
             listview.Columns.Add("Model", 80, HorizontalAlignment.Center);
             listview.Columns.Add("MO", 80, HorizontalAlignment.Center);
-            listview.Columns.Add ("TestResult",80,HorizontalAlignment.Center);
+            listview.Columns.Add("TestResult", 80, HorizontalAlignment.Center);
             listview.Columns.Add("TestTime", 80, HorizontalAlignment.Center);
-            listview.Columns.Add("1stPass", 80,HorizontalAlignment.Center);
+            listview.Columns.Add("1stPass", 80, HorizontalAlignment.Center);
             listview.Columns.Add("UploadFlag", 80, HorizontalAlignment.Center);
 
         }
@@ -808,23 +816,23 @@ namespace ATEYieldRateStatisticSystem
             string[] temp = File.ReadAllLines((string)file);
             int _lastline = -1; //获取实际最后一行,防止文本最后有空格
             string lastlinestr = string.Empty;
-            for (int i = temp.Length-1; i>0 ; i--)
+            for (int i = temp.Length - 1; i > 0; i--)
             {
                 if (!string.IsNullOrEmpty(temp[i]))
                 {
                     lastlinestr = temp[i];
-                    _lastline = i;      
+                    _lastline = i;
                     break;
-                }               
+                }
             }
-            
+
             this.Invoke((EventHandler)delegate
             {
 #if DEBUG
                 updateMsg(lstStatus, lastlinestr);
 #endif
                 string usn, testresult, testtime, firstpass, getlinkresult;
-                usn = testresult = testtime = firstpass =getlinkresult = string.Empty;
+                usn = testresult = testtime = firstpass = getlinkresult = string.Empty;
                 dealWithTestLogContent(lastlinestr, out usn, out testresult, out firstpass, out testtime);
                 Barcode lastlinebar = new Barcode();
                 getLinkUsn(usn, out getlinkresult, out lastlinebar);
@@ -838,8 +846,9 @@ namespace ATEYieldRateStatisticSystem
                     if (lastlinebar.BarType == p.BoardType.Single) //单板
                     {
                         //Get fixture id
-
-                        string _FixtureID = getFixtureID(usn, p.BackupPath);
+                        // string _FixtureID = getFixtureID(usn, p.BackupPath);
+                        string _FIXTUREID, _ERRORCODE, _OPID;
+                        readBBBFle(usn, p.BackupPath, out _FIXTUREID, out _ERRORCODE, out _OPID);
                         //SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
                         //GetUUData(usn, out rq);
                         //
@@ -860,33 +869,39 @@ namespace ATEYieldRateStatisticSystem
                                 {
                                     //
                                     //add upload stage
-                                    updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                    //1,fixtureid 
+                                    uploadFixtureID(txtCurrentWebService.Text.Trim(), usn, p.ATEStage.StageName, _FIXTUREID);
+                                    updateResult2SFCS(txtCurrentWebService.Text.Trim(), usn, true, _ERRORCODE, false);
+                                    //updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
                                 }
 
-                            }        
-                            
+                            }
+
                         }
                         if (testresult == "FAIL")
                             lt.ForeColor = Color.Red;
                         lt.SubItems.Add(testresult);
                         lt.SubItems.Add(testtime);
                         lt.SubItems.Add(firstpass);
-                       
+
                     }
 
                     if (lastlinebar.BarType == p.BoardType.Panel)
                     {
-                        string _FixtureID = getFixtureID(usn, p.BackupPath); //双板也只获取一次
+                        //string _FixtureID = getFixtureID(usn, p.BackupPath); //双板也只获取一次                     
                         ////先获取机种信息,无论单双板,机种信息是一样的
+                        string _FIXTUREID, _OPID;
+                        readBBBFle(usn, p.BackupPath, out _FIXTUREID, out _OPID);
                         //SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
                         //GetUUData(usn, out rq);
                         if (usn == lastlinebar.BarA)
                         {
+            
                             ListViewItem lt = new ListViewItem();
 #if DEBUG
                             lt = lstviewBarcode.Items.Add(usn+"-A");
 #else
-                            lt = lstviewBarcode.Items.Add(usn);                           
+                            lt = lstviewBarcode.Items.Add(usn);
 #endif
                             lt.SubItems.Add("A");
                             lt.SubItems.Add(rq.Model);
@@ -902,9 +917,11 @@ namespace ATEYieldRateStatisticSystem
                                     {
                                         //
                                         //add upload stage
-                                        updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                        uploadFixtureID(txtCurrentWebService.Text.Trim(), usn, p.ATEStage.StageName, _FIXTUREID);
+                                        updateResult2SFCS(txtCurrentWebService.Text.Trim(), usn, true, "0000", false);
+                                        // updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
                                     }
-                                }  
+                                }
                             }
                             if (testresult == "FAIL")
                                 lt.ForeColor = Color.Red;
@@ -915,7 +932,7 @@ namespace ATEYieldRateStatisticSystem
                             if (testresult == "PASS") // PASS，才去testlog中去获取另外1个条码的信息
                             {
                                 dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
-                                                                
+                                
                                 //
                                 lt = new ListViewItem();
 #if DEBUG
@@ -937,7 +954,9 @@ namespace ATEYieldRateStatisticSystem
                                         {
                                             //
                                             //add upload stage
-                                            updateMsg(lstStatus, lastlinebar.BarB + " test pass,router not upload sfcs,need add...");
+                                            uploadFixtureID(txtCurrentWebService.Text.Trim(), lastlinebar.BarB, p.ATEStage.StageName, _FIXTUREID);
+                                            updateResult2SFCS(txtCurrentWebService.Text.Trim(), lastlinebar.BarB, true, "0000", false);
+                                           // updateMsg(lstStatus, lastlinebar.BarB + " test pass,router not upload sfcs,need add...");
                                         }
                                     }
                                 }
@@ -973,7 +992,7 @@ namespace ATEYieldRateStatisticSystem
                             else //PASS
                             {
                                 //先处理A
-                                ListViewItem lt = new ListViewItem();                   
+                                ListViewItem lt = new ListViewItem();
                                 dealWithTestLogContent(temp[_lastline - 1], out usn, out testresult, out firstpass, out testtime);
 #if DEBUG
                                 updateMsg(lstStatus, temp[_lastline - 1]);
@@ -999,7 +1018,9 @@ namespace ATEYieldRateStatisticSystem
                                         {
                                             //
                                             //add upload stage
-                                            updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                            uploadFixtureID(txtCurrentWebService.Text.Trim(), usn, p.ATEStage.StageName, _FIXTUREID);
+                                            updateResult2SFCS(txtCurrentWebService.Text.Trim(), usn, true, "0000", false);
+                                            //updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
                                         }
 
                                     }
@@ -1030,7 +1051,9 @@ namespace ATEYieldRateStatisticSystem
                                         {
                                             //
                                             //add upload stage
-                                            updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                            uploadFixtureID(txtCurrentWebService.Text.Trim(), lastlinebar.BarB, p.ATEStage.StageName, _FIXTUREID);
+                                            updateResult2SFCS(txtCurrentWebService.Text.Trim(), lastlinebar.BarB, true, "0000", false);
+                                            //updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
                                         }
                                     }
                                 }
@@ -1062,7 +1085,7 @@ namespace ATEYieldRateStatisticSystem
                 }
 
                 //lt.SubItems.Add ()
-            });        
+            });
         }
 
 
@@ -1076,7 +1099,7 @@ namespace ATEYieldRateStatisticSystem
         private bool checkATEStage(List<p.STAGE> stagelist, string _stage, out p.STAGE stageresult)
         {
             stageresult = new p.STAGE("");
-            foreach (var item in stagelist )
+            foreach (var item in stagelist)
             {
                 if (_stage == item.StageName)
                 {
@@ -1100,7 +1123,7 @@ namespace ATEYieldRateStatisticSystem
         private void dealWithTestLogContent(string loglinestring, out string usn, out string testresult, out string firstpass, out string testtime)
         {
             usn = testresult = firstpass = testtime = string.Empty;
-            string[] temp = loglinestring .Trim().Split(' ');
+            string[] temp = loglinestring.Trim().Split(' ');
             int icount = 0;
             ListViewItem lt = new ListViewItem();
             for (int i = 0; i < temp.Length; i++)
@@ -1121,14 +1144,14 @@ namespace ATEYieldRateStatisticSystem
                     }
                     if (icount == 3)
                     {
-                        if (temp[i] == p.PassFlag  )
-                            testresult = "PASS";       
+                        if (temp[i] == p.PassFlag)
+                            testresult = "PASS";
                         else
                             testresult = "FAIL";
 
                     }
                     if (icount == 4)
-         
+
                         testtime = temp[i];
                 }
             }
@@ -1171,14 +1194,14 @@ namespace ATEYieldRateStatisticSystem
         /// <param name="_bar"></param>
         private void getLinkUsn(string usn, out string result, out Barcode _bar)
         {
-            result ="";
+            result = "";
             _bar = new Barcode();
             string[] bar = ws.GetLinkUSN(usn, ref result);
             if (result == "OK")
             {
                 if (bar.Length == 2)
                 {
-                    _bar.BarA  = bar[0];
+                    _bar.BarA = bar[0];
                     _bar.BarB = bar[1];
                     _bar.BarType = p.BoardType.Panel;
 
@@ -1234,7 +1257,7 @@ namespace ATEYieldRateStatisticSystem
                             break;
                         }
                     }
-                    sr.Close ();
+                    sr.Close();
                 }
                 else
                     updateMsg(lstStatus, usn + ".BBB is not exist in " + backup);
@@ -1242,9 +1265,200 @@ namespace ATEYieldRateStatisticSystem
             updateMsg(lstStatus, "USN:" + usn + ",FixtureID:" + _fixtreuid);
             return _fixtreuid;
         }
-       
-    }
 
 
-        
+        /// <summary>
+        /// read bbb file content
+        /// </summary>
+        /// <param name="usn">条码</param>
+        /// <param name="backup">BBB文件路径</param>
+        /// <param name="fixtureid">治具编号</param>
+        /// <param name="errcode">errorcode</param>
+        /// <param name="opid">工号</param>
+        private void readBBBFle(string usn, string backup, out string fixtureid, out string errcode, out string opid)
+        {
+            string _fixtreuid = string.Empty;
+            string _errcode = string.Empty;
+            string _opid = string.Empty;
+            bool _isNullEmpty = string.IsNullOrEmpty(usn);
+            bool _isExist = Directory.Exists(backup);
+
+            if (!_isNullEmpty && _isExist)
+            {
+                if (!backup.EndsWith(@"\"))
+                    backup = backup + @"\";
+                string bbbfile = backup + usn + ".BBB";
+                bool _bbbIsExist = File.Exists(bbbfile);
+                if (_bbbIsExist)
+                {
+                    StreamReader sr = new StreamReader(bbbfile);
+                    string sLine = sr.ReadLine();
+                    while (!sr.EndOfStream)
+                    {
+                        sLine = sr.ReadLine();
+                        if (sLine.ToUpper().StartsWith("FIXTUREID"))
+                        {
+                            _fixtreuid = sLine.Trim().ToUpper().Replace("FIXTUREID=", "");
+                            updateMsg(lstStatus, "USN:" + usn + ",FIXTUREID:" + _fixtreuid);
+                        }
+
+                        if (sLine.ToUpper().StartsWith("ERRORCODE"))
+                        {
+                            _errcode = sLine.Trim().ToUpper().Replace("ERRORCODE=", "");
+                            updateMsg(lstStatus, "USN:" + usn + ",ERRORCODE:" + _errcode);
+                        }
+                        if (sLine.ToUpper().StartsWith("OPID"))
+                        {
+                            _opid = sLine.Trim().ToUpper().Replace("OPID=", "");
+                            updateMsg(lstStatus, "USN:" + usn + ",OPID:" + _opid);
+                        }
+
+                    }
+                    sr.Close();
+                }
+                else
+                    updateMsg(lstStatus, usn + ".BBB is not exist in " + backup);
+            }
+
+            fixtureid = _fixtreuid;
+            errcode = _errcode;
+            opid = _opid;
+        }
+
+
+
+        /// <summary>
+        /// read bbb file content
+        /// </summary>
+        /// <param name="usn">条码</param>
+        /// <param name="backup">BBB文件路径</param>
+        /// <param name="fixtureid">治具编号</param>
+        /// <param name="errcode">errorcode</param>
+        /// <param name="opid">工号</param>
+        private void readBBBFle(string usn, string backup, out string fixtureid, out string opid)
+        {
+            string _fixtreuid = string.Empty; 
+            string _opid = string.Empty;
+            bool _isNullEmpty = string.IsNullOrEmpty(usn);
+            bool _isExist = Directory.Exists(backup);
+
+            if (!_isNullEmpty && _isExist)
+            {
+                if (!backup.EndsWith(@"\"))
+                    backup = backup + @"\";
+                string bbbfile = backup + usn + ".BBB";
+                bool _bbbIsExist = File.Exists(bbbfile);
+                if (_bbbIsExist)
+                {
+                    StreamReader sr = new StreamReader(bbbfile);
+                    string sLine = sr.ReadLine();
+                    while (!sr.EndOfStream)
+                    {
+                        sLine = sr.ReadLine();
+                        if (sLine.ToUpper().StartsWith("FIXTUREID"))
+                        {
+                            _fixtreuid = sLine.Trim().ToUpper().Replace("FIXTUREID=", "");
+                            updateMsg(lstStatus, "USN:" + usn + ",FIXTUREID:" + _fixtreuid);
+                        }
+           
+                        if (sLine.ToUpper().StartsWith("OPID"))
+                        {
+                            _opid = sLine.Trim().ToUpper().Replace("OPID=", "");
+                            updateMsg(lstStatus, "USN:" + usn + ",OPID:" + _opid);
+                        }
+
+                    }
+                    sr.Close();
+                }
+                else
+                    updateMsg(lstStatus, usn + ".BBB is not exist in " + backup);
+            }
+
+            fixtureid = _fixtreuid;
+            opid = _opid;
+        }
+
+
+        /// <summary>
+        ///  將fixtureid和usn綁定，上拋至sfcs
+        /// </summary>
+        /// <param name="website">web service地址</param>
+        /// <param name="usn">條碼</param>
+        /// <param name="stage">站別</param>
+        /// <param name="fixtureid">治具編號</param>
+        private void uploadFixtureID(string website, string usn, string stage, string fixtureid)
+        {
+            //if (!checkWebService(website))
+            //    return;
+
+            string result = string.Empty;
+            Stopwatch sw = new Stopwatch();
+            TimeSpan ts = new TimeSpan();
+            sw.Start();
+            result = ws.UploadFixtureID(usn, stage, fixtureid);
+            if (result == "OK")
+            {
+                sw.Stop();
+                ts = sw.Elapsed;
+                updateMsg(lstStatus, usn + ",Upload FixtureID:" + fixtureid + " OK,time(ms):" + ts.Milliseconds);
+                //SubFunction.updateMessage(lstStatusCommand, "upload FixtureID:" + fixtureid + " OK,time(ms):" + ts.Milliseconds);
+                //SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "upload FixtureID:" + fixtureid + " OK,time(ms):" + ts.Milliseconds);
+            }
+            else
+            {
+                sw.Stop();
+                ts = sw.Elapsed;
+                updateMsg(lstStatus, usn + ",Upload FixtureID:" + fixtureid + " Fail,time(ms):" + ts.Milliseconds + "," + result);
+                //SubFunction.updateMessage(lstStatusCommand, "upload FixtureID:" + fixtureid + " Fail,time(ms):" + ts.Milliseconds + "," + result);
+                // SubFunction.saveLog(Param.logType.SYSLOG.ToString(), "upload FixtureID:" + fixtureid + " Fail,time(ms):" + ts.Milliseconds + "," + result);
+            }
+        }
+
+        /// <summary>
+        /// 上拋信息到SFCS
+        /// </summary>
+        /// <param name="website">web serevice地址</param>
+        /// <param name="usn">條碼</param>
+        /// <param name="bresult">測試結果，PASS=true，NG=false</param>
+        /// <param name="ngitem">測試項目</param>
+        /// <param name="bretest">MB重測的標註,重測過=true，沒重測過=false</param>
+        private void updateResult2SFCS(string website, string usn, bool bresult, string errcode, bool bretest)//,string testitem)
+        {
+            string[] trndata = new string[1]; //上拋SFCS的附件信息
+            //if (!checkWebService(website))
+            //    return;
+            string result = string.Empty; //上拋的結果
+            string testresult = string.Empty;//測試的結果
+            bool bsfcsresult = false;
+
+            if (bresult)
+            {
+                trndata[0] = usn;
+                testresult = "PASS";
+            }
+            else
+            {
+                trndata[0] = errcode;
+                testresult = "FAIL";
+            }
+            result = ws.Complete(usn, p.PCBLine, p.ATEStage.StageName, p.ATEStage.StageName, "D1203ABJ0", bresult, trndata);
+            if (result == "OK")
+            {
+                bsfcsresult = true;
+                updateMsg(lstStatus, usn + ",upload test result ok");
+            }
+            else
+            {
+                bsfcsresult = false;
+                updateMsg(lstStatus, usn + ",upload test result fail," + result);
+            }
+
+            //save log
+            //SubFunction.saveLog(usn, testresult, bretest, bsfcsresult, ngitem);
+
+        }
+
+
+
+    }  
 }

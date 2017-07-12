@@ -43,7 +43,10 @@ namespace ATEYieldRateStatisticSystem
         public static List<STAGE> ATEBeforeStage = new List<STAGE>();
         public static List<STAGE> ATEAfterStage = new List<STAGE>();
         public static List<STAGE> ATEOtherStage = new List<STAGE>();
-        public string ATEFixtureID = string.Empty;
+        public static string ATEFixtureID = string.Empty;
+
+        //
+        public static string PCBLine = string.Empty;
         
         #endregion
 
