@@ -71,6 +71,15 @@ namespace ATEYieldRateStatisticSystem
             }
 
 
+            if (!p.checkDB(p.LocalDB))
+            {
+                System.Threading.Thread.Sleep(1000);
+                SplashForm.CloseSplash();
+                Environment.Exit(0);
+            }
+
+
+
 
 
             if (!File.Exists (p.AppFolder + @"\MacOS.ssk"))

@@ -1,1 +1,1 @@
-id,teststage,line,model,plant,usn,model,modelfamily,upn,mo,mac,seq,fixtureid,testresult,firstpass,uploadflag,cycletime,recordtime,remark
+id,teststage,line,plant,usn,model,modelfamily,upn,mo,mac,seq,fixtureid,testresult,firstpass,uploadflag,cycletime,testtime,recordtime,remark

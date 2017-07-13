@@ -7,6 +7,7 @@ using Edward;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
+using System.Data.SQLite;
 
 
 namespace ATEYieldRateStatisticSystem
@@ -19,6 +20,10 @@ namespace ATEYieldRateStatisticSystem
         public static string AppFolder = @".\ATEYieldRate";
         public static string iniFilePath = AppFolder + @"\ATEYieldRate.ini";
         public static AppStartModel AppStart;
+        
+        //
+        public static string LocalDB = AppFolder + @"\DB.sqlite";        
+        public static string LocalDBConnectionString = "Data Source=" + LocalDB;
 
         //ATE Client
         //public static string SFCSWebservice = @"http://10.62.201.100/Tester.WebService/WebService.asmx"; //default
@@ -641,6 +646,149 @@ namespace ATEYieldRateStatisticSystem
             {
                 StageName = stagename;
             }
+        }
+
+        /// <summary>
+        /// check db file ,if not exits,create it
+        /// </summary>
+        /// <param name="_dbfile">db file path</param>
+        /// <returns></returns>
+        public static bool checkDB(string _dbfile)
+        {
+            if (!File.Exists(_dbfile))
+            {
+                try
+                {
+                    SQLiteConnection.CreateFile(_dbfile);
+                    if (!createAllTable())
+                    {
+                        File.Delete(_dbfile);
+                        Environment.Exit(0);
+                    }
+                    return true;
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("Create DB Fail." + ex.Message, "Create DB Fail", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+
+            }
+            return true;
+        }
+
+        // string sql = "create table highscores (name varchar(20), score int)";
+        /// <summary>
+        /// create table 
+        /// </summary>
+        /// <param name="sql">sql</param>
+        /// <returns>create ok,return true;create ng,return false</returns>
+        public static bool createTable(string sql,string connectionstring)
+        {
+            SQLiteConnection conn = new SQLiteConnection(connectionstring);
+            try
+            {
+                conn.Open();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Connect to database fail," + ex.Message);
+                return false;
+            }
+
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(sql, conn);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Create TABLE fail," + ex.Message);
+                conn.Close();
+                return false;
+
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// AUTOINCREMENT
+        /// </summary>
+        /// <returns></returns>
+        public static bool createLocalTable()
+        {
+            //string sql = "CREATE TABLE salespeople ( id INTEGER PRIMARY KEY";
+            string sql = @"CREATE TABLE IF NOT EXISTS d_localdata(
+id INTEGER  PRIMARY KEY NOT NULL,
+line varchar(3),
+plant varchar(4),
+usn varchar(20),
+model varchar(20),
+modelfamily varchar(20),
+upn varchar(20),
+mo varchar(20),
+mac varchar(12),
+seq varchar(1),
+fixtureid varchar(40),
+testresult varchar(4),
+firstpass varchar(4),
+uploadflag varchar(4),
+cycletime varchar(10),
+testtime varchar(14),
+recordtime varchar(14),
+remark varchar(255)
+)";
+
+            if (p.createTable(sql, p.LocalDBConnectionString))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool createTempTable()
+        {
+            string sql = @"CREATE TABLE IF NOT EXISTS d_tempdata(
+id INTEGER  PRIMARY KEY NOT NULL,
+line varchar(3),
+plant varchar(4),
+usn varchar(20),
+model varchar(20),
+modelfamily varchar(20),
+upn varchar(20),
+mo varchar(20),
+mac varchar(12),
+seq varchar(1),
+fixtureid varchar(40),
+testresult varchar(4),
+firstpass varchar(4),
+uploadflag varchar(4),
+cycletime varchar(10),
+testtime varchar(14),
+recordtime varchar(14),
+remark varchar(255)
+)";
+
+            if (p.createTable(sql, p.LocalDBConnectionString))
+                return true;
+            else
+                return false;
+        }
+
+
+        public static bool createAllTable()
+        {
+            if (!createLocalTable ())
+                return false ;
+            if (!createTempTable())
+                return false;
+            return true;
+
         }
     }
 }
