@@ -94,6 +94,7 @@ namespace ATEYieldRateStatisticSystem
 
         private void frmATEClient_Load(object sender, EventArgs e)
         {
+           // MessageBox.Show(DateTime.Now.ToString("yyyyMMddHHmmss"));
             loadUI();
             PressStartButton();
         }
@@ -833,6 +834,8 @@ namespace ATEYieldRateStatisticSystem
 #endif
                 string usn, testresult, testtime, firstpass, getlinkresult;
                 usn = testresult = testtime = firstpass = getlinkresult = string.Empty;
+                //
+                p.DatabaseTable databasetable = p.DatabaseTable.d_localdata;
                 dealWithTestLogContent(lastlinestr, out usn, out testresult, out firstpass, out testtime);
                 Barcode lastlinebar = new Barcode();
                 getLinkUsn(usn, out getlinkresult, out lastlinebar);
@@ -842,9 +845,12 @@ namespace ATEYieldRateStatisticSystem
                     SFCS_ws.clsRequestData rq = new SFCS_ws.clsRequestData();
                     GetUUData(usn, out rq);
 
+
+
                     //判断是单板还是双板
                     if (lastlinebar.BarType == p.BoardType.Single) //单板
                     {
+                        bool _bsfcsupload = false;
                         //Get fixture id
                         // string _FixtureID = getFixtureID(usn, p.BackupPath);
                         string _FIXTUREID, _ERRORCODE, _OPID;
@@ -872,6 +878,7 @@ namespace ATEYieldRateStatisticSystem
                                     //1,fixtureid 
                                     uploadFixtureID(txtCurrentWebService.Text.Trim(), usn, p.ATEStage.StageName, _FIXTUREID);
                                     updateResult2SFCS(txtCurrentWebService.Text.Trim(), usn, true, _ERRORCODE, false);
+                                    _bsfcsupload = true;
                                     //updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
                                 }
 
@@ -883,11 +890,14 @@ namespace ATEYieldRateStatisticSystem
                         lt.SubItems.Add(testresult);
                         lt.SubItems.Add(testtime);
                         lt.SubItems.Add(firstpass);
-
+                        updateMsg(lstStatus, "start write data to local database...");
+                        p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                        updateMsg(lstStatus, "end write data to local database...");
                     }
 
                     if (lastlinebar.BarType == p.BoardType.Panel)
                     {
+                        bool _bsfcsupload = false;
                         //string _FixtureID = getFixtureID(usn, p.BackupPath); //双板也只获取一次                     
                         ////先获取机种信息,无论单双板,机种信息是一样的
                         string _FIXTUREID, _OPID;
@@ -919,6 +929,7 @@ namespace ATEYieldRateStatisticSystem
                                         //add upload stage
                                         uploadFixtureID(txtCurrentWebService.Text.Trim(), usn, p.ATEStage.StageName, _FIXTUREID);
                                         updateResult2SFCS(txtCurrentWebService.Text.Trim(), usn, true, "0000", false);
+                                        _bsfcsupload = true;
                                         // updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
                                     }
                                 }
@@ -928,6 +939,11 @@ namespace ATEYieldRateStatisticSystem
                             lt.SubItems.Add(testresult);
                             lt.SubItems.Add(testtime);
                             lt.SubItems.Add(firstpass);
+                            /////
+                            updateMsg(lstStatus, "start write data to local database...");
+                            p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                            updateMsg(lstStatus, "end write data to local database...");
+
 
                             if (testresult == "PASS") // PASS，才去testlog中去获取另外1个条码的信息
                             {
@@ -957,6 +973,7 @@ namespace ATEYieldRateStatisticSystem
                                             uploadFixtureID(txtCurrentWebService.Text.Trim(), lastlinebar.BarB, p.ATEStage.StageName, _FIXTUREID);
                                             updateResult2SFCS(txtCurrentWebService.Text.Trim(), lastlinebar.BarB, true, "0000", false);
                                            // updateMsg(lstStatus, lastlinebar.BarB + " test pass,router not upload sfcs,need add...");
+                                            _bsfcsupload = true;
                                         }
                                     }
                                 }
@@ -965,6 +982,10 @@ namespace ATEYieldRateStatisticSystem
                                 lt.SubItems.Add(testresult);
                                 lt.SubItems.Add(testtime);
                                 lt.SubItems.Add(firstpass);
+                                ////
+                                updateMsg(lstStatus, "start write data to local database...");
+                                p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                updateMsg(lstStatus, "end write data to local database...");
                             }
 
                         }
@@ -1021,6 +1042,7 @@ namespace ATEYieldRateStatisticSystem
                                             uploadFixtureID(txtCurrentWebService.Text.Trim(), usn, p.ATEStage.StageName, _FIXTUREID);
                                             updateResult2SFCS(txtCurrentWebService.Text.Trim(), usn, true, "0000", false);
                                             //updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                            _bsfcsupload = true;
                                         }
 
                                     }
@@ -1030,6 +1052,11 @@ namespace ATEYieldRateStatisticSystem
                                 lt.SubItems.Add(testresult);
                                 lt.SubItems.Add(testtime);
                                 lt.SubItems.Add(firstpass);
+                                ////
+                                updateMsg(lstStatus, "start write data to local database...");
+                                p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                updateMsg(lstStatus, "end write data to local database...");
+
                                 //处理B
                                 dealWithTestLogContent(lastlinestr, out usn, out testresult, out firstpass, out testtime);
 #if DEBUG
@@ -1054,6 +1081,7 @@ namespace ATEYieldRateStatisticSystem
                                             uploadFixtureID(txtCurrentWebService.Text.Trim(), lastlinebar.BarB, p.ATEStage.StageName, _FIXTUREID);
                                             updateResult2SFCS(txtCurrentWebService.Text.Trim(), lastlinebar.BarB, true, "0000", false);
                                             //updateMsg(lstStatus, usn + " test pass,router not upload sfcs,need add...");
+                                            _bsfcsupload = true;
                                         }
                                     }
                                 }
@@ -1062,6 +1090,11 @@ namespace ATEYieldRateStatisticSystem
                                 lt.SubItems.Add(testresult);
                                 lt.SubItems.Add(testtime);
                                 lt.SubItems.Add(firstpass);
+
+                                ////
+                                updateMsg(lstStatus, "start write data to local database...");
+                                p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                updateMsg(lstStatus, "end write data to local database...");
                             }
                         }
                     }

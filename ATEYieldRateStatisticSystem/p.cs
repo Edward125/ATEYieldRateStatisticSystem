@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
 using System.Data.SQLite;
+using System.Data;
 
 
 namespace ATEYieldRateStatisticSystem
@@ -225,7 +226,11 @@ namespace ATEYieldRateStatisticSystem
            Panel
        }
 
-
+      public enum DatabaseTable
+      {
+          d_localdata,
+          d_tempdata
+        }
 
         #endregion
 
@@ -790,5 +795,88 @@ remark varchar(255)
             return true;
 
         }
+
+
+        public static bool replaceData2DB(string _tablename,string _usn,
+            string _model,string _modelfamily,string _upn,string _mo,
+            string _mac,string _seq,string _fixtureid,string _testresult,string _testtime,
+            string _firstpass,string _uploadflag,string _remark = "",
+            string _cycletime="0")           
+    
+        {
+
+            SQLiteConnection conn = new SQLiteConnection(p.LocalDBConnectionString);
+             using (SQLiteCommand cmd = new SQLiteCommand())
+             {
+                 conn.Open();
+                 cmd.Connection = conn;    
+                 SQLiteTransaction trans = conn.BeginTransaction();
+                 cmd.Transaction = trans;
+                 cmd.CommandText =
+                     "REPLACE INTO " + _tablename + @" VALUES (
+@_id,
+@_line,
+@_pant,
+@_usn,
+@_model,
+@_modelfamily,
+@_upn,
+@_mo,
+@_mac,
+@_seq,
+@_fixtureid,
+@_testresult,
+@_firstpass,
+@_uploadflag,
+@_cycletime,
+@_testtime,
+@_recordtime
+@_remark
+)";
+                 cmd.Parameters.Add(new SQLiteParameter(@"_id", DbType.Int32));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_line", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_plant", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_usn", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_model", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_modelfamily", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_upn", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_mo", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_mac", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_seq", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_fixtureid", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_testresult", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_firstpass", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_uploadflag", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_cycletime", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_testtime", DbType.String));               
+                 cmd.Parameters.Add(new SQLiteParameter(@"_recordtime", DbType.String));
+                 cmd.Parameters.Add(new SQLiteParameter(@"_remark", DbType.String));
+                 //
+                 cmd.Parameters[@"_id"] .Value = null;
+                 cmd.Parameters[@"_line"].Value  = p.PCBLine;
+                 cmd.Parameters[@"_plant"] .Value = p.ATEPlant;
+                 cmd.Parameters[@"_usn"].Value = _usn;
+                 cmd.Parameters[@"_model"].Value = _model;
+                 cmd.Parameters[@"_modelfaily"].Value = _modelfamily;
+                 cmd.Parameters[@"_upn"].Value = _upn;
+                 cmd.Parameters[@"_mo"].Value = _mo;
+                 cmd.Parameters[@"_mac"].Value = _mac;
+                 cmd.Parameters[@"_seq"].Value = _seq;
+                 cmd.Parameters[@"_fixtureid"].Value = _fixtureid;
+                 cmd.Parameters[@"_testresult"].Value = _testresult;
+                 cmd.Parameters[@"_firstpass"].Value = _firstpass;
+                 cmd.Parameters[@"_uploadflag"].Value = _uploadflag;
+                 cmd.Parameters[@"_cycletime"].Value = _cycletime;
+                 cmd.Parameters[@"_testtime"].Value = _testtime;
+                 cmd.Parameters[@"_recordtime"].Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+                 cmd.Parameters[@"_remark"].Value = _remark;
+                 cmd.ExecuteNonQuery();
+                 trans.Commit();
+             }
+             conn.Close();
+
+            return true;
+        }
+
     }
 }
