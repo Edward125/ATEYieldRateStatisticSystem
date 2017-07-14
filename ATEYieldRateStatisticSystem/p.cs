@@ -800,7 +800,7 @@ remark varchar(255)
         public static bool replaceData2DB(string _tablename,string _usn,
             string _model,string _modelfamily,string _upn,string _mo,
             string _mac,string _seq,string _fixtureid,string _testresult,string _testtime,
-            string _firstpass,string _uploadflag,string _remark = "",
+            string _firstpass,string _uploadflag,string _remark = " ",
             string _cycletime="0")           
     
         {
@@ -816,7 +816,7 @@ remark varchar(255)
                      "REPLACE INTO " + _tablename + @" VALUES (
 @_id,
 @_line,
-@_pant,
+@_plant,
 @_usn,
 @_model,
 @_modelfamily,
@@ -830,7 +830,7 @@ remark varchar(255)
 @_uploadflag,
 @_cycletime,
 @_testtime,
-@_recordtime
+@_recordtime,
 @_remark
 )";
                  cmd.Parameters.Add(new SQLiteParameter(@"_id", DbType.Int32));
@@ -857,7 +857,7 @@ remark varchar(255)
                  cmd.Parameters[@"_plant"] .Value = p.ATEPlant;
                  cmd.Parameters[@"_usn"].Value = _usn;
                  cmd.Parameters[@"_model"].Value = _model;
-                 cmd.Parameters[@"_modelfaily"].Value = _modelfamily;
+                 cmd.Parameters[@"_modelfamily"].Value = _modelfamily;
                  cmd.Parameters[@"_upn"].Value = _upn;
                  cmd.Parameters[@"_mo"].Value = _mo;
                  cmd.Parameters[@"_mac"].Value = _mac;
@@ -870,8 +870,19 @@ remark varchar(255)
                  cmd.Parameters[@"_testtime"].Value = _testtime;
                  cmd.Parameters[@"_recordtime"].Value = DateTime.Now.ToString("yyyyMMddHHmmss");
                  cmd.Parameters[@"_remark"].Value = _remark;
-                 cmd.ExecuteNonQuery();
-                 trans.Commit();
+
+                 try
+                 {
+                     cmd.ExecuteNonQuery();
+                     trans.Commit();
+                 }
+                 catch (Exception ex)
+                 {
+                     
+                    
+                 }
+                 
+                 
              }
              conn.Close();
 
