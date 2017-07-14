@@ -725,7 +725,7 @@ namespace ATEYieldRateStatisticSystem
         {
             //string sql = "CREATE TABLE salespeople ( id INTEGER PRIMARY KEY";
             string sql = @"CREATE TABLE IF NOT EXISTS d_localdata(
-id INTEGER  PRIMARY KEY NOT NULL,
+id INTEGER  PRIMARY KEY AUTOINCREMENT,
 line varchar(3),
 plant varchar(4),
 usn varchar(20),
@@ -754,7 +754,7 @@ remark varchar(255)
         public static bool createTempTable()
         {
             string sql = @"CREATE TABLE IF NOT EXISTS d_tempdata(
-id INTEGER  PRIMARY KEY NOT NULL,
+id INTEGER  PRIMARY KEY AUTOINCREMENT,
 line varchar(3),
 plant varchar(4),
 usn varchar(20),
