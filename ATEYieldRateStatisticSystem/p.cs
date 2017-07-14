@@ -879,7 +879,9 @@ remark varchar(255)
                  catch (Exception ex)
                  {
                      
-                    
+#if DEBUG
+                     MessageBox.Show (ex.Message);
+#endif
                  }
                  
                  
