@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Data.SQLite;
 using System.Data;
+using System.Net;
 
 
 namespace ATEYieldRateStatisticSystem
@@ -53,6 +54,14 @@ namespace ATEYieldRateStatisticSystem
 
         //
         public static string PCBLine = string.Empty;
+
+        //Data base[DB_Set]
+
+        public static string DataServerName = "ATEData";
+        public static string DataBaseName = "testata";
+        public static string DataBaseTable = "atedata";
+        public static string DataBaseID = "root";
+        public static string DataBasePwd = "123456";
         
         #endregion
 
@@ -193,6 +202,15 @@ namespace ATEYieldRateStatisticSystem
             
         }
 
+        /// <summary>
+        /// IP类型,V4,V6
+        /// </summary>
+        public enum IPType
+        {
+            IPV4,
+            iPV6
+        }
+
 
         public enum PlantCode
         {
@@ -204,7 +222,8 @@ namespace ATEYieldRateStatisticSystem
         {
             SysConfig,
             ATEConfig,
-            WebService
+            WebService,
+            DBSet
         }
 
        public  enum StartEndTimeType
@@ -286,7 +305,12 @@ namespace ATEYieldRateStatisticSystem
             IniFile.IniWriteValue(IniSection.WebService.ToString(), "SFCS722Webservice", SFCS722Webservice, inifilepath);
             IniFile.IniWriteValue(IniSection.WebService.ToString(), "TEST721Webservice", TEST721Webservice, inifilepath);
             IniFile.IniWriteValue(IniSection.WebService.ToString(), "TEST722Webservice", TEST722Webservice, inifilepath);
-
+            //
+            IniFile.IniWriteValue(IniSection.DBSet.ToString(), "DataServerName", p.DataServerName, inifilepath);
+            IniFile.IniWriteValue(IniSection.DBSet.ToString(), "DataBaseName",p.DataBaseName , inifilepath);
+            IniFile.IniWriteValue(IniSection.DBSet.ToString(), "DataBaseTable", p.DataBaseTable, inifilepath);
+            IniFile.IniWriteValue(IniSection.DBSet.ToString(), "DataBaseID", p.DataBaseID, inifilepath);
+            IniFile.IniWriteValue(IniSection.DBSet.ToString(), "DataBasePwd", p.DataBasePwd, inifilepath);
         }
 
         /// <summary>
@@ -319,8 +343,12 @@ namespace ATEYieldRateStatisticSystem
             SFCS722Webservice = IniFile.IniReadValue(IniSection.WebService.ToString(), "SFCS722Webservice ", iniFilePath).Trim();
             TEST721Webservice = IniFile.IniReadValue(IniSection.WebService.ToString(), "TEST721Webservice ", iniFilePath).Trim();
             TEST721Webservice = IniFile.IniReadValue(IniSection.WebService.ToString(), "TEST721Webservice ", iniFilePath).Trim();
-
-
+            //
+            p.DataServerName = IniFile.IniReadValue(IniSection.DBSet.ToString(), "DataServerName",  inifilepath);
+            p.DataBaseName = IniFile.IniReadValue(IniSection.DBSet.ToString(), "DataBaseName",  inifilepath);
+            p.DataBaseTable = IniFile.IniReadValue(IniSection.DBSet.ToString(), "DataBaseTable", inifilepath);
+            p.DataBaseID = IniFile.IniReadValue(IniSection.DBSet.ToString(), "DataBaseID",  inifilepath);
+            p.DataBasePwd = IniFile.IniReadValue(IniSection.DBSet.ToString(), "DataBasePwd",  inifilepath);
         }
 
         /// <summary>
@@ -537,7 +565,71 @@ namespace ATEYieldRateStatisticSystem
            ATEOtherStage.Add(ZL);
           // ATEOtherStage.Add(ZM);
         }
-        
+
+        #region 检测文件夹
+
+        ///// <summary>
+        ///// 插件文件夾，如果不存在，就創建文件夾
+        ///// </summary>
+        //public static void checkFolder()
+        //{
+        //    if (!Directory.Exists(@Param.appFolder))
+        //        Directory.CreateDirectory(Param.appFolder);
+        //    if (!Directory.Exists(@Param.sysLogFolder))
+        //        Directory.CreateDirectory(Param.sysLogFolder);
+        //    if (!Directory.Exists(@Param.comLogFolder))
+        //        Directory.CreateDirectory(@Param.comLogFolder);
+
+        //}
+
+        #endregion
+
+        #region 获取IP
+
+        /// <summary>
+        /// 获取IP地址,本机IP地址hostname=dns.gethostname(),返回一个IP list
+        /// </summary>
+        /// <param name="hostname">hostname</param>
+        /// <returns>返回一个字符串类型的ip list</returns>
+        public static List<string> getIP(string hostname)
+        {
+            List<string> iplist = new List<string>();
+            System.Net.IPAddress[] addressList = Dns.GetHostAddresses(hostname);//会返回所有地址，包括IPv4和IPv6   
+            foreach (IPAddress ip in addressList)
+            {
+                iplist.Add(ip.ToString());
+            }
+            return iplist;
+        }
+
+        /// <summary>
+        /// 获取IP地址,本机IP地址hostname=dns.gethostname(),返回一个IP list
+        /// </summary>
+        /// <param name="hostname">hostname</param>
+        /// <param name="iptype">ip地址的类型，IPV4,IPV6</param>
+        /// <returns>返回一个字符串类型的ip list</returns>
+        public static List<string> getIP(string hostname, IPType iptype)
+        {
+            List<string> iplist = new List<string>();
+            IPAddress[] addressList = Dns.GetHostAddresses(hostname);
+            foreach (IPAddress ip in addressList)
+            {
+                if (iptype == IPType.IPV4)
+                {
+                    if (ip.ToString().Contains("."))
+                        iplist.Add(ip.ToString());
+                }
+                if (iptype== IPType.iPV6)
+                {
+                    if (!ip.ToString().Contains("."))
+                        iplist.Add(ip.ToString());
+                }
+            }
+            return iplist;
+        }
+
+        #endregion
+
 
         private static  string PublicResourceFileName = Application.ProductName + ".Resources";
         /// <summary>

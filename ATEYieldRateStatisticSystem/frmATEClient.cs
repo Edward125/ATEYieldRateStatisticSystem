@@ -128,7 +128,9 @@ namespace ATEYieldRateStatisticSystem
 
             if (username.Contains('-'))
                 p.PCBLine = username.Substring(0, username.LastIndexOf('-'));
-            this.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")" + "-" + username + "(Line:" + p.PCBLine + ")";
+
+
+            this.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")" + "-" + username + "(Line:" + p.PCBLine + "),IP:" + p.getIP(username, p.IPType.IPV4)[0];
 
 
 
