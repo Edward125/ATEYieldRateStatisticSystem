@@ -70,6 +70,16 @@ namespace ATEYieldRateStatisticSystem
                 }
             }
 
+            if (!File.Exists(@".\MySql.Data.dll"))
+            {
+                if (!downloadMySqlData())
+                {
+                    System.Threading.Thread.Sleep(1000);
+                    SplashForm.CloseSplash();
+                    Environment.Exit(0);
+                }
+            }
+
 
             if (!p.checkDB(p.LocalDB))
             {
@@ -174,6 +184,32 @@ namespace ATEYieldRateStatisticSystem
             if (!File.Exists(filePath))
             {
                 byte[] template = Properties.Resources.SQLite_Interop;
+                FileStream stream = new FileStream(filePath, FileMode.Create);
+                try
+                {
+                    stream.Write(template, 0, template.Length);
+                    stream.Close();
+                    stream.Dispose();
+                    //  File.SetAttributes(filePath, FileAttributes.Hidden);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+
+        private static bool downloadMySqlData()
+        {
+            string filePath = @".\MySql.Data.dll";
+
+            if (!File.Exists(filePath))
+            {
+                byte[] template = Properties.Resources.MySql_Data;
                 FileStream stream = new FileStream(filePath, FileMode.Create);
                 try
                 {

@@ -58,6 +58,7 @@ namespace ATEYieldRateStatisticSystem
         //Data base[DB_Set]
 
         public static string DataServerName = "ATEData";
+        public static string DataBaseIP = "172.30.13.2";
         public static string DataBaseName = "testata";
         public static string DataBaseTable = "atedata";
         public static string DataBaseID = "root";
