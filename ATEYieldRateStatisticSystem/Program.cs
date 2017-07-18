@@ -114,6 +114,31 @@ namespace ATEYieldRateStatisticSystem
             // close the splash screen'
             SplashForm.CloseSplash();
 
+            //create mysql db
+            string result = "";
+            if (!p.createDB(p.connstringNoDB , out result))
+                MessageBox.Show(result);
+            else
+            {
+                if (!p.createMysqlTable(p.connString, out result))
+                {
+                    MessageBox.Show(result);
+
+                 }
+            }
+
+          
+
+            p.objConn = new MySql.Data.MySqlClient.MySqlConnection(p.connString);
+            try
+            {
+                p.objConn.OpenAsync();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
 
             //
             if (p.AppStart == p.AppStartModel.ATEClient)

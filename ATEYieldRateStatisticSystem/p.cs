@@ -70,6 +70,7 @@ namespace ATEYieldRateStatisticSystem
 
         //
         public static string connString = "";
+        public static string connstringNoDB = "";
         //
         public static MySqlConnection objConn = new MySqlConnection();
         
@@ -255,7 +256,9 @@ namespace ATEYieldRateStatisticSystem
       public enum DatabaseTable
       {
           d_localdata,
-          d_tempdata
+          d_tempdata,
+          atedata,
+          ftdata
         }
 
         #endregion
@@ -310,33 +313,43 @@ namespace ATEYieldRateStatisticSystem
             {
                 case "10.62.201.2":
                     connString = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "10.62.201.3":
                     connString = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "172.0.1.161":
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "172.0.1.171":
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "172.0.1.172":
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "7.7.7.7":
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break ;
                 case "8.8.8.8":
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "10.62.22.2":
                     connString = @"server=" +OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "10.62.22.3":
                     connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 default:
                     connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
             }
 
@@ -842,6 +855,9 @@ namespace ATEYieldRateStatisticSystem
             }
         }
 
+        #region sqlitedb       
+
+
         /// <summary>
         /// check db file ,if not exits,create it
         /// </summary>
@@ -922,7 +938,7 @@ namespace ATEYieldRateStatisticSystem
 id INTEGER  PRIMARY KEY AUTOINCREMENT,
 line varchar(3),
 plant varchar(4),
-usn varchar(20),
+usn varchar(30),
 model varchar(20),
 modelfamily varchar(20),
 upn varchar(20),
@@ -944,14 +960,18 @@ remark varchar(255)
             else
                 return false;
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static bool createTempTable()
         {
             string sql = @"CREATE TABLE IF NOT EXISTS d_tempdata(
 id INTEGER  PRIMARY KEY AUTOINCREMENT,
 line varchar(3),
 plant varchar(4),
-usn varchar(20),
+usn varchar(30),
 model varchar(20),
 modelfamily varchar(20),
 upn varchar(20),
@@ -974,7 +994,10 @@ remark varchar(255)
                 return false;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static bool createAllTable()
         {
             if (!createLocalTable ())
@@ -985,7 +1008,25 @@ remark varchar(255)
 
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_tablename"></param>
+        /// <param name="_usn"></param>
+        /// <param name="_model"></param>
+        /// <param name="_modelfamily"></param>
+        /// <param name="_upn"></param>
+        /// <param name="_mo"></param>
+        /// <param name="_mac"></param>
+        /// <param name="_seq"></param>
+        /// <param name="_fixtureid"></param>
+        /// <param name="_testresult"></param>
+        /// <param name="_testtime"></param>
+        /// <param name="_firstpass"></param>
+        /// <param name="_uploadflag"></param>
+        /// <param name="_remark"></param>
+        /// <param name="_cycletime"></param>
+        /// <returns></returns>
         public static bool replaceData2DB(string _tablename,string _usn,
             string _model,string _modelfamily,string _upn,string _mo,
             string _mac,string _seq,string _fixtureid,string _testresult,string _testtime,
@@ -1080,5 +1121,126 @@ remark varchar(255)
             return true;
         }
 
+
+        #endregion
+
+        #region mysqldb
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static bool createDB(string connstring,out string result)
+        {
+            result = string.Empty;
+            objConn = new MySqlConnection(connstring);           
+            try
+            {
+                objConn.Open();
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                return false;
+            }
+            string sql = @"CREATE DATABASE IF NOT EXISTS " + DataBaseName ;            
+            MySqlCommand cmd = new MySqlCommand(sql, p.objConn);
+            try
+            {
+                cmd.ExecuteNonQuery();
+                //
+                objConn.Close();
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                objConn.Close();
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connstring"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool createMysqlTable(string connstring, out string result)
+        {
+            result = string.Empty;
+            objConn = new MySqlConnection(connstring);
+            try
+            {
+                objConn.Open();
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                return false;
+            }
+
+            string sql = @"CREATE TABLE IF NOT EXISTS " + DatabaseTable.atedata.ToString() + @"(
+id int(11) NOT NULL auto_increment,
+line varchar(3),
+plant varchar(4),
+usn varchar(30),
+model varchar(20),
+modelfamily varchar(20),
+upn varchar(20),
+mo varchar(20),
+mac varchar(12),
+seq varchar(1),
+fixtureid varchar(40),
+testresult varchar(4),
+firstpass varchar(4),
+uploadflag varchar(4),
+cycletime varchar(10),
+testtime varchar(14),
+recordtime varchar(14),
+remark varchar(255),
+PRIMARY KEY (id)) ENGINE=MyISAM DEFAULT CHARSET=utf8";                
+
+            MySqlCommand cmd = new MySqlCommand(sql, p.objConn);
+            try
+            {
+                cmd.ExecuteNonQuery();
+               sql= @"CREATE TABLE IF NOT EXISTS " + DatabaseTable.ftdata.ToString() + @"(
+id int(11) NOT NULL auto_increment,
+line varchar(3),
+plant varchar(4),
+usn varchar(30),
+model varchar(20),
+modelfamily varchar(20),
+upn varchar(20),
+mo varchar(20),
+mac varchar(12),
+seq varchar(1),
+fixtureid varchar(40),
+testresult varchar(4),
+firstpass varchar(4),
+uploadflag varchar(4),
+cycletime varchar(10),
+testtime varchar(14),
+recordtime varchar(14),
+remark varchar(255),
+PRIMARY KEY (id)) ENGINE=MyISAM DEFAULT CHARSET=utf8";
+                cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
+                //
+                objConn.Close();
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                objConn.Close();
+                return false;
+            }
+            return true;
+        }
+
+        #endregion
     }
 }
