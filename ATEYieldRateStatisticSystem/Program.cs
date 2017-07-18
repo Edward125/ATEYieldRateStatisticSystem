@@ -108,6 +108,8 @@ namespace ATEYieldRateStatisticSystem
                 p.createIniFile(p.iniFilePath);
             p.readIniValue(p.iniFilePath);//exits,read ini file
 
+            p.autoSelectConnstring();
+
             System.Threading.Thread.Sleep(1000); 
             // close the splash screen'
             SplashForm.CloseSplash();

@@ -247,6 +247,12 @@ namespace ATEYieldRateStatisticSystem
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            p.objConn = new MySql.Data.MySqlClient.MySqlConnection(p.connString);
+            p.objConn.Open();
+            MessageBox.Show(p.objConn.State.ToString());
+
+
+            return;
 
             if (!PressStartButton())
                 return;

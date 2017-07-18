@@ -10,6 +10,8 @@ using System.Reflection;
 using System.Data.SQLite;
 using System.Data;
 using System.Net;
+using MySql.Data.MySqlClient;
+using System.Net.NetworkInformation;
 
 
 namespace ATEYieldRateStatisticSystem
@@ -56,13 +58,20 @@ namespace ATEYieldRateStatisticSystem
         public static string PCBLine = string.Empty;
 
         //Data base[DB_Set]
-
         public static string DataServerName = "ATEData";
         public static string DataBaseIP = "172.30.13.2";
         public static string DataBaseName = "testata";
         public static string DataBaseTable = "atedata";
         public static string DataBaseID = "root";
         public static string DataBasePwd = "123456";
+        public static string SFCS_IP = "172.30.13.2";
+        public static string TE_IP = "172.0.63.80";
+        public static string OA_IP = "10.62.35.97";
+
+        //
+        public static string connString = "";
+        //
+        public static MySqlConnection objConn = new MySqlConnection();
         
         #endregion
 
@@ -187,9 +196,6 @@ namespace ATEYieldRateStatisticSystem
 
         #endregion
 
-
-
-
         #region enum
 
 
@@ -254,6 +260,89 @@ namespace ATEYieldRateStatisticSystem
 
         #endregion
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connstring"></param>
+        public static void autoSelectConnstring()
+        {
+
+            string dns = string.Empty;
+
+            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (NetworkInterface adapter in nics)
+            {
+                bool Pd1 = (adapter.NetworkInterfaceType == NetworkInterfaceType.Ethernet); //判断是否是以太网连接
+                if (Pd1)
+                {
+                    //Console.WriteLine("网络适配器名称：" + adapter.Name);
+                    //Console.WriteLine("网络适配器标识符：" + adapter.Id);
+                    //Console.WriteLine("适配器连接状态：" + adapter.OperationalStatus.ToString());
+                    IPInterfaceProperties ip = adapter.GetIPProperties();     //IP配置信息
+                    //if (ip.UnicastAddresses.Count > 0)
+                    //{
+                    //    Console.WriteLine("IP地址:" + ip.UnicastAddresses[0].Address.ToString());
+                    //    Console.WriteLine("子网掩码:" + ip.UnicastAddresses[0].IPv4Mask.ToString());
+                    //}
+                    //if (ip.GatewayAddresses.Count > 0)
+                    //{
+                    //    Console.WriteLine("默认网关:" + ip.GatewayAddresses[0].Address.ToString());   //默认网关
+                    //}
+                    int DnsCount = ip.DnsAddresses.Count;
+                    //Console.WriteLine("DNS服务器地址：");   //默认网关
+                    if (DnsCount > 0)
+                    {
+                        dns = ip.DnsAddresses[0].ToString();
+                        //其中第一个为首选DNS，第二个为备用的，余下的为所有DNS为DNS备用，按使用顺序排列
+                        //for (int i = 0; i < DnsCount; i++)
+                        //{
+                        //    Console.WriteLine("              " + ip.DnsAddresses[i].ToString());
+                        //}
+                        break;
+                    }          
+                }
+
+            }
+
+
+            switch (dns)
+            {
+                case "10.62.201.2":
+                    connString = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break;
+                case "10.62.201.3":
+                    connString = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break;
+                case "172.0.1.161":
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break;
+                case "172.0.1.171":
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break;
+                case "172.0.1.172":
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break;
+                case "7.7.7.7":
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break ;
+                case "8.8.8.8":
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break;
+                case "10.62.22.2":
+                    connString = @"server=" +OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break;
+                case "10.62.22.3":
+                    connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break;
+                default:
+                    connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
+                    break;
+            }
+
+
+        }
+
         /// <summary>
         /// check app folder
         /// </summary>
@@ -312,6 +401,9 @@ namespace ATEYieldRateStatisticSystem
             IniFile.IniWriteValue(IniSection.DBSet.ToString(), "DataBaseTable", p.DataBaseTable, inifilepath);
             IniFile.IniWriteValue(IniSection.DBSet.ToString(), "DataBaseID", p.DataBaseID, inifilepath);
             IniFile.IniWriteValue(IniSection.DBSet.ToString(), "DataBasePwd", p.DataBasePwd, inifilepath);
+            IniFile.IniWriteValue(IniSection.DBSet.ToString(), "SFCS_IP", p.SFCS_IP, inifilepath);
+            IniFile.IniWriteValue(IniSection.DBSet.ToString(), "TE_IP", p.TE_IP, inifilepath);
+            IniFile.IniWriteValue(IniSection.DBSet.ToString(), "OA_IP", p.OA_IP, inifilepath);
         }
 
         /// <summary>
@@ -350,6 +442,10 @@ namespace ATEYieldRateStatisticSystem
             p.DataBaseTable = IniFile.IniReadValue(IniSection.DBSet.ToString(), "DataBaseTable", inifilepath);
             p.DataBaseID = IniFile.IniReadValue(IniSection.DBSet.ToString(), "DataBaseID",  inifilepath);
             p.DataBasePwd = IniFile.IniReadValue(IniSection.DBSet.ToString(), "DataBasePwd",  inifilepath);
+            //
+            p.SFCS_IP = IniFile.IniReadValue(IniSection.DBSet.ToString(), "SFCS_IP", inifilepath);
+            p.TE_IP = IniFile.IniReadValue(IniSection.DBSet.ToString(), "TE_IP", inifilepath);
+            p.OA_IP = IniFile.IniReadValue(IniSection.DBSet.ToString(), "OA_IP", inifilepath);
         }
 
         /// <summary>
