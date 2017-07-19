@@ -143,7 +143,24 @@ namespace ATEYieldRateStatisticSystem
 
             //lblModelFPY.ForeColor = Color.Red;
             //
+
             p.InitATEStageInfo();
+
+            string result = "";
+            if (p.checkSqlDBIsConnect(p.connString, out result))
+            {
+                //tsslNetDB.BackColor = Color.Green;
+                tsslNetDB.ForeColor = Color.Green;
+                tsslNetDB.Text = "Net DB:CONNECTED";
+            }
+            else
+            {
+                updateMsg(lstStatus, "Net sql db can't connect," + result);
+                //tsslNetDB.BackColor = Color.Red;
+                tsslNetDB.ForeColor = Color.Red;
+                tsslNetDB.Text = "Net DB:DISCONNECTED";
+            }
+
         }
 
         private void btnSetting_Click(object sender, EventArgs e)
@@ -246,10 +263,7 @@ namespace ATEYieldRateStatisticSystem
         }
 
         private void btnRun_Click(object sender, EventArgs e)
-        {
-
-            updateMsg(lstStatus, p.objConn.State.ToString());
-            return;
+        {       
             if (!PressStartButton())
                 return;
 #if DEBUG

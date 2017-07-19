@@ -72,6 +72,7 @@ namespace ATEYieldRateStatisticSystem
         //
         public static MySqlConnection objConn = new MySqlConnection();
         
+        
         #endregion
 
 
@@ -1303,6 +1304,172 @@ PRIMARY KEY (id)) ENGINE=MyISAM DEFAULT CHARSET=utf8";
                 return false;
             }
             return true;
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_tablename"></param>
+        /// <param name="_usn"></param>
+        /// <param name="_model"></param>
+        /// <param name="_modelfamily"></param>
+        /// <param name="_upn"></param>
+        /// <param name="_mo"></param>
+        /// <param name="_mac"></param>
+        /// <param name="_seq"></param>
+        /// <param name="_fixtureid"></param>
+        /// <param name="_testresult"></param>
+        /// <param name="_testtime"></param>
+        /// <param name="_firstpass"></param>
+        /// <param name="_uploadflag"></param>
+        /// <param name="_remark"></param>
+        /// <param name="_cycletime"></param>
+        /// <returns></returns>
+        public static bool replaceData2SqlDB(string _connstr,string _tablename, string _usn,
+            string _model, string _modelfamily, string _upn, string _mo,
+            string _mac, string _seq, string _fixtureid, string _testresult, string _testtime,
+            string _firstpass, string _uploadflag, string _remark = " ",
+            string _cycletime = "0")
+        {
+
+            MySqlConnection conn = new MySqlConnection(_connstr);
+            using (MySqlCommand  cmd = new MySqlCommand())
+            {
+                conn.Open();
+                cmd.Connection = conn;
+                MySqlTransaction trans = conn.BeginTransaction();
+                cmd.Transaction = trans;
+                cmd.CommandText =
+                    "REPLACE INTO " + _tablename + @" VALUES (
+@_id,
+@_line,
+@_plant,
+@_usn,
+@_model,
+@_modelfamily,
+@_upn,
+@_mo,
+@_mac,
+@_seq,
+@_fixtureid,
+@_testresult,
+@_firstpass,
+@_uploadflag,
+@_cycletime,
+@_testtime,
+@_recordtime,
+@_remark
+)";
+                cmd.Parameters.Add(new SQLiteParameter(@"_id", DbType.Int32));
+                cmd.Parameters.Add(new SQLiteParameter(@"_line", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_plant", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_usn", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_model", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_modelfamily", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_upn", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_mo", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_mac", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_seq", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_fixtureid", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_testresult", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_firstpass", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_uploadflag", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_cycletime", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_testtime", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_recordtime", DbType.String));
+                cmd.Parameters.Add(new SQLiteParameter(@"_remark", DbType.String));
+                //
+                cmd.Parameters[@"_id"].Value = null;
+                cmd.Parameters[@"_line"].Value = p.PCBLine;
+                cmd.Parameters[@"_plant"].Value = p.ATEPlant;
+                cmd.Parameters[@"_usn"].Value = _usn;
+                cmd.Parameters[@"_model"].Value = _model;
+                cmd.Parameters[@"_modelfamily"].Value = _modelfamily;
+                cmd.Parameters[@"_upn"].Value = _upn;
+                cmd.Parameters[@"_mo"].Value = _mo;
+                cmd.Parameters[@"_mac"].Value = _mac;
+                cmd.Parameters[@"_seq"].Value = _seq;
+                cmd.Parameters[@"_fixtureid"].Value = _fixtureid;
+                cmd.Parameters[@"_testresult"].Value = _testresult;
+                cmd.Parameters[@"_firstpass"].Value = _firstpass;
+                cmd.Parameters[@"_uploadflag"].Value = _uploadflag;
+                cmd.Parameters[@"_cycletime"].Value = _cycletime;
+                cmd.Parameters[@"_testtime"].Value = _testtime;
+                cmd.Parameters[@"_recordtime"].Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+                cmd.Parameters[@"_remark"].Value = _remark;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+
+#if DEBUG
+                    MessageBox.Show(ex.Message);
+#endif
+                }
+
+
+            }
+            conn.Close();
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_connstr"></param>
+        /// <returns></returns>
+        public static bool checkSqlDBIsConnect(string _connstr)
+        {
+            MySqlConnection conn = new MySqlConnection(_connstr);
+            try
+            {
+                conn.Open();
+                if (conn.State == ConnectionState.Open)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_connstr"></param>
+        /// <returns></returns>
+        public static bool checkSqlDBIsConnect(string _connstr ,out string _result)
+        {
+            _result = string.Empty;
+            MySqlConnection conn = new MySqlConnection(_connstr);
+            try
+            {
+                conn.Open();
+                if (conn.State == ConnectionState.Open)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                _result = ex.Message;
+                return false;
+            }
         }
 
         #endregion

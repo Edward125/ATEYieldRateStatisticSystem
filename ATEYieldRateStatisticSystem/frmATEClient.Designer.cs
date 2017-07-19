@@ -57,20 +57,21 @@
             this.fswAutoLook = new System.IO.FileSystemWatcher();
             this.bgwWebService = new System.ComponentModel.BackgroundWorker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsslStartTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslModel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tsslUPN = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslModelFamily = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslMO = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tsslStartTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslUPN = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.lblModelFPY = new System.Windows.Forms.Label();
-            this.lblModelYR = new System.Windows.Forms.Label();
-            this.lblShiftFPY = new System.Windows.Forms.Label();
             this.lblShiftYR = new System.Windows.Forms.Label();
+            this.lblShiftFPY = new System.Windows.Forms.Label();
+            this.lblModelYR = new System.Windows.Forms.Label();
+            this.lblModelFPY = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tsslNetDB = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -353,24 +354,25 @@
             this.tsslModel,
             this.tsslModelFamily,
             this.tsslMO,
-            this.tsslUPN});
+            this.tsslUPN,
+            this.tsslNetDB});
             this.statusStrip1.Location = new System.Drawing.Point(0, 594);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(699, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // tsslStartTime
+            // 
+            this.tsslStartTime.Name = "tsslStartTime";
+            this.tsslStartTime.Size = new System.Drawing.Size(66, 17);
+            this.tsslStartTime.Text = "StartTime:";
+            // 
             // tsslModel
             // 
             this.tsslModel.Name = "tsslModel";
             this.tsslModel.Size = new System.Drawing.Size(49, 17);
             this.tsslModel.Text = "Model:";
-            // 
-            // tsslUPN
-            // 
-            this.tsslUPN.Name = "tsslUPN";
-            this.tsslUPN.Size = new System.Drawing.Size(37, 17);
-            this.tsslUPN.Text = "UPN:";
             // 
             // tsslModelFamily
             // 
@@ -384,11 +386,11 @@
             this.tsslMO.Size = new System.Drawing.Size(33, 17);
             this.tsslMO.Text = "MO:";
             // 
-            // tsslStartTime
+            // tsslUPN
             // 
-            this.tsslStartTime.Name = "tsslStartTime";
-            this.tsslStartTime.Size = new System.Drawing.Size(66, 17);
-            this.tsslStartTime.Text = "StartTime:";
+            this.tsslUPN.Name = "tsslUPN";
+            this.tsslUPN.Size = new System.Drawing.Size(37, 17);
+            this.tsslUPN.Text = "UPN:";
             // 
             // groupBox5
             // 
@@ -407,67 +409,16 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "YiedRate";
             // 
-            // label8
+            // lblShiftYR
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(11, 22);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(65, 14);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Model FPY:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(13, 46);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(61, 14);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Model YR:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(16, 71);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(54, 14);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "Shift FPY:";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(18, 96);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(50, 14);
-            this.label11.TabIndex = 3;
-            this.label11.Text = "Shift YR:";
-            // 
-            // lblModelFPY
-            // 
-            this.lblModelFPY.AutoSize = true;
-            this.lblModelFPY.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModelFPY.ForeColor = System.Drawing.Color.Red;
-            this.lblModelFPY.Location = new System.Drawing.Point(86, 20);
-            this.lblModelFPY.Name = "lblModelFPY";
-            this.lblModelFPY.Size = new System.Drawing.Size(25, 17);
-            this.lblModelFPY.TabIndex = 4;
-            this.lblModelFPY.Text = "0%";
-            // 
-            // lblModelYR
-            // 
-            this.lblModelYR.AutoSize = true;
-            this.lblModelYR.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModelYR.ForeColor = System.Drawing.Color.Red;
-            this.lblModelYR.Location = new System.Drawing.Point(86, 45);
-            this.lblModelYR.Name = "lblModelYR";
-            this.lblModelYR.Size = new System.Drawing.Size(25, 17);
-            this.lblModelYR.TabIndex = 5;
-            this.lblModelYR.Text = "0%";
+            this.lblShiftYR.AutoSize = true;
+            this.lblShiftYR.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblShiftYR.ForeColor = System.Drawing.Color.Red;
+            this.lblShiftYR.Location = new System.Drawing.Point(86, 96);
+            this.lblShiftYR.Name = "lblShiftYR";
+            this.lblShiftYR.Size = new System.Drawing.Size(25, 17);
+            this.lblShiftYR.TabIndex = 7;
+            this.lblShiftYR.Text = "0%";
             // 
             // lblShiftFPY
             // 
@@ -480,16 +431,73 @@
             this.lblShiftFPY.TabIndex = 6;
             this.lblShiftFPY.Text = "0%";
             // 
-            // lblShiftYR
+            // lblModelYR
             // 
-            this.lblShiftYR.AutoSize = true;
-            this.lblShiftYR.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblShiftYR.ForeColor = System.Drawing.Color.Red;
-            this.lblShiftYR.Location = new System.Drawing.Point(86, 96);
-            this.lblShiftYR.Name = "lblShiftYR";
-            this.lblShiftYR.Size = new System.Drawing.Size(25, 17);
-            this.lblShiftYR.TabIndex = 7;
-            this.lblShiftYR.Text = "0%";
+            this.lblModelYR.AutoSize = true;
+            this.lblModelYR.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblModelYR.ForeColor = System.Drawing.Color.Red;
+            this.lblModelYR.Location = new System.Drawing.Point(86, 45);
+            this.lblModelYR.Name = "lblModelYR";
+            this.lblModelYR.Size = new System.Drawing.Size(25, 17);
+            this.lblModelYR.TabIndex = 5;
+            this.lblModelYR.Text = "0%";
+            // 
+            // lblModelFPY
+            // 
+            this.lblModelFPY.AutoSize = true;
+            this.lblModelFPY.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblModelFPY.ForeColor = System.Drawing.Color.Red;
+            this.lblModelFPY.Location = new System.Drawing.Point(86, 20);
+            this.lblModelFPY.Name = "lblModelFPY";
+            this.lblModelFPY.Size = new System.Drawing.Size(25, 17);
+            this.lblModelFPY.TabIndex = 4;
+            this.lblModelFPY.Text = "0%";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(18, 96);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(50, 14);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Shift YR:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(16, 71);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(54, 14);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Shift FPY:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(13, 46);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(61, 14);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Model YR:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(11, 22);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(65, 14);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Model FPY:";
+            // 
+            // tsslNetDB
+            // 
+            this.tsslNetDB.Name = "tsslNetDB";
+            this.tsslNetDB.Size = new System.Drawing.Size(49, 17);
+            this.tsslNetDB.Text = "NetDB:";
             // 
             // frmATEClient
             // 
@@ -571,5 +579,6 @@
         private System.Windows.Forms.Label lblShiftFPY;
         private System.Windows.Forms.Label lblModelYR;
         private System.Windows.Forms.Label lblModelFPY;
+        private System.Windows.Forms.ToolStripStatusLabel tsslNetDB;
     }
 }

@@ -125,20 +125,7 @@ namespace ATEYieldRateStatisticSystem
                     MessageBox.Show(result);
 
                  }
-            }
-
-          
-
-            p.objConn = new MySql.Data.MySqlClient.MySqlConnection(p.connString);
-            try
-            {
-                p.objConn.OpenAsync();
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }
+            }        
 
             //
             if (p.AppStart == p.AppStartModel.ATEClient)
