@@ -56,7 +56,6 @@ namespace ATEYieldRateStatisticSystem
 
         //
         public static string PCBLine = string.Empty;
-
         //Data base[DB_Set]
         public static string DataServerName = "ATEData";
         public static string DataBaseIP = "172.30.13.2";
@@ -67,7 +66,6 @@ namespace ATEYieldRateStatisticSystem
         public static string SFCS_IP = "172.30.13.2";
         public static string TE_IP = "172.0.63.80";
         public static string OA_IP = "10.62.35.97";
-
         //
         public static string connString = "";
         public static string connstringNoDB = "";
@@ -320,34 +318,100 @@ namespace ATEYieldRateStatisticSystem
                     connstringNoDB = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "172.0.1.161":
+                    try
+                    {
+                        TE_IP = getIP(DataServerName, IPType.IPV4)[0];
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
                     connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "172.0.1.171":
+                    try
+                    {
+                        TE_IP = getIP(DataServerName, IPType.IPV4)[0];
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
                     connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "172.0.1.172":
+                    try
+                    {
+                        TE_IP = getIP(DataServerName, IPType.IPV4)[0];
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
                     connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "7.7.7.7":
+                    try
+                    {
+                        TE_IP = getIP(DataServerName, IPType.IPV4)[0];
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
                     connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break ;
                 case "8.8.8.8":
+                    try
+                    {
+                        TE_IP = getIP(DataServerName, IPType.IPV4)[0];
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
                     connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "10.62.22.2":
+                    try
+                    {
+                        OA_IP = getIP(DataServerName, IPType.IPV4)[0];
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     connString = @"server=" +OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
                     connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 case "10.62.22.3":
+                    try
+                    {
+                        OA_IP = getIP(DataServerName, IPType.IPV4)[0];
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
                     connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;
                 default:
+                    try
+                    {
+                        OA_IP = getIP(DataServerName, IPType.IPV4)[0];
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
                     connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
                     break;

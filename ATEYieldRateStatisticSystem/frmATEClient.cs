@@ -295,7 +295,7 @@ namespace ATEYieldRateStatisticSystem
             updateMsg(lstStatus, "result:" + result);
             updateMsg(lstStatus, "bara:" + bara);
             updateMsg(lstStatus, "barb:" + barb);
-
+            
             result = bara = barb = "";
             getLinkUsn("CN063JCXWSC0076Q08LCA00", out result, out bara, out barb);
             updateMsg(lstStatus, "result:" + result);
