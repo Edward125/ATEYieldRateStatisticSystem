@@ -147,19 +147,9 @@ namespace ATEYieldRateStatisticSystem
             p.InitATEStageInfo();
 
             string result = "";
-            if (p.checkSqlDBIsConnect(p.connString, out result))
-            {
-                //tsslNetDB.BackColor = Color.Green;
-                tsslNetDB.ForeColor = Color.Green;
-                tsslNetDB.Text = "Net DB:CONNECTED";
-            }
-            else
-            {
-                updateMsg(lstStatus, "Net sql db can't connect," + result);
-                //tsslNetDB.BackColor = Color.Red;
-                tsslNetDB.ForeColor = Color.Red;
-                tsslNetDB.Text = "Net DB:DISCONNECTED";
-            }
+            bool isConnect = p.checkSqlDBIsConnect(p.connString, out result);
+            checkSqlDBUIChange(isConnect, result);
+    
 
         }
 
@@ -910,7 +900,20 @@ namespace ATEYieldRateStatisticSystem
                         lt.SubItems.Add(firstpass);
                         updateMsg(lstStatus, "start write data to local database...");
                         p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
-                        updateMsg(lstStatus, "end write data to local database...");
+                        //updateMsg(lstStatus, "end write data to local database...");
+                        string result = "";
+                        bool isConnect = p.checkSqlDBIsConnect(p.connString, out result);
+                        checkSqlDBUIChange(isConnect, result);
+                        if (isConnect)
+                        {
+                            updateMsg(lstStatus, "net db connect,start write data to net database...");
+                            p.replaceData2SqlDB(p.connString, p.DatabaseTable.atedata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                        }
+                        else
+                        {
+                            updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
+                            p.replaceData2DB(p.DatabaseTable.d_tempdata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                        }
                     }
 
                     if (lastlinebar.BarType == p.BoardType.Panel)
@@ -960,7 +963,20 @@ namespace ATEYieldRateStatisticSystem
                             /////
                             updateMsg(lstStatus, "start write data to local database...");
                             p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
-                            updateMsg(lstStatus, "end write data to local database...");
+                            //updateMsg(lstStatus, "end write data to local database...");
+                            string result = "";
+                            bool isConnect = p.checkSqlDBIsConnect(p.connString, out result);
+                            checkSqlDBUIChange(isConnect, result);
+                            if (isConnect)
+                            {
+                                updateMsg(lstStatus, "net db connect,start write data to net database...");
+                                p.replaceData2SqlDB(p.connString, p.DatabaseTable.atedata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                            }
+                            else
+                            {
+                                updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
+                                p.replaceData2DB(p.DatabaseTable.d_tempdata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                            }
 
 
                             if (testresult == "PASS") // PASS，才去testlog中去获取另外1个条码的信息
@@ -1003,7 +1019,20 @@ namespace ATEYieldRateStatisticSystem
                                 ////
                                 updateMsg(lstStatus, "start write data to local database...");
                                 p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
-                                updateMsg(lstStatus, "end write data to local database...");
+                                //updateMsg(lstStatus, "end write data to local database...");
+                                result = "";
+                                isConnect = p.checkSqlDBIsConnect(p.connString, out result);
+                                checkSqlDBUIChange(isConnect, result);
+                                if (isConnect)
+                                {
+                                    updateMsg(lstStatus, "net db connect,start write data to net database...");
+                                    p.replaceData2SqlDB (p.connString,p.DatabaseTable.atedata.ToString (), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                }
+                                else
+                                {
+                                    updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
+                                    p.replaceData2DB(p.DatabaseTable.d_tempdata .ToString (), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                }
                             }
 
                         }
@@ -1073,7 +1102,22 @@ namespace ATEYieldRateStatisticSystem
                                 ////
                                 updateMsg(lstStatus, "start write data to local database...");
                                 p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
-                                updateMsg(lstStatus, "end write data to local database...");
+                                //updateMsg(lstStatus, "end write data to local database...");
+                                string result = "";
+                                bool isConnect = p.checkSqlDBIsConnect(p.connString, out result);
+                                checkSqlDBUIChange(isConnect, result);
+                                if (isConnect)
+                                {
+                                    updateMsg(lstStatus, "net db connect,start write data to net database...");
+                                    p.replaceData2SqlDB(p.connString, p.DatabaseTable.atedata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                }
+                                else
+                                {
+                                    updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
+                                    p.replaceData2DB(p.DatabaseTable.d_tempdata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                }
+
+
 
                                 //处理B
                                 dealWithTestLogContent(lastlinestr, out usn, out testresult, out firstpass, out testtime);
@@ -1112,7 +1156,20 @@ namespace ATEYieldRateStatisticSystem
                                 ////
                                 updateMsg(lstStatus, "start write data to local database...");
                                 p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
-                                updateMsg(lstStatus, "end write data to local database...");
+                                //updateMsg(lstStatus, "end write data to local database...");
+                                result = "";
+                                isConnect = p.checkSqlDBIsConnect(p.connString, out result);
+                                checkSqlDBUIChange(isConnect, result);
+                                if (isConnect)
+                                {
+                                    updateMsg(lstStatus, "net db connect,start write data to net database...");
+                                    p.replaceData2SqlDB(p.connString, p.DatabaseTable.atedata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                }
+                                else
+                                {
+                                    updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
+                                    p.replaceData2DB(p.DatabaseTable.d_tempdata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                }
                             }
                         }
                     }
@@ -1510,6 +1567,27 @@ namespace ATEYieldRateStatisticSystem
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_isconnect"></param>
+        /// <param name="result"></param>
+        private void checkSqlDBUIChange(bool _isconnect, string _result)
+        {
+            if (_isconnect)
+            {
+                //tsslNetDB.BackColor = Color.Green;
+                tsslNetDB.ForeColor = Color.Green;
+                tsslNetDB.Text = "Net DB:CONNECTED";
+            }
+            else
+            {
+                updateMsg(lstStatus, "Net sql db can't connect," + _result);
+                //tsslNetDB.BackColor = Color.Red;
+                tsslNetDB.ForeColor = Color.Red;
+                tsslNetDB.Text = "Net DB:DISCONNECTED";
+            }
+        }
 
     }  
 }
