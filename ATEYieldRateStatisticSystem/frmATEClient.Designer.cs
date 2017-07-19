@@ -59,9 +59,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsslStartTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslModel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tsslModelFamily = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tsslMO = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslUPN = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslNetDB = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.lblShiftYR = new System.Windows.Forms.Label();
             this.lblShiftFPY = new System.Windows.Forms.Label();
@@ -71,7 +70,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.tsslNetDB = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -352,8 +350,6 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsslStartTime,
             this.tsslModel,
-            this.tsslModelFamily,
-            this.tsslMO,
             this.tsslUPN,
             this.tsslNetDB});
             this.statusStrip1.Location = new System.Drawing.Point(0, 594);
@@ -374,23 +370,17 @@
             this.tsslModel.Size = new System.Drawing.Size(49, 17);
             this.tsslModel.Text = "Model:";
             // 
-            // tsslModelFamily
-            // 
-            this.tsslModelFamily.Name = "tsslModelFamily";
-            this.tsslModelFamily.Size = new System.Drawing.Size(85, 17);
-            this.tsslModelFamily.Text = "ModelFamily:";
-            // 
-            // tsslMO
-            // 
-            this.tsslMO.Name = "tsslMO";
-            this.tsslMO.Size = new System.Drawing.Size(33, 17);
-            this.tsslMO.Text = "MO:";
-            // 
             // tsslUPN
             // 
             this.tsslUPN.Name = "tsslUPN";
             this.tsslUPN.Size = new System.Drawing.Size(37, 17);
             this.tsslUPN.Text = "UPN:";
+            // 
+            // tsslNetDB
+            // 
+            this.tsslNetDB.Name = "tsslNetDB";
+            this.tsslNetDB.Size = new System.Drawing.Size(49, 17);
+            this.tsslNetDB.Text = "NetDB:";
             // 
             // groupBox5
             // 
@@ -493,12 +483,6 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Model FPY:";
             // 
-            // tsslNetDB
-            // 
-            this.tsslNetDB.Name = "tsslNetDB";
-            this.tsslNetDB.Size = new System.Drawing.Size(49, 17);
-            this.tsslNetDB.Text = "NetDB:";
-            // 
             // frmATEClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -567,8 +551,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tsslModel;
         private System.Windows.Forms.ToolStripStatusLabel tsslUPN;
-        private System.Windows.Forms.ToolStripStatusLabel tsslModelFamily;
-        private System.Windows.Forms.ToolStripStatusLabel tsslMO;
         private System.Windows.Forms.ToolStripStatusLabel tsslStartTime;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label11;

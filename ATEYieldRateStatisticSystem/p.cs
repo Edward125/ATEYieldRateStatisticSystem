@@ -1013,7 +1013,7 @@ seq varchar(1),
 fixtureid varchar(40),
 testresult varchar(4),
 firstpass varchar(4),
-uploadflag varchar(4),
+uploadflag varchar(5),
 cycletime varchar(10),
 testtime varchar(14),
 recordtime varchar(14),
@@ -1046,7 +1046,7 @@ seq varchar(1),
 fixtureid varchar(40),
 testresult varchar(4),
 firstpass varchar(4),
-uploadflag varchar(4),
+uploadflag varchar(5),
 cycletime varchar(10),
 testtime varchar(14),
 recordtime varchar(14),
@@ -1261,7 +1261,7 @@ seq varchar(1),
 fixtureid varchar(40),
 testresult varchar(4),
 firstpass varchar(4),
-uploadflag varchar(4),
+uploadflag varchar(5),
 cycletime varchar(10),
 testtime varchar(14),
 recordtime varchar(14),
@@ -1286,7 +1286,7 @@ seq varchar(1),
 fixtureid varchar(40),
 testresult varchar(4),
 firstpass varchar(4),
-uploadflag varchar(4),
+uploadflag varchar(5),
 cycletime varchar(10),
 testtime varchar(14),
 recordtime varchar(14),
@@ -1333,7 +1333,7 @@ PRIMARY KEY (id)) ENGINE=MyISAM DEFAULT CHARSET=utf8";
         public static bool replaceData2SqlDB(string _connstr,string _tablename, string _usn,
             string _model, string _modelfamily, string _upn, string _mo,
             string _mac, string _seq, string _fixtureid, string _testresult, string _testtime,
-            string _firstpass, string _uploadflag, string _remark = " ",
+            string _firstpass, string _uploadflag, string _remark = "NA",
             string _cycletime = "0")
         {
 
@@ -1342,71 +1342,127 @@ PRIMARY KEY (id)) ENGINE=MyISAM DEFAULT CHARSET=utf8";
             {
                 conn.Open();
                 cmd.Connection = conn;
-                MySqlTransaction trans = conn.BeginTransaction();
-                cmd.Transaction = trans;
-                cmd.CommandText =
-                    "REPLACE INTO " + _tablename + @" VALUES (
-@_id,
-@_line,
-@_plant,
-@_usn,
-@_model,
-@_modelfamily,
-@_upn,
-@_mo,
-@_mac,
-@_seq,
-@_fixtureid,
-@_testresult,
-@_firstpass,
-@_uploadflag,
-@_cycletime,
-@_testtime,
-@_recordtime,
-@_remark
-)";
-                cmd.Parameters.Add(new SQLiteParameter(@"_id", DbType.Int32));
-                cmd.Parameters.Add(new SQLiteParameter(@"_line", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_plant", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_usn", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_model", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_modelfamily", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_upn", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_mo", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_mac", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_seq", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_fixtureid", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_testresult", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_firstpass", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_uploadflag", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_cycletime", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_testtime", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_recordtime", DbType.String));
-                cmd.Parameters.Add(new SQLiteParameter(@"_remark", DbType.String));
-                //
-                cmd.Parameters[@"_id"].Value = null;
-                cmd.Parameters[@"_line"].Value = p.PCBLine;
-                cmd.Parameters[@"_plant"].Value = p.ATEPlant;
-                cmd.Parameters[@"_usn"].Value = _usn;
-                cmd.Parameters[@"_model"].Value = _model;
-                cmd.Parameters[@"_modelfamily"].Value = _modelfamily;
-                cmd.Parameters[@"_upn"].Value = _upn;
-                cmd.Parameters[@"_mo"].Value = _mo;
-                cmd.Parameters[@"_mac"].Value = _mac;
-                cmd.Parameters[@"_seq"].Value = _seq;
-                cmd.Parameters[@"_fixtureid"].Value = _fixtureid;
-                cmd.Parameters[@"_testresult"].Value = _testresult;
-                cmd.Parameters[@"_firstpass"].Value = _firstpass;
-                cmd.Parameters[@"_uploadflag"].Value = _uploadflag;
-                cmd.Parameters[@"_cycletime"].Value = _cycletime;
-                cmd.Parameters[@"_testtime"].Value = _testtime;
-                cmd.Parameters[@"_recordtime"].Value = DateTime.Now.ToString("yyyyMMddHHmmss");
-                cmd.Parameters[@"_remark"].Value = _remark;
+
+
+                cmd.CommandText = @"REPLACE INTO " + _tablename + @"(
+line,
+plant,
+usn,
+model,
+modelfamily,
+upn,
+mo,
+mac,
+seq,
+fixtureid,
+testresult,
+firstpass,
+uploadflag,
+cycletime,
+testtime,
+recordtime,
+remark) VALUES ('" + p.PCBLine + "','"
+                   + p.ATEPlant + "','"
+                   + _usn + "','"
+                   + _model + "','"
+                   + _modelfamily + "','"
+                   + _upn + "','"
+                   + _mo + "','"
+                   + _mac + "','"
+                   + _seq + "','"
+                   + _fixtureid + "','"
+                   + _testresult + "','"
+                   + _firstpass + "','"
+                   + _uploadflag + "','"
+                   + _cycletime + "','"
+                   + _testtime + "','"
+                   + DateTime.Now.ToString("yyyyMMddHHmmss") + "','"
+                   + _remark + "')";
+
+
+
+               // MySqlTransaction trans = conn.BeginTransaction();
+                //cmd.Transaction = trans;
+//                cmd.CommandText =
+//                    "REPLACE INTO " + _tablename + @" VALUES (
+//@_id,
+//@_line,
+//@_plant,
+//@_usn,
+//@_model,
+//@_modelfamily,
+//@_upn,
+//@_mo,
+//@_mac,
+//@_seq,
+//@_fixtureid,
+//@_testresult,
+//@_firstpass,
+//@_uploadflag,
+//@_cycletime,
+//@_testtime,
+//@_recordtime,
+//@_remark
+//)";
+//                cmd.Parameters.Add(new MySqlParameter(@"_id", DbType.Int32));
+//                cmd.Parameters.Add(new MySqlParameter(@"_line", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_plant", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_usn", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_model", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_modelfamily", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_upn", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_mo", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_mac", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_seq", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_fixtureid", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_testresult", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_firstpass", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_uploadflag", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_cycletime", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_testtime", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_recordtime", DbType.String));
+//                cmd.Parameters.Add(new MySqlParameter(@"_remark", DbType.String));             
+           
+                //cmd.Parameters[@"_line"].Value = p.PCBLine;               
+                //cmd.Parameters[@"_plant"].Value = p.ATEPlant;
+                //cmd.Parameters[@"_usn"].Value = _usn;
+                //cmd.Parameters[@"_model"].Value = _model;
+                //cmd.Parameters[@"_modelfamily"].Value = _modelfamily;
+                //cmd.Parameters[@"_upn"].Value = _upn;
+                //cmd.Parameters[@"_mo"].Value = _mo;
+                //cmd.Parameters[@"_mac"].Value = _mac;
+                //cmd.Parameters[@"_seq"].Value = _seq;
+                //cmd.Parameters[@"_fixtureid"].Value = _fixtureid;
+                //cmd.Parameters[@"_testresult"].Value = _testresult;
+                //cmd.Parameters[@"_firstpass"].Value = _firstpass;
+                //cmd.Parameters[@"_uploadflag"].Value = _uploadflag;
+                //cmd.Parameters[@"_cycletime"].Value = _cycletime;
+                //cmd.Parameters[@"_testtime"].Value = _testtime;
+                //cmd.Parameters[@"_recordtime"].Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+                //cmd.Parameters[@"_remark"].Value = _remark;
+
+                //cmd.Parameters[@"_line"].Value = " ";
+                //cmd.Parameters[@"_plant"].Value = " ";
+                //cmd.Parameters[@"_usn"].Value = " ";
+                //cmd.Parameters[@"_model"].Value = " ";
+                //cmd.Parameters[@"_modelfamily"].Value = " ";
+                //cmd.Parameters[@"_upn"].Value = " ";
+                //cmd.Parameters[@"_mo"].Value = " ";
+                //cmd.Parameters[@"_mac"].Value = " ";
+                //cmd.Parameters[@"_seq"].Value = " ";
+                //cmd.Parameters[@"_fixtureid"].Value = " ";
+                //cmd.Parameters[@"_testresult"].Value = " ";
+                //cmd.Parameters[@"_firstpass"].Value = " ";
+                //cmd.Parameters[@"_uploadflag"].Value = " ";
+                //cmd.Parameters[@"_cycletime"].Value = " ";
+                //cmd.Parameters[@"_testtime"].Value = " ";
+                //cmd.Parameters[@"_recordtime"].Value = " ";
+                //cmd.Parameters[@"_remark"].Value = " ";
 
                 try
                 {
                     cmd.ExecuteNonQuery();
-                    trans.Commit();
+                    //trans.Commit();
                 }
                 catch (Exception ex)
                 {

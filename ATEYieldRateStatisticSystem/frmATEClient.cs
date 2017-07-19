@@ -139,7 +139,7 @@ namespace ATEYieldRateStatisticSystem
             txtTestlogPath.SetWatermark("DbClick here to select ATE test program testlog file folder path...");
             InitListviewBarcode(lstviewBarcode);
             loadConfig();
-            tsslStartTime.Text = "StartTime:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ",";
+            tsslStartTime.Text = "StartTime:" + DateTime.Now.ToString("MM-dd HH:mm:ss") + ",";
 
             //lblModelFPY.ForeColor = Color.Red;
             //
@@ -285,9 +285,9 @@ namespace ATEYieldRateStatisticSystem
             txtModel.Text = rq.Model;
             tsslModel.Text = "Model:" + rq.Model;
             txtProjectCode.Text = rq.ModelFamily;
-            tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
+            //tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
             txtMO.Text = rq.MO;
-            tsslMO.Text = "MO:" + rq.MO;
+            //tsslMO.Text = "MO:" + rq.MO;
             txtUPN.Text = rq.UPN;
             tsslUPN.Text = "UPN:" + rq.UPN;
 
@@ -1177,9 +1177,9 @@ namespace ATEYieldRateStatisticSystem
                     txtModel.Text = rq.Model;
                     tsslModel.Text = "Model:" + rq.Model;
                     txtProjectCode.Text = rq.ModelFamily;
-                    tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
+                    //tsslModelFamily.Text = "ModelFamily:" + rq.ModelFamily;
                     txtMO.Text = rq.MO;
-                    tsslMO.Text = "MO:" + rq.MO;
+                    //tsslMO.Text = "MO:" + rq.MO;
                     txtUPN.Text = rq.UPN;
                     tsslUPN.Text = "UPN:" + rq.UPN;
 
@@ -1578,14 +1578,14 @@ namespace ATEYieldRateStatisticSystem
             {
                 //tsslNetDB.BackColor = Color.Green;
                 tsslNetDB.ForeColor = Color.Green;
-                tsslNetDB.Text = "Net DB:CONNECTED";
+                tsslNetDB.Text = "CONNECTED";
             }
             else
             {
                 updateMsg(lstStatus, "Net sql db can't connect," + _result);
                 //tsslNetDB.BackColor = Color.Red;
                 tsslNetDB.ForeColor = Color.Red;
-                tsslNetDB.Text = "Net DB:DISCONNECTED";
+                tsslNetDB.Text = "DISCONNECTED";
             }
         }
 
