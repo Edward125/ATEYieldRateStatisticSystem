@@ -116,15 +116,17 @@ namespace ATEYieldRateStatisticSystem
 
             //create mysql db
             string result = "";
-            if (!p.createDB(p.connstringNoDB , out result))
-                MessageBox.Show(result);
+            if (!p.createDB(p.connstringNoDB, out result))
+            {
+                // MessageBox.Show(result);
+            }
             else
             {
                 if (!p.createMysqlTable(p.connString, out result))
                 {
                     MessageBox.Show(result);
 
-                 }
+                }
             }        
 
             //

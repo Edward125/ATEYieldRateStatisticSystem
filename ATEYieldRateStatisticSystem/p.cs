@@ -311,12 +311,12 @@ namespace ATEYieldRateStatisticSystem
             switch (dns)
             {
                 case "10.62.201.2":
-                    connString = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break;
                 case "10.62.201.3":
-                    connString = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + SFCS_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break;
                 case "172.0.1.161":
                     try
