@@ -1549,7 +1549,7 @@ remark) VALUES ('" + p.PCBLine + "','"
         /// <param name="_uploadflag"></param>
         /// <param name="_remark"></param>
         /// <param name="_cycletime"></param>
-        private void saveTempLog(string _usn,
+        public static  void saveTempLog(string _usn,
             string _model, string _modelfamily, string _upn, string _mo,
             string _mac, string _seq, string _fixtureid, string _testresult, string _testtime,
             string _firstpass, string _uploadflag, string _remark = "NA",
@@ -1565,7 +1565,7 @@ remark) VALUES ('" + p.PCBLine + "','"
                 + _testresult + "," + _firstpass +","
                 + _uploadflag +"," +_cycletime +","
                 + _testtime + ","
-                + DateTime.Now.ToString("yyyyMMddHHmmss") + "," + _remark + @"\r\n";
+                + DateTime.Now.ToString("yyyyMMddHHmmss") + "," + _remark ;
             sw.WriteLine(linestr);
             sw.Close();
         }
@@ -1576,7 +1576,7 @@ remark) VALUES ('" + p.PCBLine + "','"
         /// 读出templog 的list并删除掉文件
         /// </summary>
 
-        private void readTemplog()
+        public static  List <string>  readTemplog()
         {
             List<string> templist = new List<string>();
             string logpath = AppFolder + @"\Temp.log";
@@ -1590,6 +1590,7 @@ remark) VALUES ('" + p.PCBLine + "','"
             }
             sr.Close();
             File.Delete(logpath);
+            return templist;
         }
 
 
@@ -1612,7 +1613,7 @@ remark) VALUES ('" + p.PCBLine + "','"
         /// <param name="_testtime"></param>
         /// <param name="_recordtime"></param>
         /// <param name="_remark"></param>
-        public void dealwithteamploglinestring(string linestr, out string _usn,
+        public static  void dealwithteamploglinestring(string linestr, out string _usn,
             out string _model, out string _modelfamily, out string _upn, out  string _mo,
             out string _mac, out  string _seq, out  string _fixtureid,
             out string _testresult, out string _firstpass,
@@ -1623,23 +1624,23 @@ remark) VALUES ('" + p.PCBLine + "','"
             if (!string.IsNullOrEmpty(linestr))
             {
                 string[] temps = linestr.Split(',');
-                if (temps.Length == 15)
+                if (temps.Length == 17)
                 {
-                    _usn = temps[0].ToUpper();
-                    _model = temps[1].ToUpper();
-                    _modelfamily = temps[2].ToUpper();
-                    _upn = temps[3].ToUpper();
-                    _mo = temps[4].ToUpper();
-                    _mac = temps[5].ToUpper();
-                    _seq = temps[6].ToUpper();
-                    _fixtureid = temps[7];
-                    _testresult = temps[8];
-                    _firstpass = temps[9];
-                    _uploadflag = temps[10];
-                    _cycletime = temps[11];
-                    _testtime = temps[12];
-                    _recordtime = temps[13];
-                    _remark = temps[14];
+                    _usn = temps[2].ToUpper();
+                    _model = temps[3].ToUpper();
+                    _modelfamily = temps[4].ToUpper();
+                    _upn = temps[5].ToUpper();
+                    _mo = temps[6].ToUpper();
+                    _mac = temps[7].ToUpper();
+                    _seq = temps[8].ToUpper();
+                    _fixtureid = temps[9];
+                    _testresult = temps[10];
+                    _firstpass = temps[11];
+                    _uploadflag = temps[12];
+                    _cycletime = temps[13];
+                    _testtime = temps[14];
+                    _recordtime = temps[15];
+                    _remark = temps[16];
                 }
             }
 

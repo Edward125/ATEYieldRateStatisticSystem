@@ -110,9 +110,7 @@ namespace ATEYieldRateStatisticSystem
 
             p.autoSelectConnstring();
 
-            System.Threading.Thread.Sleep(1000); 
-            // close the splash screen'
-            SplashForm.CloseSplash();
+          
 
             //create mysql db
             string result = "";
@@ -127,8 +125,11 @@ namespace ATEYieldRateStatisticSystem
                     MessageBox.Show(result);
 
                 }
-            }        
+            }
 
+            System.Threading.Thread.Sleep(1000);
+            // close the splash screen'
+            SplashForm.CloseSplash();
             //
             if (p.AppStart == p.AppStartModel.ATEClient)
                 Application.Run(new frmATEClient());

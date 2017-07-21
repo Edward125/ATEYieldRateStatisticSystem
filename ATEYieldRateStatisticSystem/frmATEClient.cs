@@ -13,6 +13,7 @@ using Edward;
 using System.Resources;
 using System.Reflection;
 using System.Threading;
+using MySql.Data.MySqlClient;
 
 namespace ATEYieldRateStatisticSystem
 {
@@ -354,6 +355,8 @@ namespace ATEYieldRateStatisticSystem
             if (!bgwWebService.IsBusy)
                 bgwWebService.RunWorkerAsync();
 
+            timerDetectNet.Enabled = true;
+            timerDetectNet.Start();
             return true;
         }
 
@@ -913,6 +916,7 @@ namespace ATEYieldRateStatisticSystem
                         {
                             updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
                             p.replaceData2DB(p.DatabaseTable.d_tempdata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                            p.saveTempLog(usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, " ", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString(), testtime);
                         }
                     }
 
@@ -970,12 +974,13 @@ namespace ATEYieldRateStatisticSystem
                             if (isConnect)
                             {
                                 updateMsg(lstStatus, "net db connect,start write data to net database...");
-                                p.replaceData2SqlDB(p.connString, p.DatabaseTable.atedata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                p.replaceData2SqlDB(p.connString, p.DatabaseTable.atedata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
                             }
                             else
                             {
                                 updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
-                                p.replaceData2DB(p.DatabaseTable.d_tempdata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                p.replaceData2DB(p.DatabaseTable.d_tempdata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                p.saveTempLog(usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, " ", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString(), testtime);
                             }
 
 
@@ -1032,6 +1037,7 @@ namespace ATEYieldRateStatisticSystem
                                 {
                                     updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
                                     p.replaceData2DB(p.DatabaseTable.d_tempdata .ToString (), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                    p.saveTempLog(usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, " ", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString(), testtime);
                                 }
                             }
 
@@ -1115,6 +1121,7 @@ namespace ATEYieldRateStatisticSystem
                                 {
                                     updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
                                     p.replaceData2DB(p.DatabaseTable.d_tempdata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                    p.saveTempLog(usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, " ", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString(), testtime);
                                 }
 
 
@@ -1169,6 +1176,7 @@ namespace ATEYieldRateStatisticSystem
                                 {
                                     updateMsg(lstStatus, "net db disconnect,start write data to temp database...");
                                     p.replaceData2DB(p.DatabaseTable.d_tempdata.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "B", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
+                                    p.saveTempLog(usn, rq.Model, rq.ModelFamily,rq.UPN, rq.MO, " ", "B",_FIXTUREID, testresult, testtime ,firstpass,_bsfcsupload.ToString () , testtime);
                                 }
                             }
                         }
@@ -1591,6 +1599,119 @@ namespace ATEYieldRateStatisticSystem
                 tsslNetDB.ForeColor = Color.Red;
                 tsslNetDB.Text = "DISCONNECTED";
             }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_isconnect"></param>
+        /// <param name="result"></param>
+        private void checkSqlDBUIChange(bool _isconnect)
+        {
+            if (_isconnect)
+            {
+                //tsslNetDB.BackColor = Color.Green;
+                tsslNetDB.ForeColor = Color.Green;
+                tsslNetDB.Text = "CONNECTED";
+            }
+            else
+            { 
+                //tsslNetDB.BackColor = Color.Red;
+                tsslNetDB.ForeColor = Color.Red;
+                tsslNetDB.Text = "DISCONNECTED";
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerDetectNet_Tick(object sender, EventArgs e)
+        {
+            timerDetectNet.Stop();    
+             string logpath = p.AppFolder + @"\Temp.log";
+             if (File.Exists(logpath)) // 先判定文件是否存在,速度快
+             {
+                 bool isConnect = p.checkSqlDBIsConnect(p.connString);
+                 checkSqlDBUIChange(isConnect);
+                 if (isConnect)
+                 {
+                    List<string> temploglist = p.readTemplog();
+                    foreach (string  item in temploglist)
+                    {
+                        MySqlConnection conn = new MySqlConnection(p.connString);
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            conn.Open();
+                            cmd.Connection = conn;
+
+                            string _usn, _model, _modelfamily, _upn, _mo, _mac, _seq, _fixtureid, _testresult, _firstpass, _uploadflag, _cycletime, _testtime, _recordtime, _remark;
+                          _usn = _model = _modelfamily=  _upn=  _mo= _mac= _seq= _fixtureid= _testresult= _firstpass= _uploadflag= _cycletime= _testtime= _recordtime= _remark = string.Empty ;
+
+                          updateMsg(lstStatus, "start ot update temp log data to net database ...");
+                            p.dealwithteamploglinestring (item ,out _usn,out _model ,out _modelfamily,
+                                out _upn,out _mo,out _mac ,out _seq ,out _fixtureid ,
+                                out _testresult ,out _firstpass ,out _uploadflag ,
+                                out _cycletime ,out _testtime ,out _recordtime ,out _remark);                       
+
+                            cmd.CommandText = @"REPLACE INTO " + p.DatabaseTable.atedata.ToString () + @"(
+line,
+plant,
+usn,
+model,
+modelfamily,
+upn,
+mo,
+mac,
+seq,
+fixtureid,
+testresult,
+firstpass,
+uploadflag,
+cycletime,
+testtime,
+recordtime,
+remark) VALUES ('" + p.PCBLine + "','"
+                               + p.ATEPlant + "','"
+                               + _usn + "','"
+                               + _model + "','"
+                               + _modelfamily + "','"
+                               + _upn + "','"
+                               + _mo + "','"
+                               + _mac + "','"
+                               + _seq + "','"
+                               + _fixtureid + "','"
+                               + _testresult + "','"
+                               + _firstpass + "','"
+                               + _uploadflag + "','"
+                               + _cycletime + "','"
+                               + _testtime + "','"
+                               + _recordtime  + "','"
+                               + _remark + "')";
+                            try
+                            {
+                                cmd.ExecuteNonQuery();
+                                //trans.Commit();
+                            }
+                            catch (Exception ex)
+                            {
+
+#if DEBUG
+                    MessageBox.Show(ex.Message);
+#endif
+                            }
+
+
+                        }
+                        conn.Close();
+                        updateMsg(lstStatus, "update temp log data to net database is over...");
+
+                    }
+                 }
+            }          
+            timerDetectNet.Start();
         }
 
     }  

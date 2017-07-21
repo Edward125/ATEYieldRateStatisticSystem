@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstviewBarcode = new System.Windows.Forms.ListView();
@@ -70,6 +71,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.timerDetectNet = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -483,6 +485,11 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Model FPY:";
             // 
+            // timerDetectNet
+            // 
+            this.timerDetectNet.Interval = 2000;
+            this.timerDetectNet.Tick += new System.EventHandler(this.timerDetectNet_Tick);
+            // 
             // frmATEClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -562,5 +569,6 @@
         private System.Windows.Forms.Label lblModelYR;
         private System.Windows.Forms.Label lblModelFPY;
         private System.Windows.Forms.ToolStripStatusLabel tsslNetDB;
+        private System.Windows.Forms.Timer timerDetectNet;
     }
 }
