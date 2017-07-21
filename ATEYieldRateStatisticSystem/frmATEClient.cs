@@ -1259,8 +1259,12 @@ namespace ATEYieldRateStatisticSystem
 
                     }
                     if (icount == 4)
-
+                    {
                         testtime = temp[i];
+                        if (testtime.Length == 12 && !testtime.StartsWith("20"))
+                            testtime = "20" + testtime;
+                    }
+
                 }
             }
 

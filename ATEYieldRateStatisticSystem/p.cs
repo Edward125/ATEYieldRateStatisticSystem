@@ -1503,7 +1503,6 @@ remark) VALUES ('" + p.PCBLine + "','"
             }
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -1529,5 +1528,121 @@ remark) VALUES ('" + p.PCBLine + "','"
         }
 
         #endregion
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_usn"></param>
+        /// <param name="_model"></param>
+        /// <param name="_modelfamily"></param>
+        /// <param name="_upn"></param>
+        /// <param name="_mo"></param>
+        /// <param name="_mac"></param>
+        /// <param name="_seq"></param>
+        /// <param name="_fixtureid"></param>
+        /// <param name="_testresult"></param>
+        /// <param name="_testtime"></param>
+        /// <param name="_firstpass"></param>
+        /// <param name="_uploadflag"></param>
+        /// <param name="_remark"></param>
+        /// <param name="_cycletime"></param>
+        private void saveTempLog(string _usn,
+            string _model, string _modelfamily, string _upn, string _mo,
+            string _mac, string _seq, string _fixtureid, string _testresult, string _testtime,
+            string _firstpass, string _uploadflag, string _remark = "NA",
+            string _cycletime = "0")
+        {
+            string logpath = AppFolder + @"\Temp.log";
+            StreamWriter sw = new StreamWriter(logpath, true, Encoding.UTF8);
+            string linestr = p.PCBLine + "," + p.ATEPlant + @","
+                + _usn + "," + _model + ","
+                + _modelfamily + "," + _upn + ","
+                + _mo + "," + _mac + ","
+                + _seq + "," + _fixtureid + ","
+                + _testresult + "," + _firstpass +","
+                + _uploadflag +"," +_cycletime +","
+                + _testtime + ","
+                + DateTime.Now.ToString("yyyyMMddHHmmss") + "," + _remark + @"\r\n";
+            sw.WriteLine(linestr);
+            sw.Close();
+        }
+
+
+
+        /// <summary>
+        /// 读出templog 的list并删除掉文件
+        /// </summary>
+
+        private void readTemplog()
+        {
+            List<string> templist = new List<string>();
+            string logpath = AppFolder + @"\Temp.log";
+            StreamReader sr = new StreamReader(logpath, Encoding.UTF8);
+            string linestr = string.Empty;
+            while (!sr.EndOfStream )
+            {
+                linestr = sr.ReadLine().Trim();
+                if (!string.IsNullOrEmpty(linestr)) 
+                    templist.Add(linestr);                
+            }
+            sr.Close();
+            File.Delete(logpath);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="linestr"></param>
+        /// <param name="_usn"></param>
+        /// <param name="_model"></param>
+        /// <param name="_modelfamily"></param>
+        /// <param name="_upn"></param>
+        /// <param name="_mo"></param>
+        /// <param name="_mac"></param>
+        /// <param name="_seq"></param>
+        /// <param name="_fixtureid"></param>
+        /// <param name="_testresult"></param>
+        /// <param name="_firstpass"></param>
+        /// <param name="_uploadflag"></param>
+        /// <param name="_cycletime"></param>
+        /// <param name="_testtime"></param>
+        /// <param name="_recordtime"></param>
+        /// <param name="_remark"></param>
+        public void dealwithteamploglinestring(string linestr, out string _usn,
+            out string _model, out string _modelfamily, out string _upn, out  string _mo,
+            out string _mac, out  string _seq, out  string _fixtureid,
+            out string _testresult, out string _firstpass,
+            out  string _uploadflag, out string _cycletime,
+            out string _testtime, out string _recordtime, out string _remark)
+        {
+            _usn = _model = _modelfamily = _upn = _mo = _mac = _seq = _fixtureid = _testresult = _firstpass = _uploadflag = _cycletime = _testtime = _recordtime = _remark = "";
+            if (!string.IsNullOrEmpty(linestr))
+            {
+                string[] temps = linestr.Split(',');
+                if (temps.Length == 15)
+                {
+                    _usn = temps[0].ToUpper();
+                    _model = temps[1].ToUpper();
+                    _modelfamily = temps[2].ToUpper();
+                    _upn = temps[3].ToUpper();
+                    _mo = temps[4].ToUpper();
+                    _mac = temps[5].ToUpper();
+                    _seq = temps[6].ToUpper();
+                    _fixtureid = temps[7];
+                    _testresult = temps[8];
+                    _firstpass = temps[9];
+                    _uploadflag = temps[10];
+                    _cycletime = temps[11];
+                    _testtime = temps[12];
+                    _recordtime = temps[13];
+                    _remark = temps[14];
+                }
+            }
+
+        }
     }
 }
