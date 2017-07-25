@@ -260,6 +260,12 @@ namespace ATEYieldRateStatisticSystem
           ftdata
         }
 
+
+      public enum Shift
+      {
+            DShift,
+            Nshift
+        }
         #endregion
 
 
@@ -1751,25 +1757,27 @@ remark) VALUES ('" + _line  + "','"
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="linestr"></param>
-        /// <param name="_usn"></param>
-        /// <param name="_model"></param>
-        /// <param name="_modelfamily"></param>
-        /// <param name="_upn"></param>
-        /// <param name="_mo"></param>
-        /// <param name="_mac"></param>
-        /// <param name="_seq"></param>
-        /// <param name="_fixtureid"></param>
-        /// <param name="_testresult"></param>
-        /// <param name="_firstpass"></param>
-        /// <param name="_uploadflag"></param>
-        /// <param name="_cycletime"></param>
-        /// <param name="_testtime"></param>
-        /// <param name="_recordtime"></param>
-        /// <param name="_remark"></param>
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="linestr"></param>
+       /// <param name="_line"></param>
+       /// <param name="_plant"></param>
+       /// <param name="_usn"></param>
+       /// <param name="_model"></param>
+       /// <param name="_modelfamily"></param>
+       /// <param name="_upn"></param>
+       /// <param name="_mo"></param>
+       /// <param name="_mac"></param>
+       /// <param name="_seq"></param>
+       /// <param name="_fixtureid"></param>
+       /// <param name="_testresult"></param>
+       /// <param name="_firstpass"></param>
+       /// <param name="_uploadflag"></param>
+       /// <param name="_cycletime"></param>
+       /// <param name="_testtime"></param>
+       /// <param name="_recordtime"></param>
+       /// <param name="_remark"></param>
         public static  void dealwithteamploglinestring(string linestr,out string _line,out string _plant, out string _usn,
             out string _model, out string _modelfamily, out string _upn, out  string _mo,
             out string _mac, out  string _seq, out  string _fixtureid,
@@ -1804,5 +1812,129 @@ remark) VALUES ('" + _line  + "','"
             }
 
         }
+
+
+        /// <summary>
+        /// calc percentage 
+        /// </summary>
+        /// <param name="member">分子</param>
+        /// <param name="denominator">分母</param>
+        /// <returns></returns>
+        public static string CalcPCT(decimal member, decimal denominator)
+        {
+            try
+            {
+                return string.Format("{0:0.00%}", member / denominator);
+            }
+            catch (Exception)
+            {
+
+                return "0.00%";
+            }
+        }
+
+        /// <summary>
+        /// calc percentage 
+        /// </summary>
+        /// <param name="member">分子</param>
+        /// <param name="denominator">分母</param>
+        /// <returns></returns>
+        public static string CalcPCT(Int32  member, Int32  denominator)
+        {
+            try
+            {
+                return string.Format("{0:0.00%}", member / denominator);
+            }
+            catch (Exception)
+            {
+                return "0.00%";
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static Int32 queryCount(string sql)
+        {
+            Int32 count = 0;
+            SQLiteConnection conn = new SQLiteConnection(p.LocalDBConnectionString);
+            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+            conn.Open();
+            object o = cmd.ExecuteScalar();
+            try
+            {
+                count = Convert.ToInt32(o);
+            }
+            catch (Exception)
+            {
+                
+            }
+            return count;
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connstring"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static Int32 queryCount(string connstring,string sql)
+        {
+            Int32 count = 0;
+            SQLiteConnection conn = new SQLiteConnection(connstring);
+            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+            conn.Open();
+            object o = cmd.ExecuteScalar();
+            try
+            {
+                count = Convert.ToInt32(o);
+            }
+            catch (Exception)
+            {
+
+            }
+            return count;
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static Shift getCurrentShift()
+        {
+            Shift sf = Shift.DShift;
+            switch (StartEndTime )
+	        {
+		        case StartEndTimeType.Day800:
+                    string temp = DateTime.Now.ToString ("yyyy/MM/dd");
+                    DateTime sstart = Convert.ToDateTime(temp + " 08:00:00");
+                    DateTime send = Convert.ToDateTime(temp + " 20:00:00");
+                    if (DateTime.Now >= sstart && DateTime.Now < send)
+                        sf = Shift.DShift;
+                    else
+                        sf = Shift.Nshift;                    
+                break;
+                case StartEndTimeType.Day830:
+                    temp = DateTime.Now.ToString ("yyyy/MM/dd");
+                    sstart = Convert.ToDateTime(temp + " 08:30:00");
+                    send = Convert.ToDateTime(temp + " 20:30:00");
+                    if (DateTime.Now >= sstart && DateTime.Now < send)
+                        sf = Shift.DShift;
+                    else
+                        sf = Shift.Nshift;   
+                break;
+                default:
+                break;
+	        }
+            return sf;
+        }
+
     }
 }

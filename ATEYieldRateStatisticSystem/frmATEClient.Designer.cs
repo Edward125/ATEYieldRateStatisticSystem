@@ -65,12 +65,8 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.lblShiftYR = new System.Windows.Forms.Label();
             this.lblShiftFPY = new System.Windows.Forms.Label();
-            this.lblModelYR = new System.Windows.Forms.Label();
-            this.lblModelFPY = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.timerDetectNet = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -388,12 +384,8 @@
             // 
             this.groupBox5.Controls.Add(this.lblShiftYR);
             this.groupBox5.Controls.Add(this.lblShiftFPY);
-            this.groupBox5.Controls.Add(this.lblModelYR);
-            this.groupBox5.Controls.Add(this.lblModelFPY);
             this.groupBox5.Controls.Add(this.label11);
             this.groupBox5.Controls.Add(this.label10);
-            this.groupBox5.Controls.Add(this.label9);
-            this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Location = new System.Drawing.Point(558, 11);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(129, 117);
@@ -404,52 +396,30 @@
             // lblShiftYR
             // 
             this.lblShiftYR.AutoSize = true;
-            this.lblShiftYR.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblShiftYR.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblShiftYR.ForeColor = System.Drawing.Color.Red;
-            this.lblShiftYR.Location = new System.Drawing.Point(86, 96);
+            this.lblShiftYR.Location = new System.Drawing.Point(60, 78);
             this.lblShiftYR.Name = "lblShiftYR";
-            this.lblShiftYR.Size = new System.Drawing.Size(25, 17);
+            this.lblShiftYR.Size = new System.Drawing.Size(49, 19);
             this.lblShiftYR.TabIndex = 7;
-            this.lblShiftYR.Text = "0%";
+            this.lblShiftYR.Text = "0.00%";
             // 
             // lblShiftFPY
             // 
             this.lblShiftFPY.AutoSize = true;
-            this.lblShiftFPY.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblShiftFPY.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblShiftFPY.ForeColor = System.Drawing.Color.Red;
-            this.lblShiftFPY.Location = new System.Drawing.Point(86, 70);
+            this.lblShiftFPY.Location = new System.Drawing.Point(60, 36);
             this.lblShiftFPY.Name = "lblShiftFPY";
-            this.lblShiftFPY.Size = new System.Drawing.Size(25, 17);
+            this.lblShiftFPY.Size = new System.Drawing.Size(49, 19);
             this.lblShiftFPY.TabIndex = 6;
-            this.lblShiftFPY.Text = "0%";
-            // 
-            // lblModelYR
-            // 
-            this.lblModelYR.AutoSize = true;
-            this.lblModelYR.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModelYR.ForeColor = System.Drawing.Color.Red;
-            this.lblModelYR.Location = new System.Drawing.Point(86, 45);
-            this.lblModelYR.Name = "lblModelYR";
-            this.lblModelYR.Size = new System.Drawing.Size(25, 17);
-            this.lblModelYR.TabIndex = 5;
-            this.lblModelYR.Text = "0%";
-            // 
-            // lblModelFPY
-            // 
-            this.lblModelFPY.AutoSize = true;
-            this.lblModelFPY.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModelFPY.ForeColor = System.Drawing.Color.Red;
-            this.lblModelFPY.Location = new System.Drawing.Point(86, 20);
-            this.lblModelFPY.Name = "lblModelFPY";
-            this.lblModelFPY.Size = new System.Drawing.Size(25, 17);
-            this.lblModelFPY.TabIndex = 4;
-            this.lblModelFPY.Text = "0%";
+            this.lblShiftFPY.Text = "0.00%";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(18, 96);
+            this.label11.Location = new System.Drawing.Point(6, 83);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(50, 14);
             this.label11.TabIndex = 3;
@@ -459,31 +429,11 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(16, 71);
+            this.label10.Location = new System.Drawing.Point(4, 39);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(54, 14);
             this.label10.TabIndex = 2;
             this.label10.Text = "Shift FPY:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(13, 46);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(61, 14);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Model YR:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(11, 22);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(65, 14);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Model FPY:";
             // 
             // timerDetectNet
             // 
@@ -562,12 +512,8 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label lblShiftYR;
         private System.Windows.Forms.Label lblShiftFPY;
-        private System.Windows.Forms.Label lblModelYR;
-        private System.Windows.Forms.Label lblModelFPY;
         private System.Windows.Forms.ToolStripStatusLabel tsslNetDB;
         private System.Windows.Forms.Timer timerDetectNet;
     }

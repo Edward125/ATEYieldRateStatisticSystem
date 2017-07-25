@@ -116,7 +116,7 @@ namespace ATEYieldRateStatisticSystem
             string result = "";
             if (!p.createDB(p.connstringNoDB, out result))
             {
-                // MessageBox.Show(result);
+                 MessageBox.Show(result);
             }
             else
             {
