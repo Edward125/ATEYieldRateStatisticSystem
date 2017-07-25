@@ -904,6 +904,7 @@ namespace ATEYieldRateStatisticSystem
                         updateMsg(lstStatus, "start write data to local database...");
                         p.replaceData2DB(databasetable.ToString(), usn, rq.Model, rq.ModelFamily, rq.UPN, rq.MO, "", "A", _FIXTUREID, testresult, testtime, firstpass, _bsfcsupload.ToString());
                         //updateMsg(lstStatus, "end write data to local database...");
+
                         string result = "";
                         bool isConnect = p.checkSqlDBIsConnect(p.connString, out result);
                         checkSqlDBUIChange(isConnect, result);
@@ -1639,76 +1640,63 @@ namespace ATEYieldRateStatisticSystem
                  if (isConnect)
                  {
                     List<string> temploglist = p.readTemplog();
-                    foreach (string  item in temploglist)
-                    {
-                        MySqlConnection conn = new MySqlConnection(p.connString);
-                        using (MySqlCommand cmd = new MySqlCommand())
-                        {
-                            conn.Open();
-                            cmd.Connection = conn;
+                    MySqlConnection conn = new MySqlConnection(p.connString);
+                    updateMsg(lstStatus, "start to update temp log data to net database ...");
+                    conn.Open();
+                   
+                    foreach (string  item in temploglist )
+                    {                   
+                        string _line,_plant,_usn, _model, _modelfamily, _upn, _mo, _mac, _seq, _fixtureid, _testresult, _firstpass, _uploadflag, _cycletime, _testtime, _recordtime, _remark;
+                        _line = _plant =_usn = _model = _modelfamily = _upn = _mo = _mac = _seq = _fixtureid = _testresult = _firstpass = _uploadflag = _cycletime = _testtime = _recordtime = _remark = string.Empty;
 
-                            string _usn, _model, _modelfamily, _upn, _mo, _mac, _seq, _fixtureid, _testresult, _firstpass, _uploadflag, _cycletime, _testtime, _recordtime, _remark;
-                          _usn = _model = _modelfamily=  _upn=  _mo= _mac= _seq= _fixtureid= _testresult= _firstpass= _uploadflag= _cycletime= _testtime= _recordtime= _remark = string.Empty ;
+                        p.dealwithteamploglinestring(item, out _line,out _plant,out _usn, out _model, out _modelfamily,
+                            out _upn, out _mo, out _mac, out _seq, out _fixtureid,
+                            out _testresult, out _firstpass, out _uploadflag,
+                            out _cycletime, out _testtime, out _recordtime, out _remark);
 
-                          updateMsg(lstStatus, "start ot update temp log data to net database ...");
-                            p.dealwithteamploglinestring (item ,out _usn,out _model ,out _modelfamily,
-                                out _upn,out _mo,out _mac ,out _seq ,out _fixtureid ,
-                                out _testresult ,out _firstpass ,out _uploadflag ,
-                                out _cycletime ,out _testtime ,out _recordtime ,out _remark);                       
+                        MySqlCommand cmd = new MySqlCommand ();
+                        cmd.Connection = conn;
 
-                            cmd.CommandText = @"REPLACE INTO " + p.DatabaseTable.atedata.ToString () + @"(
-line,
-plant,
-usn,
-model,
-modelfamily,
-upn,
-mo,
-mac,
-seq,
-fixtureid,
-testresult,
-firstpass,
-uploadflag,
-cycletime,
-testtime,
-recordtime,
-remark) VALUES ('" + p.PCBLine + "','"
-                               + p.ATEPlant + "','"
-                               + _usn + "','"
-                               + _model + "','"
-                               + _modelfamily + "','"
-                               + _upn + "','"
-                               + _mo + "','"
-                               + _mac + "','"
-                               + _seq + "','"
-                               + _fixtureid + "','"
-                               + _testresult + "','"
-                               + _firstpass + "','"
-                               + _uploadflag + "','"
-                               + _cycletime + "','"
-                               + _testtime + "','"
-                               + _recordtime  + "','"
-                               + _remark + "')";
-                            try
-                            {
-                                cmd.ExecuteNonQuery();
-                                //trans.Commit();
-                            }
-                            catch (Exception ex)
-                            {
+                        p.replaceData2SqlDB(cmd, p.DatabaseTable.atedata.ToString(), 
+                           _line ,_plant , _usn, _model, _modelfamily,
+                            _upn, _mo, _mac, _seq, _fixtureid, _testresult, 
+                            _testtime, _firstpass, _uploadflag, _remark, _cycletime);
+//                        string sql =@"REPLACE INTO " + p.DatabaseTable.atedata.ToString() +
+//@"(line,plant,usn,model,modelfamily,upn,mo,mac,seq,fixtureid,testresult,firstpass,uploadflag,cycletime,testtime,recordtime,remark) VALUES ('" + _line + "','"
+//                           + _plant  + "','"
+//                           + _usn + "','"
+//                           + _model + "','"
+//                           + _modelfamily + "','"
+//                           + _upn + "','"
+//                           + _mo + "','"
+//                           + _mac + "','"
+//                           + _seq + "','"
+//                           + _fixtureid + "','"
+//                           + _testresult + "','"
+//                           + _firstpass + "','"
+//                           + _uploadflag + "','"
+//                           + _cycletime + "','"
+//                           + _testtime + "','"
+//                           + _recordtime + "','"
+//                           + _remark + "')";
 
-#if DEBUG
-                    MessageBox.Show(ex.Message);
-#endif
-                            }
+//                        MySqlCommand cmd = new MySqlCommand(sql, conn);                     
+                        
+//                        try
+//                        {
+//                            int i = cmd.ExecuteNonQuery();
+//                            //trans.Commit();
+//                           // MessageBox.Show(i.ToString());
+//                        }
+//                        catch (Exception ex)
+//                        {
+//                           // MessageBox.Show(ex.Message);
 
-
-                        }
-                        conn.Close();
-                        updateMsg(lstStatus, "update temp log data to net database is over...");
-
+//                        }
                     }
+                    conn.Close();       
+                    updateMsg(lstStatus, "update temp log data to net database is over...");       
+   
                  }
             }          
             timerDetectNet.Start();

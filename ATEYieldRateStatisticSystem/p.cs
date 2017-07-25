@@ -1342,8 +1342,6 @@ PRIMARY KEY (id)) ENGINE=MyISAM DEFAULT CHARSET=utf8";
             {
                 conn.Open();
                 cmd.Connection = conn;
-
-
                 cmd.CommandText = @"REPLACE INTO " + _tablename + @"(
 line,
 plant,
@@ -1483,6 +1481,165 @@ remark) VALUES ('" + p.PCBLine + "','"
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="_tablename"></param>
+        /// <param name="_usn"></param>
+        /// <param name="_model"></param>
+        /// <param name="_modelfamily"></param>
+        /// <param name="_upn"></param>
+        /// <param name="_mo"></param>
+        /// <param name="_mac"></param>
+        /// <param name="_seq"></param>
+        /// <param name="_fixtureid"></param>
+        /// <param name="_testresult"></param>
+        /// <param name="_testtime"></param>
+        /// <param name="_firstpass"></param>
+        /// <param name="_uploadflag"></param>
+        /// <param name="_remark"></param>
+        /// <param name="_cycletime"></param>
+        /// <returns></returns>
+        public static bool replaceData2SqlDB(MySqlCommand cmd, string _tablename, string _line,string _plant,string _usn,
+            string _model, string _modelfamily, string _upn, string _mo,
+            string _mac, string _seq, string _fixtureid, string _testresult, string _testtime,
+            string _firstpass, string _uploadflag, string _remark = "NA",
+            string _cycletime = "0")
+        {
+            cmd.CommandText = @"REPLACE INTO " + _tablename + @"(
+line,
+plant,
+usn,
+model,
+modelfamily,
+upn,
+mo,
+mac,
+seq,
+fixtureid,
+testresult,
+firstpass,
+uploadflag,
+cycletime,
+testtime,
+recordtime,
+remark) VALUES ('" + _line  + "','"
+                   + _plant  + "','"
+                   + _usn + "','"
+                   + _model + "','"
+                   + _modelfamily + "','"
+                   + _upn + "','"
+                   + _mo + "','"
+                   + _mac + "','"
+                   + _seq + "','"
+                   + _fixtureid + "','"
+                   + _testresult + "','"
+                   + _firstpass + "','"
+                   + _uploadflag + "','"
+                   + _cycletime + "','"
+                   + _testtime + "','"
+                   + DateTime.Now.ToString("yyyyMMddHHmmss") + "','"
+                   + _remark + "')";
+
+
+
+            // MySqlTransaction trans = conn.BeginTransaction();
+            //cmd.Transaction = trans;
+            //                cmd.CommandText =
+            //                    "REPLACE INTO " + _tablename + @" VALUES (
+            //@_id,
+            //@_line,
+            //@_plant,
+            //@_usn,
+            //@_model,
+            //@_modelfamily,
+            //@_upn,
+            //@_mo,
+            //@_mac,
+            //@_seq,
+            //@_fixtureid,
+            //@_testresult,
+            //@_firstpass,
+            //@_uploadflag,
+            //@_cycletime,
+            //@_testtime,
+            //@_recordtime,
+            //@_remark
+            //)";
+            //                cmd.Parameters.Add(new MySqlParameter(@"_id", DbType.Int32));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_line", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_plant", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_usn", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_model", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_modelfamily", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_upn", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_mo", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_mac", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_seq", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_fixtureid", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_testresult", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_firstpass", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_uploadflag", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_cycletime", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_testtime", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_recordtime", DbType.String));
+            //                cmd.Parameters.Add(new MySqlParameter(@"_remark", DbType.String));             
+
+            //cmd.Parameters[@"_line"].Value = p.PCBLine;               
+            //cmd.Parameters[@"_plant"].Value = p.ATEPlant;
+            //cmd.Parameters[@"_usn"].Value = _usn;
+            //cmd.Parameters[@"_model"].Value = _model;
+            //cmd.Parameters[@"_modelfamily"].Value = _modelfamily;
+            //cmd.Parameters[@"_upn"].Value = _upn;
+            //cmd.Parameters[@"_mo"].Value = _mo;
+            //cmd.Parameters[@"_mac"].Value = _mac;
+            //cmd.Parameters[@"_seq"].Value = _seq;
+            //cmd.Parameters[@"_fixtureid"].Value = _fixtureid;
+            //cmd.Parameters[@"_testresult"].Value = _testresult;
+            //cmd.Parameters[@"_firstpass"].Value = _firstpass;
+            //cmd.Parameters[@"_uploadflag"].Value = _uploadflag;
+            //cmd.Parameters[@"_cycletime"].Value = _cycletime;
+            //cmd.Parameters[@"_testtime"].Value = _testtime;
+            //cmd.Parameters[@"_recordtime"].Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+            //cmd.Parameters[@"_remark"].Value = _remark;
+
+            //cmd.Parameters[@"_line"].Value = " ";
+            //cmd.Parameters[@"_plant"].Value = " ";
+            //cmd.Parameters[@"_usn"].Value = " ";
+            //cmd.Parameters[@"_model"].Value = " ";
+            //cmd.Parameters[@"_modelfamily"].Value = " ";
+            //cmd.Parameters[@"_upn"].Value = " ";
+            //cmd.Parameters[@"_mo"].Value = " ";
+            //cmd.Parameters[@"_mac"].Value = " ";
+            //cmd.Parameters[@"_seq"].Value = " ";
+            //cmd.Parameters[@"_fixtureid"].Value = " ";
+            //cmd.Parameters[@"_testresult"].Value = " ";
+            //cmd.Parameters[@"_firstpass"].Value = " ";
+            //cmd.Parameters[@"_uploadflag"].Value = " ";
+            //cmd.Parameters[@"_cycletime"].Value = " ";
+            //cmd.Parameters[@"_testtime"].Value = " ";
+            //cmd.Parameters[@"_recordtime"].Value = " ";
+            //cmd.Parameters[@"_remark"].Value = " ";
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                //trans.Commit();
+            }
+            catch (Exception ex)
+            {
+
+#if DEBUG
+                    MessageBox.Show(ex.Message);
+#endif
+            }
+   
+
+            return true;
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="_connstr"></param>
         /// <returns></returns>
         public static bool checkSqlDBIsConnect(string _connstr)
@@ -1613,19 +1770,21 @@ remark) VALUES ('" + p.PCBLine + "','"
         /// <param name="_testtime"></param>
         /// <param name="_recordtime"></param>
         /// <param name="_remark"></param>
-        public static  void dealwithteamploglinestring(string linestr, out string _usn,
+        public static  void dealwithteamploglinestring(string linestr,out string _line,out string _plant, out string _usn,
             out string _model, out string _modelfamily, out string _upn, out  string _mo,
             out string _mac, out  string _seq, out  string _fixtureid,
             out string _testresult, out string _firstpass,
             out  string _uploadflag, out string _cycletime,
             out string _testtime, out string _recordtime, out string _remark)
         {
-            _usn = _model = _modelfamily = _upn = _mo = _mac = _seq = _fixtureid = _testresult = _firstpass = _uploadflag = _cycletime = _testtime = _recordtime = _remark = "";
+           _line = _plant = _usn = _model = _modelfamily = _upn = _mo = _mac = _seq = _fixtureid = _testresult = _firstpass = _uploadflag = _cycletime = _testtime = _recordtime = _remark = "";
             if (!string.IsNullOrEmpty(linestr))
             {
                 string[] temps = linestr.Split(',');
                 if (temps.Length == 17)
                 {
+                    _line = temps[0].ToUpper();
+                    _plant = temps[1].ToUpper();
                     _usn = temps[2].ToUpper();
                     _model = temps[3].ToUpper();
                     _modelfamily = temps[4].ToUpper();
