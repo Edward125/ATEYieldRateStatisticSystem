@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtATEBackupPath = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.comboPlantCode = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -50,8 +52,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtTestlogPath = new System.Windows.Forms.TextBox();
             this.txtAutoLookLogPath = new System.Windows.Forms.TextBox();
-            this.txtATEBackupPath = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -85,6 +85,24 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Setting";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(24, 87);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(96, 17);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "ATEBackupPath";
+            // 
+            // txtATEBackupPath
+            // 
+            this.txtATEBackupPath.Location = new System.Drawing.Point(129, 83);
+            this.txtATEBackupPath.Name = "txtATEBackupPath";
+            this.txtATEBackupPath.Size = new System.Drawing.Size(474, 25);
+            this.txtATEBackupPath.TabIndex = 18;
+            this.txtATEBackupPath.TextChanged += new System.EventHandler(this.txtATEBackupPath_TextChanged);
+            this.txtATEBackupPath.DoubleClick += new System.EventHandler(this.txtATEBackupPath_DoubleClick);
             // 
             // label7
             // 
@@ -301,30 +319,13 @@
             this.txtAutoLookLogPath.TextChanged += new System.EventHandler(this.txtAutoLookLogPath_TextChanged);
             this.txtAutoLookLogPath.DoubleClick += new System.EventHandler(this.txtAutoLookLogPath_DoubleClick);
             // 
-            // txtATEBackupPath
-            // 
-            this.txtATEBackupPath.Location = new System.Drawing.Point(129, 83);
-            this.txtATEBackupPath.Name = "txtATEBackupPath";
-            this.txtATEBackupPath.Size = new System.Drawing.Size(474, 25);
-            this.txtATEBackupPath.TabIndex = 18;
-            this.txtATEBackupPath.TextChanged += new System.EventHandler(this.txtATEBackupPath_TextChanged);
-            this.txtATEBackupPath.DoubleClick += new System.EventHandler(this.txtATEBackupPath_DoubleClick);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(24, 87);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(96, 17);
-            this.label8.TabIndex = 19;
-            this.label8.Text = "ATEBackupPath";
-            // 
             // frmATEClientSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(659, 286);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmATEClientSetting";
             this.Text = "frmATEClientSetting";
