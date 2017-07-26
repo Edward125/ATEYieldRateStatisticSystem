@@ -21,5 +21,19 @@ namespace ATEYieldRateStatisticSystem
         {
 
         }
+
+        private void chkUseSql_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkUseSql.Checked)
+            {
+                grbQueryOption.Enabled = false;
+                txtSql.Enabled = true;
+            }
+            else
+            {
+                grbQueryOption.Enabled = true;
+                txtSql.Enabled = false;
+            }
+        }
     }
 }
