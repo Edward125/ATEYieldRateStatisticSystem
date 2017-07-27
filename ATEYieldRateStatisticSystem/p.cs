@@ -1193,6 +1193,55 @@ remark varchar(255)
         }
 
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static Int32 queryCount(string sql)
+        {
+            Int32 count = 0;
+            SQLiteConnection conn = new SQLiteConnection(p.LocalDBConnectionString);
+            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+            conn.Open();
+            object o = cmd.ExecuteScalar();
+            try
+            {
+                count = Convert.ToInt32(o);
+            }
+            catch (Exception)
+            {
+
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connstring"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static Int32 queryCount(string connstring, string sql)
+        {
+            Int32 count = 0;
+            SQLiteConnection conn = new SQLiteConnection(connstring);
+            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+            conn.Open();
+            object o = cmd.ExecuteScalar();
+            try
+            {
+                count = Convert.ToInt32(o);
+            }
+            catch (Exception)
+            {
+
+            }
+            return count;
+        }
+
+
         #endregion
 
         #region mysqldb
@@ -1690,11 +1739,33 @@ remark) VALUES ('" + _line  + "','"
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connstring"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static List<string> queryMySql(string connstring, string sql)
+        {
+            List<string> result = new List<string>();
+            MySqlConnection conn = new MySqlConnection(connstring);
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            conn.Open();
+            MySqlDataReader re = cmd.ExecuteReader();
+            if (re.HasRows)
+            {
+                while (re.Read())
+                {
+                    result.Add(re[0].ToString());
+                }
+              
+            }
+            conn.Close();
+            return result;
+        }
         #endregion
-
-
-
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -1850,59 +1921,7 @@ remark) VALUES ('" + _line  + "','"
                 return "0.00%";
             }
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public static Int32 queryCount(string sql)
-        {
-            Int32 count = 0;
-            SQLiteConnection conn = new SQLiteConnection(p.LocalDBConnectionString);
-            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-            conn.Open();
-            object o = cmd.ExecuteScalar();
-            try
-            {
-                count = Convert.ToInt32(o);
-            }
-            catch (Exception)
-            {
-                
-            }
-            return count;
-        }
-
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="connstring"></param>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public static Int32 queryCount(string connstring,string sql)
-        {
-            Int32 count = 0;
-            SQLiteConnection conn = new SQLiteConnection(connstring);
-            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-            conn.Open();
-            object o = cmd.ExecuteScalar();
-            try
-            {
-                count = Convert.ToInt32(o);
-            }
-            catch (Exception)
-            {
-
-            }
-            return count;
-        }
-
-
-
+        
         /// <summary>
         /// 
         /// </summary>

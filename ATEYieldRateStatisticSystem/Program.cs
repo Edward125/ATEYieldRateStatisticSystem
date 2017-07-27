@@ -116,7 +116,19 @@ namespace ATEYieldRateStatisticSystem
             string result = "";
             if (!p.createDB(p.connstringNoDB, out result))
             {
-                 MessageBox.Show(result);
+                if (p.AppStart == p.AppStartModel.ATEClient)
+                {
+                    MessageBox.Show(result + ",the data will record in the local db.");
+                }
+                if (p.AppStart == p.AppStartModel.YRServer)
+                {
+                    MessageBox.Show(result + "the program will exit...");
+                    System.Threading.Thread.Sleep(1000);
+                    SplashForm.CloseSplash();
+                    Environment.Exit(0);
+                }
+
+               
             }
             else
             {

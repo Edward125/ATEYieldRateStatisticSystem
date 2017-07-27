@@ -411,8 +411,8 @@
             // 
             this.comboQueryType.FormattingEnabled = true;
             this.comboQueryType.Items.AddRange(new object[] {
-            "ATE",
-            "FT"});
+            "Yield Rate",
+            "Production Output"});
             this.comboQueryType.Location = new System.Drawing.Point(86, 15);
             this.comboQueryType.Name = "comboQueryType";
             this.comboQueryType.Size = new System.Drawing.Size(126, 22);
