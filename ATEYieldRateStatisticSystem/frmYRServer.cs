@@ -59,6 +59,7 @@ namespace ATEYieldRateStatisticSystem
                 loadLine(comboLine, this.comboQueryType.Text);
                 loadPlant(comboPlant, this.comboQueryType.Text);
                 loadModel(comboModel, this.comboQueryType.Text);
+                loadUPN(comboUPN, this.comboQueryType.Text);
             }
             else
             {
@@ -100,11 +101,7 @@ namespace ATEYieldRateStatisticSystem
             if (mfgtype.ToUpper () == "FT")      
                 sql = "SELECT DISTINCT line FROM " + p.DatabaseTable.ftdata.ToString();
             loadSqlList(sql, combobox);
-        }
-
-
-
-
+        } 
 
         /// <summary>
         /// 
@@ -115,7 +112,7 @@ namespace ATEYieldRateStatisticSystem
         {
             string sql = "SELECT DISTINCT plant FROM " + p.DatabaseTable.atedata.ToString();
             if (mfgtype.ToUpper() == "FT")
-                sql = "SELECT DISTINCT line FROM " + p.DatabaseTable.ftdata.ToString();
+                sql = "SELECT DISTINCT plant FROM " + p.DatabaseTable.ftdata.ToString();
             loadSqlList(sql, combobox);
         }
 
@@ -136,13 +133,13 @@ namespace ATEYieldRateStatisticSystem
                 {
                     sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.atedata.ToString();
                     if (mfgtype.ToUpper() == "FT")
-                        sql = "SELECT DISTINCT line FROM " + p.DatabaseTable.ftdata.ToString();
+                        sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.ftdata.ToString();
                 }
                 else
                 {
                     sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.atedata.ToString() + "WHERE line = '" + line + "'";
                     if (mfgtype.ToUpper() == "FT")
-                        sql = "SELECT DISTINCT line FROM " + p.DatabaseTable.ftdata.ToString()  + "WHERE line = '" + line + "'";
+                        sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.ftdata.ToString()  + "WHERE line = '" + line + "'";
                 }               
             }
             else
@@ -151,18 +148,106 @@ namespace ATEYieldRateStatisticSystem
                 {
                     sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "'";
                     if (mfgtype.ToUpper() == "FT")
-                        sql = "SELECT DISTINCT line FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "'";
+                        sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "'";
                 }
                 else
                 {
                     sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line +"'";
                     if (mfgtype.ToUpper() == "FT")
-                        sql = "SELECT DISTINCT line FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "'";
+                        sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "'";
                 }
                 
             }
             loadSqlList(sql, combobox);
+        }
+
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="combobox"></param>
+        /// <param name="mfgtype"></param>
+        /// <param name="plant"></param>
+        /// <param name="line"></param>
+        /// <param name="model"></param>
+        private void loadUPN(ComboBox combobox, string mfgtype, string plant = "----", string line = "----",string model="----")
+        {
+            string sql = "";
+            if (plant == "----")
+            {
+                if (line == "----")
+                {
+                    if (model == "----")
+                    {
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString();
+                        if (mfgtype.ToUpper() == "FT")
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString();
+                    }
+                    else
+                    {
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + "WHERE model = '" + model + "'";
+                        if (mfgtype.ToUpper() == "FT")
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + "WHERE model = '" + model + "'";
+                    }
+                    
+                }
+                else
+                {
+                    if (model == "----")
+                    {
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + "WHERE line = '" + line + "'";
+                        if (mfgtype.ToUpper() == "FT")
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + "WHERE line = '" + line + "'";
+                    }
+                    else
+                    {
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + "WHERE line = '" + line + "' and  model = '" + model + "'";
+                        if (mfgtype.ToUpper() == "FT")
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + "WHERE line = '" + line + "' and  model = '" + model + "'";
+                    }
+                   
+                }
+            }
+            else
+            {
+                if (line == "----")
+                {
+                    if (model == "----")
+                    {
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "'";
+                        if (mfgtype.ToUpper() == "FT")
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "'";
+                    }
+                    else
+                    {
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and model = '" + model + "'";
+                        if (mfgtype.ToUpper() == "FT")
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and model = '" + model + "'";
+                    }
+                    
+                }
+                else
+                {
+                    if (model == "----")
+                    {
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "'";
+                        if (mfgtype.ToUpper() == "FT")
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "'";
+                    }
+                    else
+                    {
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "' and model ='" + model + "'";
+                        if (mfgtype.ToUpper() == "FT")
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "' and model ='" + model + "'";
+                    }
+                    
+                }
+
+            }
+            loadSqlList(sql, combobox);
         }      
-       
     }
 }

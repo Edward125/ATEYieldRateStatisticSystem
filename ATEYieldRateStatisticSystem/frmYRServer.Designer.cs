@@ -51,7 +51,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.comboModel = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboUPN = new System.Windows.Forms.ComboBox();
             this.txtSql = new System.Windows.Forms.TextBox();
             this.chkUseSql = new System.Windows.Forms.CheckBox();
             this.dtpStartTime = new System.Windows.Forms.DateTimePicker();
@@ -272,13 +272,13 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "UPN:";
             // 
-            // comboBox1
+            // comboUPN
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(55, 128);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(159, 22);
-            this.comboBox1.TabIndex = 9;
+            this.comboUPN.FormattingEnabled = true;
+            this.comboUPN.Location = new System.Drawing.Point(55, 128);
+            this.comboUPN.Name = "comboUPN";
+            this.comboUPN.Size = new System.Drawing.Size(159, 22);
+            this.comboUPN.TabIndex = 9;
             // 
             // txtSql
             // 
@@ -332,7 +332,7 @@
             this.grbQueryOption.Controls.Add(this.label2);
             this.grbQueryOption.Controls.Add(this.label3);
             this.grbQueryOption.Controls.Add(this.comboPlant);
-            this.grbQueryOption.Controls.Add(this.comboBox1);
+            this.grbQueryOption.Controls.Add(this.comboUPN);
             this.grbQueryOption.Controls.Add(this.label4);
             this.grbQueryOption.Controls.Add(this.label5);
             this.grbQueryOption.Controls.Add(this.comboModel);
@@ -469,7 +469,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboModel;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboUPN;
         private System.Windows.Forms.CheckBox chkUseSql;
         private System.Windows.Forms.TextBox txtSql;
         private System.Windows.Forms.DateTimePicker dtpStartTime;
