@@ -86,6 +86,7 @@ namespace ATEYieldRateStatisticSystem
             {
                 combobox.Items.Add(item);
             }
+            combobox.Sorted = true;
             combobox.SelectedIndex = 0;
         }
 
