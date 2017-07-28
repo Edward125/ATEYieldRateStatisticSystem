@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ATEYieldRateStatisticSystem
 {
@@ -445,33 +448,88 @@ namespace ATEYieldRateStatisticSystem
                     return;
                 }
                 else
-                {
-                    string sql = txtSql.Text.Trim();
-                    DataSet ds = new DataSet();
-                    string _message = "";
-                    string keyname = "Query";
+                {                
                     dgvSqlResult.DataSource = null;
+                    Thread t = new Thread(queryMysqlShowDataSet);
+                    t.Name = "ReadTestLog";
+                    //t.IsBackground = true;
+                    t.Start(txtSql.Text.Trim());
                     
-                    if (p.queryMySql2DataSet(p.connString, sql,keyname , out ds, out _message))
-                    {
-                        dgvSqlResult.DataSource = ds.Tables[keyname];
-                    }
-                    else
-                    {
-                        MessageBox.Show("query fail," + _message);
-                        txtSql.SelectAll();
-                        txtSql.Focus();
-                    }
-
-
                 }
             }
             else
             {
 
             }
-        }      
+        }
 
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connstring"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static bool queryMySql2DataSet(string connstring, string sql, string keyname, out DataSet ds, out string _message)
+        {
+            ds = new DataSet();
+            _message = "";
+            List<string> result = new List<string>();
+            MySqlConnection conn = new MySqlConnection(connstring);
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            try
+            {
+
+                conn.Open();
+                MySqlDataAdapter da = new MySqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds, keyname);
+                conn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                _message = ex.Message;
+                conn.Close();
+                return false;
+
+            }
+            return true;
+
+        }
+
+
+
+
+        public  void queryMysqlShowDataSet(object sql)
+        {
+            DataSet ds = new DataSet();            
+            List<string> result = new List<string>();
+            MySqlConnection conn = new MySqlConnection(p.connString);
+            MySqlCommand cmd = new MySqlCommand((string)sql, conn);
+            try
+            {
+
+                conn.Open();
+                MySqlDataAdapter da = new MySqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Query");
+                conn.Close();
+                this.Invoke((EventHandler)(delegate
+                {
+                    dgvSqlResult.DataSource = ds.Tables["Query"];
+                }));
+                
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                conn.Close();       
+
+            }
+   
+        }
     }
 }
