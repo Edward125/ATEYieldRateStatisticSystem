@@ -487,7 +487,9 @@ namespace ATEYieldRateStatisticSystem
             }
             else
             {
-
+                tabMain.SelectedTab = tabProduectionOutput;
+                loadProductionOutput(dtpStartTime.Value, dtpEndTime.Value, lstviewProductionOutput, comboType.Text);
+                MessageBox.Show("OK");
             }
         }
 
@@ -663,53 +665,37 @@ namespace ATEYieldRateStatisticSystem
             string sql = string.Empty;
             List<string> _Line = new List<string>();
             List<string> _FixtureID = new List<string>();
-            listview.BeginUpdate();//数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度 
+           // listview.BeginUpdate();//数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度 
             MySqlConnection conn = new MySqlConnection(p.connString);           
             conn.Open();
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
-            // Line
+  
             if (mfgtype.ToUpper() == "ATE")
-                sql = "SELECT DISTINCT line from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "'";
-            if (mfgtype .ToUpper () == "FT")
-                sql = "SELECT DISTINCT line from " + p.DatabaseTable.ftdata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "'";
-            _Line = p.queryMySql(conn, sql);
-
-            //FixtureID
-            // Line
-            if (mfgtype.ToUpper() == "ATE")
-                sql = "SELECT DISTINCT fixtureid from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "'";
+                //"select line,fixtureid,count(usn) as Qty,date_format(recordtime,'%Y-%m-%d %H:00:00') as time from atedata where recordtime between " + dtpStartTime.Value .ToString ("yyyyMMddHHmmss") + " and " + dtpEndTime.Value .ToString ("yyyyMMddHHmmss") + " group by line,fixtureid,time";
+                sql = "SELECT line, count(usn) ,date_format(recordtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.atedata.ToString() + " WHERE recordtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,time1";
             if (mfgtype.ToUpper() == "FT")
-                sql = "SELECT DISTINCT fixtureid from " + p.DatabaseTable.ftdata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "'";
-            _FixtureID = p.queryMySql(conn, sql);
-
+                sql = "SELECT line, count(usn) ,date_format(recordtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.ftdata.ToString() + " WHERE recordtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,time1";
+            cmd.CommandText = sql;
+            MySqlDataReader re = cmd.ExecuteReader();
             ListViewItem lt = new ListViewItem();
-
-            for ( DateTime i = startdatevalue;  i < enddatatimevalue;  i = startdatevalue.AddHours (1))
+            if (re.HasRows)
             {
-                foreach (string line in _Line)
+                while (re.Read())
                 {
-                    foreach (string fixtureid in _FixtureID)
-                    {
-                        if (mfgtype.ToUpper() == "ATE")
-                            sql = "SELECT COUNT(*)  from " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line +"' and fixtureid = '" + fixtureid +"' and testresult = 'PASS' and testtime BETWEEN '" + i.ToString("yyyyMMddHHmmss") + "' and '" + i.AddHours (1).ToString("yyyyMMddHHmmss") + "'";
-                        if (mfgtype.ToUpper() == "FT")
-                             sql = "SELECT COUNT(*)  from " + p.DatabaseTable.ftdata.ToString() + " WHERE line = '" + line +"' and fixtureid = '" + fixtureid +"' and testresult = 'PASS' and testtime BETWEEN '" + i.ToString("yyyyMMddHHmmss") + "' and '" + i.AddHours (1).ToString("yyyyMMddHHmmss") + "'";
-
-                        Int32 qty = 0;
-                        // Int32  qty = p.queryMysqlCount(conn, sql);
-
-                        lt = listview.Items.Add(mfgtype);
-                        lt.SubItems.Add(line);
-                        lt.SubItems.Add(fixtureid);
-                        lt.SubItems.Add(i.ToString("yyyy-MM-dd HH:mm:ss") + "~" + i.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
-                        lt.SubItems.Add(qty.ToString());
-                    }
+                    lt = listview.Items.Add(mfgtype);
+                    lt.SubItems.Add(re["line"].ToString());
+                   // lt.SubItems.Add(re["fixtureid"].ToString());
+                    lt.SubItems.Add("");
+                    lt.SubItems.Add(byte2string((Byte[])re[2]));
+                    lt.SubItems.Add(re["count(usn)"].ToString());
                 }
             }
+       
+
 
             conn.Close();
-            listview.EndUpdate();//结束数据处理，UI界面一次性绘制。
+            //listview.EndUpdate();//结束数据处理，UI界面一次性绘制。
 
         }
 
@@ -729,39 +715,23 @@ namespace ATEYieldRateStatisticSystem
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conn;
                 // Line        
-                sql = "SELECT DISTINCT line from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + dtpStartTime.Value.ToString("yyyyMMddHHmmss") + "' and '" + dtpEndTime.Value.ToString("yyyyMMddHHmmss") + "'";
-
-                _Line = p.queryMySql(conn, sql);
-
-                //FixtureID
-                // Line
-
-                sql = "SELECT DISTINCT fixtureid from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + dtpStartTime.Value.ToString("yyyyMMddHHmmss") + "' and '" + dtpEndTime.Value.ToString("yyyyMMddHHmmss") + "'";
-                _FixtureID = p.queryMySql(conn, sql);
-
+                sql = "select line,fixtureid,count(usn) as Qty,date_format(recordtime,'%Y-%m-%d %H:00:00') as time from atedata where recordtime between " + dtpStartTime.Value .ToString ("yyyyMMddHHmmss") + " and " + dtpEndTime.Value .ToString ("yyyyMMddHHmmss") + " group by line,fixtureid,time";
+                cmd.CommandText = sql;
+                MySqlDataReader re = cmd.ExecuteReader();
                 ListViewItem lt = new ListViewItem();
-
-                for (DateTime i = dtpStartTime.Value; i < dtpEndTime.Value; i = dtpStartTime.Value.AddHours(1))
+                if (re.HasRows)
                 {
-                    foreach (string line in _Line)
+                    while (re.Read())
                     {
-                        foreach (string fixtureid in _FixtureID)
-                        {
-
-                            sql = "SELECT COUNT(*)  from " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line + "' and fixtureid = '" + fixtureid + "' and testresult = 'PASS' and testtime BETWEEN '" + i.ToString("yyyyMMddHHmmss") + "' and '" + i.AddHours(1).ToString("yyyyMMddHHmmss") + "'";
-
-
-                            Int32 qty = 0;
-                            // Int32  qty = p.queryMysqlCount(conn, sql);
-
-                            lt = lstviewProductionOutput.Items.Add("ATE");
-                            lt.SubItems.Add(line);
-                            lt.SubItems.Add(fixtureid);
-                            lt.SubItems.Add(i.ToString("yyyy-MM-dd HH:mm:ss") + "~" + i.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
-                            lt.SubItems.Add(qty.ToString());
-                        }
+                       // MessageBox.Show(byte2string((Byte[])re[3]));
+                        lt = lstviewProductionOutput.Items.Add("ATE");
+                        lt .SubItems .Add(re[0].ToString());
+                        lt .SubItems.Add(re[1].ToString());
+                        lt .SubItems.Add(re[2].ToString());
+                        lt.SubItems.Add(byte2string((Byte[])re[3]));
                     }
                 }
+
 
                 conn.Close();
                 lstviewProductionOutput.EndUpdate();//结束数据处理，UI界面一次性绘制。 
@@ -769,6 +739,25 @@ namespace ATEYieldRateStatisticSystem
 
           
 
+        }
+
+
+        public static string ByteToString(byte[] bytes)
+        {
+            StringBuilder strBuilder = new StringBuilder();
+            foreach (byte bt in bytes)
+            {
+                strBuilder.AppendFormat("{0:X2}", bt);
+            }
+            return strBuilder.ToString();
+        }
+
+        public static string byte2string(byte[] byteArray)
+        {
+            System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
+            //byte[] byteArray = new byte[] { (byte)asciiCode };
+            string strCharacter = asciiEncoding.GetString(byteArray);
+            return (strCharacter);
         }
     }
 }
