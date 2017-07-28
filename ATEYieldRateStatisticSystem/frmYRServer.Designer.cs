@@ -38,8 +38,8 @@
             this.queryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.queryATEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.queryFTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabMain = new System.Windows.Forms.TabControl();
+            this.tabUseSql = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnQuery = new System.Windows.Forms.Button();
@@ -67,11 +67,14 @@
             this.comboModel = new System.Windows.Forms.ComboBox();
             this.chkUseSql = new System.Windows.Forms.CheckBox();
             this.txtSql = new System.Windows.Forms.TextBox();
+            this.dgvSqlResult = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabMain.SuspendLayout();
+            this.tabUseSql.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.grbQuicklyQuery.SuspendLayout();
             this.grbQueryOption.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSqlResult)).BeginInit();
             this.SuspendLayout();
             // 
             // skinEngine1
@@ -150,25 +153,26 @@
             this.queryFTToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.queryFTToolStripMenuItem.Text = "Query FT";
             // 
-            // tabControl1
+            // tabMain
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(256, 28);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(773, 483);
-            this.tabControl1.TabIndex = 1;
+            this.tabMain.Controls.Add(this.tabUseSql);
+            this.tabMain.Controls.Add(this.tabPage2);
+            this.tabMain.Location = new System.Drawing.Point(256, 28);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.SelectedIndex = 0;
+            this.tabMain.Size = new System.Drawing.Size(773, 483);
+            this.tabMain.TabIndex = 1;
             // 
-            // tabPage1
+            // tabUseSql
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 23);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(765, 456);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabUseSql.Controls.Add(this.dgvSqlResult);
+            this.tabUseSql.Location = new System.Drawing.Point(4, 23);
+            this.tabUseSql.Name = "tabUseSql";
+            this.tabUseSql.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUseSql.Size = new System.Drawing.Size(765, 456);
+            this.tabUseSql.TabIndex = 0;
+            this.tabUseSql.Text = "Sql Result";
+            this.tabUseSql.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -443,13 +447,22 @@
             this.txtSql.Size = new System.Drawing.Size(226, 80);
             this.txtSql.TabIndex = 10;
             // 
+            // dgvSqlResult
+            // 
+            this.dgvSqlResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSqlResult.Location = new System.Drawing.Point(6, 6);
+            this.dgvSqlResult.Name = "dgvSqlResult";
+            this.dgvSqlResult.RowTemplate.Height = 23;
+            this.dgvSqlResult.Size = new System.Drawing.Size(753, 444);
+            this.dgvSqlResult.TabIndex = 0;
+            // 
             // frmYRServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1041, 531);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabMain);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MainMenuStrip = this.menuStrip1;
@@ -458,12 +471,14 @@
             this.Load += new System.EventHandler(this.frmYRServer_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.tabMain.ResumeLayout(false);
+            this.tabUseSql.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.grbQuicklyQuery.ResumeLayout(false);
             this.grbQueryOption.ResumeLayout(false);
             this.grbQueryOption.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSqlResult)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -481,8 +496,8 @@
         private System.Windows.Forms.ToolStripMenuItem queryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem queryATEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem queryFTToolStripMenuItem;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabControl tabMain;
+        private System.Windows.Forms.TabPage tabUseSql;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox comboLine;
@@ -510,5 +525,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboFixtureID;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DataGridView dgvSqlResult;
     }
 }

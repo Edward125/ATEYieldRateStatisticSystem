@@ -444,6 +444,27 @@ namespace ATEYieldRateStatisticSystem
                     txtSql.Focus();
                     return;
                 }
+                else
+                {
+                    string sql = txtSql.Text.Trim();
+                    DataSet ds = new DataSet();
+                    string _message = "";
+                    string keyname = "Query";
+                    dgvSqlResult.DataSource = null;
+                    
+                    if (p.queryMySql2DataSet(p.connString, sql,keyname , out ds, out _message))
+                    {
+                        dgvSqlResult.DataSource = ds.Tables[keyname];
+                    }
+                    else
+                    {
+                        MessageBox.Show("query fail," + _message);
+                        txtSql.SelectAll();
+                        txtSql.Focus();
+                    }
+
+
+                }
             }
             else
             {

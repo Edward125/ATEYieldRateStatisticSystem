@@ -1764,6 +1764,45 @@ remark) VALUES ('" + _line  + "','"
             conn.Close();
             return result;
         }
+
+
+
+
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="connstring"></param>
+       /// <param name="sql"></param>
+       /// <returns></returns>
+        public static bool  queryMySql2DataSet(string connstring, string sql,string keyname,out DataSet ds,out string _message)
+        {
+             ds = new DataSet();
+             _message = "";
+            List<string> result = new List<string>();
+            MySqlConnection conn = new MySqlConnection(connstring);
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            try
+            {
+               
+                conn.Open();
+                MySqlDataAdapter da = new MySqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds, keyname);
+                conn.Close();
+                
+            }
+            catch (Exception ex)
+            {
+                _message = ex.Message ;
+                conn.Close();
+                return false;
+                
+            }
+            return true;
+
+        }
+
+
         #endregion
         
         /// <summary>
