@@ -60,6 +60,7 @@ namespace ATEYieldRateStatisticSystem
                 loadPlant(comboPlant, this.comboQueryType.Text);
                 loadModel(comboModel, this.comboQueryType.Text);
                 loadUPN(comboUPN, this.comboQueryType.Text);
+                loadFixuteID(comboFixtureID, this.comboQueryType.Text);
             }
             else
             {
@@ -249,6 +250,170 @@ namespace ATEYieldRateStatisticSystem
 
             }
             loadSqlList(sql, combobox);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="combobox"></param>
+        /// <param name="mfgtype"></param>
+        /// <param name="plant"></param>
+        /// <param name="line"></param>
+        /// <param name="model"></param>
+        /// <param name="upn"></param>
+        private void loadFixuteID(ComboBox combobox, string mfgtype, string plant = "----", string line = "----", string model = "----",string upn="----")
+        {
+            string sql = "";
+            if (plant == "----")
+            {
+                if (line == "----")
+                {
+                    if (model == "----")
+                    {
+                        if (upn == "----")
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString();
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString();
+                        }
+                        else
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE upn = '" + upn + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE upn = '" + upn + "'";
+                        }
+                        
+                    }
+                    else
+                    {
+                        if (upn == "----")
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE model = '" + model + "' and upn = '" + upn + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE model = '" + model + "' and upn = '" + upn + "'";
+                        }
+                        
+                    }
+
+                }
+                else
+                {
+                    if (model == "----")
+                    {
+                        if (upn == "----")
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE line = '" + line + "'";
+                        }
+                        else
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line + "' and upn = '" + upn + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE line = '" + line + "' and upn = '" + upn + "'";
+
+                        }
+                        
+                    }
+                    else
+                    {
+                        if (upn == "----")
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line + "' and  model = '" + model + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE line = '" + line + "' and  model = '" + model + "'";
+                        }
+                        else
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line + "' and  model = '" + model + "' and upn = '" + upn + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE line = '" + line + "' and  model = '" + model + "' and upn = '" + upn + "'";
+                        }
+                        
+                    }
+
+                }
+            }
+            else
+            {
+                if (line == "----")
+                {
+                    if (model == "----")
+                    {
+                        if (upn == "----")
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "'";
+                        }
+                        else
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and upn = '" + upn + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and upn = '" + upn + "'";
+                        }
+
+                    }
+                    else
+                    {
+                        if (upn == "----")
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and model = '" + model + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and model = '" + model + "'";
+                        }
+                        else
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and model = '" + model + "' and upn = '" + upn + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and model = '" + model + "' and upn = '" + upn + "'";
+                        }
+                        
+                    }
+
+                }
+                else
+                {
+                    if (model == "----")
+                    {
+                        if (upn == "----")
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "'";
+                        }
+                        else
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "' and upn = '" + upn + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "' and upn = '" + upn + "'";
+                        }
+                        
+                    
+                    }
+                    else
+                    {
+                        if (upn == "----")
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "' and model ='" + model + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "' and model ='" + model + "'";
+                        }
+                        else
+                        {
+                            sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.atedata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "' and model ='" + model + "' and upn = '" + upn + "'";
+                            if (mfgtype.ToUpper() == "FT")
+                                sql = "SELECT DISTINCT fixtureid FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE plant = '" + plant + "' and line ='" + line + "' and model ='" + model + "' and upn = '" + upn + "'";
+                        }
+                        
+                    }
+
+                }
+
+            }
+            loadSqlList(sql, combobox);
         }      
+
+
     }
 }

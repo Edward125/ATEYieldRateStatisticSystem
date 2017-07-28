@@ -425,15 +425,15 @@
             // comboFixtureID
             // 
             this.comboFixtureID.FormattingEnabled = true;
-            this.comboFixtureID.Location = new System.Drawing.Point(72, 142);
+            this.comboFixtureID.Location = new System.Drawing.Point(70, 142);
             this.comboFixtureID.Name = "comboFixtureID";
-            this.comboFixtureID.Size = new System.Drawing.Size(140, 22);
+            this.comboFixtureID.Size = new System.Drawing.Size(142, 22);
             this.comboFixtureID.TabIndex = 19;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(10, 145);
+            this.label9.Location = new System.Drawing.Point(5, 145);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(59, 14);
             this.label9.TabIndex = 18;
