@@ -139,9 +139,9 @@ namespace ATEYieldRateStatisticSystem
                 }
                 else
                 {
-                    sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.atedata.ToString() + "WHERE line = '" + line + "'";
+                    sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line + "'";
                     if (mfgtype.ToUpper() == "FT")
-                        sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.ftdata.ToString()  + "WHERE line = '" + line + "'";
+                        sql = "SELECT DISTINCT model FROM " + p.DatabaseTable.ftdata.ToString()  + " WHERE line = '" + line + "'";
                 }               
             }
             else
@@ -190,9 +190,9 @@ namespace ATEYieldRateStatisticSystem
                     }
                     else
                     {
-                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + "WHERE model = '" + model + "'";
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + " WHERE model = '" + model + "'";
                         if (mfgtype.ToUpper() == "FT")
-                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + "WHERE model = '" + model + "'";
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE model = '" + model + "'";
                     }
                     
                 }
@@ -200,15 +200,15 @@ namespace ATEYieldRateStatisticSystem
                 {
                     if (model == "----")
                     {
-                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + "WHERE line = '" + line + "'";
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line + "'";
                         if (mfgtype.ToUpper() == "FT")
-                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + "WHERE line = '" + line + "'";
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE line = '" + line + "'";
                     }
                     else
                     {
-                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + "WHERE line = '" + line + "' and  model = '" + model + "'";
+                        sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line + "' and  model = '" + model + "'";
                         if (mfgtype.ToUpper() == "FT")
-                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + "WHERE line = '" + line + "' and  model = '" + model + "'";
+                            sql = "SELECT DISTINCT upn FROM " + p.DatabaseTable.ftdata.ToString() + " WHERE line = '" + line + "' and  model = '" + model + "'";
                     }
                    
                 }
@@ -412,6 +412,43 @@ namespace ATEYieldRateStatisticSystem
 
             }
             loadSqlList(sql, combobox);
+        }
+
+        private void comboLine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           // loadLine(comboLine, this.comboQueryType.Text);
+            //loadPlant(comboPlant, this.comboQueryType.Text);
+            loadModel(comboModel, this.comboQueryType.Text, this.comboPlant.Text, comboLine.Text);
+            loadUPN(comboUPN, this.comboQueryType.Text, this.comboPlant.Text, comboLine.Text);
+            loadFixuteID(comboFixtureID, this.comboQueryType.Text, this.comboPlant.Text, comboLine.Text);
+        }
+
+        private void comboModel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadUPN(comboUPN, this.comboQueryType.Text, this.comboPlant.Text, comboLine.Text, comboModel.Text);
+            loadFixuteID(comboFixtureID, this.comboQueryType.Text, this.comboPlant.Text, comboLine.Text, comboModel.Text);
+        }
+         
+
+        private void comboUPN_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadFixuteID(comboFixtureID, this.comboQueryType.Text, this.comboPlant.Text, comboLine.Text, comboModel.Text, comboUPN.Text);
+        }
+
+        private void btnQuery_Click(object sender, EventArgs e)
+        {
+            if (chkUseSql.Checked)
+            {
+                if (string.IsNullOrEmpty(txtSql.Text.Trim()))
+                {
+                    txtSql.Focus();
+                    return;
+                }
+            }
+            else
+            {
+
+            }
         }      
 
 

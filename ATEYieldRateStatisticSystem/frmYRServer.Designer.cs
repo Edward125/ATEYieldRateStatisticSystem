@@ -47,6 +47,8 @@
             this.btnQuicklyQuery = new System.Windows.Forms.Button();
             this.comboQuicklyQuery = new System.Windows.Forms.ComboBox();
             this.grbQueryOption = new System.Windows.Forms.GroupBox();
+            this.comboFixtureID = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.comboQueryType = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.dtpEndTime = new System.Windows.Forms.DateTimePicker();
@@ -65,8 +67,6 @@
             this.comboModel = new System.Windows.Forms.ComboBox();
             this.chkUseSql = new System.Windows.Forms.CheckBox();
             this.txtSql = new System.Windows.Forms.TextBox();
-            this.comboFixtureID = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -202,6 +202,7 @@
             this.btnQuery.TabIndex = 2;
             this.btnQuery.Text = "Query";
             this.btnQuery.UseVisualStyleBackColor = true;
+            this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
             // 
             // grbQuicklyQuery
             // 
@@ -257,6 +258,23 @@
             this.grbQueryOption.TabIndex = 14;
             this.grbQueryOption.TabStop = false;
             this.grbQueryOption.Text = "Query Option";
+            // 
+            // comboFixtureID
+            // 
+            this.comboFixtureID.FormattingEnabled = true;
+            this.comboFixtureID.Location = new System.Drawing.Point(70, 142);
+            this.comboFixtureID.Name = "comboFixtureID";
+            this.comboFixtureID.Size = new System.Drawing.Size(142, 22);
+            this.comboFixtureID.TabIndex = 19;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(5, 145);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(59, 14);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "FixtureID:";
             // 
             // comboQueryType
             // 
@@ -323,6 +341,7 @@
             this.comboLine.Name = "comboLine";
             this.comboLine.Size = new System.Drawing.Size(62, 22);
             this.comboLine.TabIndex = 1;
+            this.comboLine.SelectedIndexChanged += new System.EventHandler(this.comboLine_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -375,6 +394,7 @@
             this.comboUPN.Name = "comboUPN";
             this.comboUPN.Size = new System.Drawing.Size(159, 22);
             this.comboUPN.TabIndex = 9;
+            this.comboUPN.SelectedIndexChanged += new System.EventHandler(this.comboUPN_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -401,6 +421,7 @@
             this.comboModel.Name = "comboModel";
             this.comboModel.Size = new System.Drawing.Size(158, 22);
             this.comboModel.TabIndex = 7;
+            this.comboModel.SelectedIndexChanged += new System.EventHandler(this.comboModel_SelectedIndexChanged);
             // 
             // chkUseSql
             // 
@@ -421,23 +442,6 @@
             this.txtSql.Name = "txtSql";
             this.txtSql.Size = new System.Drawing.Size(226, 80);
             this.txtSql.TabIndex = 10;
-            // 
-            // comboFixtureID
-            // 
-            this.comboFixtureID.FormattingEnabled = true;
-            this.comboFixtureID.Location = new System.Drawing.Point(70, 142);
-            this.comboFixtureID.Name = "comboFixtureID";
-            this.comboFixtureID.Size = new System.Drawing.Size(142, 22);
-            this.comboFixtureID.TabIndex = 19;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(5, 145);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(59, 14);
-            this.label9.TabIndex = 18;
-            this.label9.Text = "FixtureID:";
             // 
             // frmYRServer
             // 
