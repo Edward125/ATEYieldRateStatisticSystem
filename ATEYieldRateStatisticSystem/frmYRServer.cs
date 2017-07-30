@@ -531,5 +531,28 @@ namespace ATEYieldRateStatisticSystem
             }
    
         }
+
+        private void btnQuicklyQuery_Click(object sender, EventArgs e)
+        {
+            //ATE Current Day Yield Rate ->0
+            //ATE Current Day Production Output ->1
+            //FT Current Day Yield Rate ->2
+           //FT Current Day Production Output ->3
+            switch (comboQuicklyQuery.SelectedIndex)
+            {   
+                case 0:                    
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
     }
 }

@@ -40,7 +40,8 @@
             this.queryFTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabUseSql = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dgvSqlResult = new System.Windows.Forms.DataGridView();
+            this.tabYieldRate = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnQuery = new System.Windows.Forms.Button();
             this.grbQuicklyQuery = new System.Windows.Forms.GroupBox();
@@ -67,14 +68,18 @@
             this.comboModel = new System.Windows.Forms.ComboBox();
             this.chkUseSql = new System.Windows.Forms.CheckBox();
             this.txtSql = new System.Windows.Forms.TextBox();
-            this.dgvSqlResult = new System.Windows.Forms.DataGridView();
+            this.tabProduectionOutput = new System.Windows.Forms.TabPage();
+            this.lstviewYieldRate = new System.Windows.Forms.ListView();
+            this.lstviewProductionOutput = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabUseSql.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSqlResult)).BeginInit();
+            this.tabYieldRate.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.grbQuicklyQuery.SuspendLayout();
             this.grbQueryOption.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSqlResult)).BeginInit();
+            this.tabProduectionOutput.SuspendLayout();
             this.SuspendLayout();
             // 
             // skinEngine1
@@ -156,7 +161,8 @@
             // tabMain
             // 
             this.tabMain.Controls.Add(this.tabUseSql);
-            this.tabMain.Controls.Add(this.tabPage2);
+            this.tabMain.Controls.Add(this.tabYieldRate);
+            this.tabMain.Controls.Add(this.tabProduectionOutput);
             this.tabMain.Location = new System.Drawing.Point(256, 28);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
@@ -174,15 +180,25 @@
             this.tabUseSql.Text = "Sql Result";
             this.tabUseSql.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // dgvSqlResult
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 23);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(765, 456);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.dgvSqlResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSqlResult.Location = new System.Drawing.Point(6, 6);
+            this.dgvSqlResult.Name = "dgvSqlResult";
+            this.dgvSqlResult.RowTemplate.Height = 23;
+            this.dgvSqlResult.Size = new System.Drawing.Size(753, 444);
+            this.dgvSqlResult.TabIndex = 0;
+            // 
+            // tabYieldRate
+            // 
+            this.tabYieldRate.Controls.Add(this.lstviewYieldRate);
+            this.tabYieldRate.Location = new System.Drawing.Point(4, 23);
+            this.tabYieldRate.Name = "tabYieldRate";
+            this.tabYieldRate.Padding = new System.Windows.Forms.Padding(3);
+            this.tabYieldRate.Size = new System.Drawing.Size(765, 456);
+            this.tabYieldRate.TabIndex = 1;
+            this.tabYieldRate.Text = "Yield Rate";
+            this.tabYieldRate.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -227,10 +243,16 @@
             this.btnQuicklyQuery.TabIndex = 1;
             this.btnQuicklyQuery.Text = "Quickly Query";
             this.btnQuicklyQuery.UseVisualStyleBackColor = true;
+            this.btnQuicklyQuery.Click += new System.EventHandler(this.btnQuicklyQuery_Click);
             // 
             // comboQuicklyQuery
             // 
             this.comboQuicklyQuery.FormattingEnabled = true;
+            this.comboQuicklyQuery.Items.AddRange(new object[] {
+            "ATE Current Day Yield Rate",
+            "ATE Current Day Production Output",
+            "FT Current Day Yield Rate",
+            "FT Current Day Production Output"});
             this.comboQuicklyQuery.Location = new System.Drawing.Point(13, 17);
             this.comboQuicklyQuery.Name = "comboQuicklyQuery";
             this.comboQuicklyQuery.Size = new System.Drawing.Size(202, 22);
@@ -447,14 +469,33 @@
             this.txtSql.Size = new System.Drawing.Size(226, 80);
             this.txtSql.TabIndex = 10;
             // 
-            // dgvSqlResult
+            // tabProduectionOutput
             // 
-            this.dgvSqlResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSqlResult.Location = new System.Drawing.Point(6, 6);
-            this.dgvSqlResult.Name = "dgvSqlResult";
-            this.dgvSqlResult.RowTemplate.Height = 23;
-            this.dgvSqlResult.Size = new System.Drawing.Size(753, 444);
-            this.dgvSqlResult.TabIndex = 0;
+            this.tabProduectionOutput.Controls.Add(this.lstviewProductionOutput);
+            this.tabProduectionOutput.Location = new System.Drawing.Point(4, 23);
+            this.tabProduectionOutput.Name = "tabProduectionOutput";
+            this.tabProduectionOutput.Size = new System.Drawing.Size(765, 456);
+            this.tabProduectionOutput.TabIndex = 2;
+            this.tabProduectionOutput.Text = "Production Output";
+            this.tabProduectionOutput.UseVisualStyleBackColor = true;
+            // 
+            // lstviewYieldRate
+            // 
+            this.lstviewYieldRate.Location = new System.Drawing.Point(6, 6);
+            this.lstviewYieldRate.Name = "lstviewYieldRate";
+            this.lstviewYieldRate.Size = new System.Drawing.Size(753, 444);
+            this.lstviewYieldRate.TabIndex = 0;
+            this.lstviewYieldRate.UseCompatibleStateImageBehavior = false;
+            this.lstviewYieldRate.View = System.Windows.Forms.View.Details;
+            // 
+            // lstviewProductionOutput
+            // 
+            this.lstviewProductionOutput.Location = new System.Drawing.Point(3, 3);
+            this.lstviewProductionOutput.Name = "lstviewProductionOutput";
+            this.lstviewProductionOutput.Size = new System.Drawing.Size(759, 450);
+            this.lstviewProductionOutput.TabIndex = 0;
+            this.lstviewProductionOutput.UseCompatibleStateImageBehavior = false;
+            this.lstviewProductionOutput.View = System.Windows.Forms.View.Details;
             // 
             // frmYRServer
             // 
@@ -473,12 +514,14 @@
             this.menuStrip1.PerformLayout();
             this.tabMain.ResumeLayout(false);
             this.tabUseSql.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSqlResult)).EndInit();
+            this.tabYieldRate.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.grbQuicklyQuery.ResumeLayout(false);
             this.grbQueryOption.ResumeLayout(false);
             this.grbQueryOption.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSqlResult)).EndInit();
+            this.tabProduectionOutput.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -498,7 +541,7 @@
         private System.Windows.Forms.ToolStripMenuItem queryFTToolStripMenuItem;
         private System.Windows.Forms.TabControl tabMain;
         private System.Windows.Forms.TabPage tabUseSql;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabYieldRate;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox comboLine;
         private System.Windows.Forms.Label label1;
@@ -526,5 +569,8 @@
         private System.Windows.Forms.ComboBox comboFixtureID;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridView dgvSqlResult;
+        private System.Windows.Forms.TabPage tabProduectionOutput;
+        private System.Windows.Forms.ListView lstviewYieldRate;
+        private System.Windows.Forms.ListView lstviewProductionOutput;
     }
 }
