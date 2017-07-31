@@ -266,6 +266,14 @@ namespace ATEYieldRateStatisticSystem
             DShift,
             Nshift
         }
+
+
+
+       public enum QueryType
+       {
+            YieldRate,
+            ProductionOutput
+        }
         #endregion
 
 

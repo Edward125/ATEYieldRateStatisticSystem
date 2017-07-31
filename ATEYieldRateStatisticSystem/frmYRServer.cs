@@ -69,9 +69,36 @@ namespace ATEYieldRateStatisticSystem
             {
                 MessageBox.Show("Detect your pc is not connect to network,pls retry...", "NOT CONNECT NETWORK", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
-         
+
+            setListView(lstviewYieldRate, p.QueryType .YieldRate , comboType);
+            setListView(lstviewProductionOutput ,p.QueryType.ProductionOutput , comboType);
+
         }
 
+
+
+        private void setListView(ListView listview, p.QueryType querytype,ComboBox mfgtype)
+        {
+          
+            string _mfgtype = mfgtype.Text;
+            listview.MultiSelect = false;
+            listview.AutoArrange = true;
+            listview.GridLines = true;
+            listview.FullRowSelect = true;
+            listview.Columns.Add("MfgType", 60, HorizontalAlignment.Center);
+            listview.Columns.Add("Line", 60, HorizontalAlignment.Center);
+            listview.Columns.Add("FixtureID",120, HorizontalAlignment.Center);
+            listview.Columns.Add("Time",240 , HorizontalAlignment.Center);
+            if (querytype == p.QueryType .YieldRate )
+                listview.Columns.Add(querytype.ToString(), 80, HorizontalAlignment.Center);
+            if (querytype == p.QueryType .ProductionOutput)
+                listview.Columns.Add(querytype.ToString(),120, HorizontalAlignment.Center);
+            
+            if (querytype == p.QueryType.YieldRate)
+            {
+                listview.Columns.Add("FPY", 60, HorizontalAlignment.Center);
+            }
+        }
 
 
         /// <summary>
@@ -442,18 +469,21 @@ namespace ATEYieldRateStatisticSystem
         {
             if (chkUseSql.Checked)
             {
+                
                 if (string.IsNullOrEmpty(txtSql.Text.Trim()))
                 {
                     txtSql.Focus();
                     return;
                 }
                 else
-                {                
+                {
+                    tabMain.SelectedTab = tabUseSql;
                     dgvSqlResult.DataSource = null;
                     Thread t = new Thread(queryMysqlShowDataSet);
                     t.Name = "ReadTestLog";
                     //t.IsBackground = true;
                     t.Start(txtSql.Text.Trim());
+                    
                     
                 }
             }
@@ -538,15 +568,23 @@ namespace ATEYieldRateStatisticSystem
             //ATE Current Day Production Output ->1
             //FT Current Day Yield Rate ->2
            //FT Current Day Production Output ->3
+
+            lstviewProductionOutput.Items.Clear();
+            lstviewYieldRate.Items.Clear();
+
             switch (comboQuicklyQuery.SelectedIndex)
             {   
-                case 0:                    
+                case 0:
+                    tabMain.SelectedTab = tabYieldRate;
                     break;
                 case 1:
+                    tabMain.SelectedTab = tabProduectionOutput;
                     break;
                 case 2:
+                    tabMain.SelectedTab = tabYieldRate;
                     break;
                 case 3:
+                    tabMain.SelectedTab = tabProduectionOutput;
                     break;
                 default:
                     break;
