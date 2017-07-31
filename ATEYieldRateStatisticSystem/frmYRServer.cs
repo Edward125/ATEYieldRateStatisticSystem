@@ -484,7 +484,6 @@ namespace ATEYieldRateStatisticSystem
                     //t.IsBackground = true;
                     t.Start(txtSql.Text.Trim());
                     
-                    
                 }
             }
             else
@@ -567,7 +566,11 @@ namespace ATEYieldRateStatisticSystem
             //ATE Current Day Yield Rate ->0
             //ATE Current Day Production Output ->1
             //FT Current Day Yield Rate ->2
-           //FT Current Day Production Output ->3
+            //FT Current Day Production Output ->3
+            //ATE Yesterday Yield Rate ->4
+            //ATE Yesterday Production Output ->5
+            //FT Yesterday Yield Rate ->6
+            //FT Yesterday Production Output ->7
 
             lstviewProductionOutput.Items.Clear();
             lstviewYieldRate.Items.Clear();
@@ -586,10 +589,86 @@ namespace ATEYieldRateStatisticSystem
                 case 3:
                     tabMain.SelectedTab = tabProduectionOutput;
                     break;
+                case 4:
+                    tabMain.SelectedTab = tabYieldRate;
+                    break;
+                case 5:
+                    tabMain.SelectedTab = tabProduectionOutput;
+                    break;
+                case 6:
+                    tabMain.SelectedTab = tabYieldRate;
+                    break;
+                case 7:
+                    tabMain.SelectedTab = tabProduectionOutput;
+                    break;
                 default:
                     break;
             }
 
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="listview"></param>
+        private void loadYieldRate(string sql, ListView listview)
+        {
+            listview.Items.Clear();
+            listview.BeginUpdate();//数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度 
+
+            MySqlConnection conn = new MySqlConnection(p.connString);
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            conn.Open();
+
+
+
+
+            conn.Close();
+            listview.EndUpdate();//结束数据处理，UI界面一次性绘制。
+
+        }
+
+        private void loadProductionOutput(DateTime  startdatevalue,DateTime  enddatatimevalue, ListView listview,string mfgtype)
+        {
+            listview.Items.Clear();
+            string sql = string.Empty;
+            List<string> _Line = new List<string>();
+            List<string> _FixtureID = new List<string>();
+            listview.BeginUpdate();//数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度 
+            MySqlConnection conn = new MySqlConnection(p.connString);           
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = conn;
+            // Line
+            if (mfgtype.ToUpper() == "ATE")
+                sql = "SELECT DISTINCT line from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "'";
+            if (mfgtype .ToUpper () == "FT")
+                sql = "SELECT DISTINCT line from " + p.DatabaseTable.ftdata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "'";
+            _Line = p.queryMySql(conn, sql);
+
+            //FixtureID
+            // Line
+            if (mfgtype.ToUpper() == "ATE")
+                sql = "SELECT DISTINCT fixtureid from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "'";
+            if (mfgtype.ToUpper() == "FT")
+                sql = "SELECT DISTINCT fixtureid from " + p.DatabaseTable.ftdata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "'";
+            _FixtureID = p.queryMySql(conn, sql);
+
+           
+
+
+
+
+
+            conn.Close();
+            listview.EndUpdate();//结束数据处理，UI界面一次性绘制。
 
         }
     }

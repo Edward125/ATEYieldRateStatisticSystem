@@ -252,7 +252,11 @@
             "ATE Current Day Yield Rate",
             "ATE Current Day Production Output",
             "FT Current Day Yield Rate",
-            "FT Current Day Production Output"});
+            "FT Current Day Production Output",
+            "ATE Yesterday Yield Rate",
+            "ATE Yesterday Production Output",
+            "FT Yesterday Yield Rate",
+            "FT Yesterday Production Output"});
             this.comboQuicklyQuery.Location = new System.Drawing.Point(13, 17);
             this.comboQuicklyQuery.Name = "comboQuicklyQuery";
             this.comboQuicklyQuery.Size = new System.Drawing.Size(202, 22);

@@ -1772,7 +1772,30 @@ remark) VALUES ('" + _line  + "','"
             conn.Close();
             return result;
         }
-        
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connstring"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static List<string> queryMySql(MySqlConnection conn, string sql)
+        {
+            List<string> result = new List<string>();       
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            conn.Open();
+            MySqlDataReader re = cmd.ExecuteReader();
+            if (re.HasRows)
+            {
+                while (re.Read())
+                {
+                    result.Add(re[0].ToString());
+                }
+            }
+            return result;
+        }
+
 
         #endregion
         
