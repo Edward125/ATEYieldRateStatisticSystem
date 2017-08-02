@@ -42,6 +42,9 @@
             this.tabUseSql = new System.Windows.Forms.TabPage();
             this.dgvSqlResult = new System.Windows.Forms.DataGridView();
             this.tabYieldRate = new System.Windows.Forms.TabPage();
+            this.lstviewYieldRate = new System.Windows.Forms.ListView();
+            this.tabProduectionOutput = new System.Windows.Forms.TabPage();
+            this.lstviewProductionOutput = new System.Windows.Forms.ListView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnQuery = new System.Windows.Forms.Button();
             this.grbQuicklyQuery = new System.Windows.Forms.GroupBox();
@@ -68,18 +71,16 @@
             this.comboModel = new System.Windows.Forms.ComboBox();
             this.chkUseSql = new System.Windows.Forms.CheckBox();
             this.txtSql = new System.Windows.Forms.TextBox();
-            this.tabProduectionOutput = new System.Windows.Forms.TabPage();
-            this.lstviewYieldRate = new System.Windows.Forms.ListView();
-            this.lstviewProductionOutput = new System.Windows.Forms.ListView();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabUseSql.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSqlResult)).BeginInit();
             this.tabYieldRate.SuspendLayout();
+            this.tabProduectionOutput.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.grbQuicklyQuery.SuspendLayout();
             this.grbQueryOption.SuspendLayout();
-            this.tabProduectionOutput.SuspendLayout();
             this.SuspendLayout();
             // 
             // skinEngine1
@@ -199,6 +200,34 @@
             this.tabYieldRate.TabIndex = 1;
             this.tabYieldRate.Text = "Yield Rate";
             this.tabYieldRate.UseVisualStyleBackColor = true;
+            // 
+            // lstviewYieldRate
+            // 
+            this.lstviewYieldRate.Location = new System.Drawing.Point(6, 6);
+            this.lstviewYieldRate.Name = "lstviewYieldRate";
+            this.lstviewYieldRate.Size = new System.Drawing.Size(753, 444);
+            this.lstviewYieldRate.TabIndex = 0;
+            this.lstviewYieldRate.UseCompatibleStateImageBehavior = false;
+            this.lstviewYieldRate.View = System.Windows.Forms.View.Details;
+            // 
+            // tabProduectionOutput
+            // 
+            this.tabProduectionOutput.Controls.Add(this.lstviewProductionOutput);
+            this.tabProduectionOutput.Location = new System.Drawing.Point(4, 23);
+            this.tabProduectionOutput.Name = "tabProduectionOutput";
+            this.tabProduectionOutput.Size = new System.Drawing.Size(765, 456);
+            this.tabProduectionOutput.TabIndex = 2;
+            this.tabProduectionOutput.Text = "Production Output";
+            this.tabProduectionOutput.UseVisualStyleBackColor = true;
+            // 
+            // lstviewProductionOutput
+            // 
+            this.lstviewProductionOutput.Location = new System.Drawing.Point(3, 3);
+            this.lstviewProductionOutput.Name = "lstviewProductionOutput";
+            this.lstviewProductionOutput.Size = new System.Drawing.Size(759, 450);
+            this.lstviewProductionOutput.TabIndex = 0;
+            this.lstviewProductionOutput.UseCompatibleStateImageBehavior = false;
+            this.lstviewProductionOutput.View = System.Windows.Forms.View.Details;
             // 
             // groupBox1
             // 
@@ -473,33 +502,9 @@
             this.txtSql.Size = new System.Drawing.Size(226, 80);
             this.txtSql.TabIndex = 10;
             // 
-            // tabProduectionOutput
+            // backgroundWorker1
             // 
-            this.tabProduectionOutput.Controls.Add(this.lstviewProductionOutput);
-            this.tabProduectionOutput.Location = new System.Drawing.Point(4, 23);
-            this.tabProduectionOutput.Name = "tabProduectionOutput";
-            this.tabProduectionOutput.Size = new System.Drawing.Size(765, 456);
-            this.tabProduectionOutput.TabIndex = 2;
-            this.tabProduectionOutput.Text = "Production Output";
-            this.tabProduectionOutput.UseVisualStyleBackColor = true;
-            // 
-            // lstviewYieldRate
-            // 
-            this.lstviewYieldRate.Location = new System.Drawing.Point(6, 6);
-            this.lstviewYieldRate.Name = "lstviewYieldRate";
-            this.lstviewYieldRate.Size = new System.Drawing.Size(753, 444);
-            this.lstviewYieldRate.TabIndex = 0;
-            this.lstviewYieldRate.UseCompatibleStateImageBehavior = false;
-            this.lstviewYieldRate.View = System.Windows.Forms.View.Details;
-            // 
-            // lstviewProductionOutput
-            // 
-            this.lstviewProductionOutput.Location = new System.Drawing.Point(3, 3);
-            this.lstviewProductionOutput.Name = "lstviewProductionOutput";
-            this.lstviewProductionOutput.Size = new System.Drawing.Size(759, 450);
-            this.lstviewProductionOutput.TabIndex = 0;
-            this.lstviewProductionOutput.UseCompatibleStateImageBehavior = false;
-            this.lstviewProductionOutput.View = System.Windows.Forms.View.Details;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
             // frmYRServer
             // 
@@ -520,12 +525,12 @@
             this.tabUseSql.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSqlResult)).EndInit();
             this.tabYieldRate.ResumeLayout(false);
+            this.tabProduectionOutput.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.grbQuicklyQuery.ResumeLayout(false);
             this.grbQueryOption.ResumeLayout(false);
             this.grbQueryOption.PerformLayout();
-            this.tabProduectionOutput.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -576,5 +581,6 @@
         private System.Windows.Forms.TabPage tabProduectionOutput;
         private System.Windows.Forms.ListView lstviewYieldRate;
         private System.Windows.Forms.ListView lstviewProductionOutput;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

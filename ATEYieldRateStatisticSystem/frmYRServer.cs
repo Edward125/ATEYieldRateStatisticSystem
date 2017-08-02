@@ -469,7 +469,6 @@ namespace ATEYieldRateStatisticSystem
         {
             if (chkUseSql.Checked)
             {
-                
                 if (string.IsNullOrEmpty(txtSql.Text.Trim()))
                 {
                     txtSql.Focus();
@@ -563,6 +562,28 @@ namespace ATEYieldRateStatisticSystem
 
         private void btnQuicklyQuery_Click(object sender, EventArgs e)
         {
+
+            //DateTime startdatevalue = dtpStartTime.Value;
+            //DateTime enddatavalue = dtpEndTime.Value;
+            //for (DateTime i = startdatevalue; i < enddatavalue; i = i.AddHours(1.0))
+            //{
+            //    MessageBox.Show(i.ToString("yyyy-MM-dd HH:mm:ss"));
+
+            //}
+            
+            //DateTime j = startdatevalue.AddHours(1);
+            //MessageBox.Show("i:" + startdatevalue.ToString("yyyy-MM-dd HH:mm:ss") + "->j:" + j.ToString("yyyy-MM-dd HH:mm:ss"));
+
+            //if (startdatevalue < enddatavalue)
+            //{
+            //    MessageBox.Show(true.ToString());
+            //}
+            //else
+            //{
+            //    MessageBox.Show(false.ToString());
+            //}
+
+           // return;
             //ATE Current Day Yield Rate ->0
             //ATE Current Day Production Output ->1
             //FT Current Day Yield Rate ->2
@@ -582,6 +603,7 @@ namespace ATEYieldRateStatisticSystem
                     break;
                 case 1:
                     tabMain.SelectedTab = tabProduectionOutput;
+                    backgroundWorker1.RunWorkerAsync();
                     break;
                 case 2:
                     tabMain.SelectedTab = tabYieldRate;
@@ -661,14 +683,91 @@ namespace ATEYieldRateStatisticSystem
                 sql = "SELECT DISTINCT fixtureid from " + p.DatabaseTable.ftdata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "'";
             _FixtureID = p.queryMySql(conn, sql);
 
-           
+            ListViewItem lt = new ListViewItem();
 
+            for ( DateTime i = startdatevalue;  i < enddatatimevalue;  i = startdatevalue.AddHours (1))
+            {
+                foreach (string line in _Line)
+                {
+                    foreach (string fixtureid in _FixtureID)
+                    {
+                        if (mfgtype.ToUpper() == "ATE")
+                            sql = "SELECT COUNT(*)  from " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line +"' and fixtureid = '" + fixtureid +"' and testresult = 'PASS' and testtime BETWEEN '" + i.ToString("yyyyMMddHHmmss") + "' and '" + i.AddHours (1).ToString("yyyyMMddHHmmss") + "'";
+                        if (mfgtype.ToUpper() == "FT")
+                             sql = "SELECT COUNT(*)  from " + p.DatabaseTable.ftdata.ToString() + " WHERE line = '" + line +"' and fixtureid = '" + fixtureid +"' and testresult = 'PASS' and testtime BETWEEN '" + i.ToString("yyyyMMddHHmmss") + "' and '" + i.AddHours (1).ToString("yyyyMMddHHmmss") + "'";
 
+                        Int32 qty = 0;
+                        // Int32  qty = p.queryMysqlCount(conn, sql);
 
-
+                        lt = listview.Items.Add(mfgtype);
+                        lt.SubItems.Add(line);
+                        lt.SubItems.Add(fixtureid);
+                        lt.SubItems.Add(i.ToString("yyyy-MM-dd HH:mm:ss") + "~" + i.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
+                        lt.SubItems.Add(qty.ToString());
+                    }
+                }
+            }
 
             conn.Close();
             listview.EndUpdate();//结束数据处理，UI界面一次性绘制。
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //loadProductionOutput(dtpStartTime.Value, dtpEndTime.Value, lstviewProductionOutput, comboType.Text);
+
+            this.Invoke((EventHandler)(delegate
+            {
+                lstviewProductionOutput.Items.Clear();
+                string sql = string.Empty;
+                List<string> _Line = new List<string>();
+                List<string> _FixtureID = new List<string>();
+                lstviewProductionOutput.BeginUpdate();//数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度 
+                MySqlConnection conn = new MySqlConnection(p.connString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                // Line        
+                sql = "SELECT DISTINCT line from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + dtpStartTime.Value.ToString("yyyyMMddHHmmss") + "' and '" + dtpEndTime.Value.ToString("yyyyMMddHHmmss") + "'";
+
+                _Line = p.queryMySql(conn, sql);
+
+                //FixtureID
+                // Line
+
+                sql = "SELECT DISTINCT fixtureid from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + dtpStartTime.Value.ToString("yyyyMMddHHmmss") + "' and '" + dtpEndTime.Value.ToString("yyyyMMddHHmmss") + "'";
+                _FixtureID = p.queryMySql(conn, sql);
+
+                ListViewItem lt = new ListViewItem();
+
+                for (DateTime i = dtpStartTime.Value; i < dtpEndTime.Value; i = dtpStartTime.Value.AddHours(1))
+                {
+                    foreach (string line in _Line)
+                    {
+                        foreach (string fixtureid in _FixtureID)
+                        {
+
+                            sql = "SELECT COUNT(*)  from " + p.DatabaseTable.atedata.ToString() + " WHERE line = '" + line + "' and fixtureid = '" + fixtureid + "' and testresult = 'PASS' and testtime BETWEEN '" + i.ToString("yyyyMMddHHmmss") + "' and '" + i.AddHours(1).ToString("yyyyMMddHHmmss") + "'";
+
+
+                            Int32 qty = 0;
+                            // Int32  qty = p.queryMysqlCount(conn, sql);
+
+                            lt = lstviewProductionOutput.Items.Add("ATE");
+                            lt.SubItems.Add(line);
+                            lt.SubItems.Add(fixtureid);
+                            lt.SubItems.Add(i.ToString("yyyy-MM-dd HH:mm:ss") + "~" + i.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
+                            lt.SubItems.Add(qty.ToString());
+                        }
+                    }
+                }
+
+                conn.Close();
+                lstviewProductionOutput.EndUpdate();//结束数据处理，UI界面一次性绘制。 
+            }));
+
+          
 
         }
     }

@@ -1784,7 +1784,8 @@ remark) VALUES ('" + _line  + "','"
         {
             List<string> result = new List<string>();       
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            conn.Open();
+            if (conn.State == ConnectionState.Closed)
+                conn.Open();
             MySqlDataReader re = cmd.ExecuteReader();
             if (re.HasRows)
             {
@@ -1793,9 +1794,60 @@ remark) VALUES ('" + _line  + "','"
                     result.Add(re[0].ToString());
                 }
             }
+            conn.Close();
             return result;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connstring"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static Int32 queryMysqlCount(string connstring, string sql)
+        {
+            Int32 count = 0;
+            MySqlConnection conn = new MySqlConnection(connstring);
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            conn.Open();
+            object o = cmd.ExecuteScalar();
+            try
+            {
+                count = Convert.ToInt32(o);
+                conn.Close();
+            }
+            catch (Exception)
+            {
+                conn.Close();
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connstring"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static Int32 queryMysqlCount(MySqlConnection conn, string sql)
+        {
+            Int32 count = 0;  
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            if (conn.State == ConnectionState.Closed)
+                conn.Open();
+            object o = cmd.ExecuteScalar();
+            try
+            {
+                count = Convert.ToInt32(o);
+            }
+            catch (Exception)
+            {
+
+            }
+            conn.Close();
+            return count;
+        }
 
         #endregion
         
