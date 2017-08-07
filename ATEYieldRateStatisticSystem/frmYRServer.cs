@@ -665,7 +665,7 @@ namespace ATEYieldRateStatisticSystem
             string sql = string.Empty;
             List<string> _Line = new List<string>();
             List<string> _FixtureID = new List<string>();
-           // listview.BeginUpdate();//数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度 
+            listview.BeginUpdate();//数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度 
             MySqlConnection conn = new MySqlConnection(p.connString);           
             conn.Open();
             MySqlCommand cmd = new MySqlCommand();
@@ -673,9 +673,9 @@ namespace ATEYieldRateStatisticSystem
   
             if (mfgtype.ToUpper() == "ATE")
                 //"select line,fixtureid,count(usn) as Qty,date_format(recordtime,'%Y-%m-%d %H:00:00') as time from atedata where recordtime between " + dtpStartTime.Value .ToString ("yyyyMMddHHmmss") + " and " + dtpEndTime.Value .ToString ("yyyyMMddHHmmss") + " group by line,fixtureid,time";
-                sql = "SELECT line, count(usn) ,date_format(recordtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.atedata.ToString() + " WHERE recordtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,time1";
+                sql = "SELECT line,fixtureid,count(usn) ,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.atedata.ToString() + " WHERE recordtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,fixtureid,time1";
             if (mfgtype.ToUpper() == "FT")
-                sql = "SELECT line, count(usn) ,date_format(recordtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.ftdata.ToString() + " WHERE recordtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,time1";
+                sql = "SELECT line,fixtureid,count(usn) ,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.ftdata.ToString() + " WHERE recordtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,fixtureid,time1";
             cmd.CommandText = sql;
             MySqlDataReader re = cmd.ExecuteReader();
             ListViewItem lt = new ListViewItem();
@@ -685,9 +685,9 @@ namespace ATEYieldRateStatisticSystem
                 {
                     lt = listview.Items.Add(mfgtype);
                     lt.SubItems.Add(re["line"].ToString());
-                   // lt.SubItems.Add(re["fixtureid"].ToString());
-                    lt.SubItems.Add("");
-                    lt.SubItems.Add(byte2string((Byte[])re[2]));
+                    lt.SubItems.Add(re["fixtureid"].ToString());
+                    //lt.SubItems.Add("");
+                    lt.SubItems.Add(byte2string((Byte[])re["time1"]));
                     lt.SubItems.Add(re["count(usn)"].ToString());
                 }
             }
@@ -695,7 +695,7 @@ namespace ATEYieldRateStatisticSystem
 
 
             conn.Close();
-            //listview.EndUpdate();//结束数据处理，UI界面一次性绘制。
+            listview.EndUpdate();//结束数据处理，UI界面一次性绘制。
 
         }
 

@@ -1311,7 +1311,6 @@ remark varchar(255)
             }
 
             string sql = @"CREATE TABLE IF NOT EXISTS " + DatabaseTable.atedata.ToString() + @"(
-id int(11) NOT NULL auto_increment,
 line varchar(3),
 plant varchar(4),
 usn varchar(30),
@@ -1329,14 +1328,13 @@ cycletime varchar(10),
 testtime varchar(14),
 recordtime varchar(14),
 remark varchar(255),
-PRIMARY KEY (id)) ENGINE=MyISAM DEFAULT CHARSET=utf8";                
+PRIMARY KEY (usn,testtime)) ENGINE=MyISAM DEFAULT CHARSET=utf8";                
 
             MySqlCommand cmd = new MySqlCommand(sql, p.objConn);
             try
             {
                 cmd.ExecuteNonQuery();
                sql= @"CREATE TABLE IF NOT EXISTS " + DatabaseTable.ftdata.ToString() + @"(
-id int(11) NOT NULL auto_increment,
 line varchar(3),
 plant varchar(4),
 usn varchar(30),
@@ -1354,7 +1352,7 @@ cycletime varchar(10),
 testtime varchar(14),
 recordtime varchar(14),
 remark varchar(255),
-PRIMARY KEY (id)) ENGINE=MyISAM DEFAULT CHARSET=utf8";
+PRIMARY KEY (usn,testtime)) ENGINE=MyISAM DEFAULT CHARSET=utf8";
                 cmd.CommandText = sql;
                 cmd.ExecuteNonQuery();
                 //
