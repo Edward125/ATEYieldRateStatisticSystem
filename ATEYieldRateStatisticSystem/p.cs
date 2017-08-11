@@ -292,7 +292,7 @@ namespace ATEYieldRateStatisticSystem
                 bool Pd1 = (adapter.NetworkInterfaceType == NetworkInterfaceType.Ethernet); //判断是否是以太网连接
                 if (Pd1)
                 {
-                    //Console.WriteLine("网络适配器名称：" + adapter.Name);
+                    Console.WriteLine("网络适配器名称：" + adapter.Name);
                     //Console.WriteLine("网络适配器标识符：" + adapter.Id);
                     //Console.WriteLine("适配器连接状态：" + adapter.OperationalStatus.ToString());
                     IPInterfaceProperties ip = adapter.GetIPProperties();     //IP配置信息

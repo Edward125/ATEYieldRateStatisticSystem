@@ -72,6 +72,7 @@
             this.chkUseSql = new System.Windows.Forms.CheckBox();
             this.txtSql = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.chkDisplayFixureid = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabUseSql.SuspendLayout();
@@ -167,7 +168,7 @@
             this.tabMain.Location = new System.Drawing.Point(256, 28);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(773, 483);
+            this.tabMain.Size = new System.Drawing.Size(773, 505);
             this.tabMain.TabIndex = 1;
             // 
             // tabUseSql
@@ -215,16 +216,16 @@
             this.tabProduectionOutput.Controls.Add(this.lstviewProductionOutput);
             this.tabProduectionOutput.Location = new System.Drawing.Point(4, 23);
             this.tabProduectionOutput.Name = "tabProduectionOutput";
-            this.tabProduectionOutput.Size = new System.Drawing.Size(765, 456);
+            this.tabProduectionOutput.Size = new System.Drawing.Size(765, 478);
             this.tabProduectionOutput.TabIndex = 2;
             this.tabProduectionOutput.Text = "Production Output";
             this.tabProduectionOutput.UseVisualStyleBackColor = true;
             // 
             // lstviewProductionOutput
             // 
-            this.lstviewProductionOutput.Location = new System.Drawing.Point(3, 3);
+            this.lstviewProductionOutput.Location = new System.Drawing.Point(3, 41);
             this.lstviewProductionOutput.Name = "lstviewProductionOutput";
-            this.lstviewProductionOutput.Size = new System.Drawing.Size(759, 450);
+            this.lstviewProductionOutput.Size = new System.Drawing.Size(759, 428);
             this.lstviewProductionOutput.TabIndex = 0;
             this.lstviewProductionOutput.UseCompatibleStateImageBehavior = false;
             this.lstviewProductionOutput.View = System.Windows.Forms.View.Details;
@@ -238,14 +239,14 @@
             this.groupBox1.Controls.Add(this.txtSql);
             this.groupBox1.Location = new System.Drawing.Point(12, 28);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(238, 489);
+            this.groupBox1.Size = new System.Drawing.Size(238, 505);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Query Setting";
             // 
             // btnQuery
             // 
-            this.btnQuery.Location = new System.Drawing.Point(9, 359);
+            this.btnQuery.Location = new System.Drawing.Point(9, 371);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(223, 36);
             this.btnQuery.TabIndex = 2;
@@ -257,7 +258,7 @@
             // 
             this.grbQuicklyQuery.Controls.Add(this.btnQuicklyQuery);
             this.grbQuicklyQuery.Controls.Add(this.comboQuicklyQuery);
-            this.grbQuicklyQuery.Location = new System.Drawing.Point(9, 399);
+            this.grbQuicklyQuery.Location = new System.Drawing.Point(6, 413);
             this.grbQuicklyQuery.Name = "grbQuicklyQuery";
             this.grbQuicklyQuery.Size = new System.Drawing.Size(226, 83);
             this.grbQuicklyQuery.TabIndex = 15;
@@ -293,6 +294,7 @@
             // 
             // grbQueryOption
             // 
+            this.grbQueryOption.Controls.Add(this.chkDisplayFixureid);
             this.grbQueryOption.Controls.Add(this.comboFixtureID);
             this.grbQueryOption.Controls.Add(this.label9);
             this.grbQueryOption.Controls.Add(this.comboQueryType);
@@ -313,7 +315,7 @@
             this.grbQueryOption.Controls.Add(this.comboModel);
             this.grbQueryOption.Location = new System.Drawing.Point(6, 21);
             this.grbQueryOption.Name = "grbQueryOption";
-            this.grbQueryOption.Size = new System.Drawing.Size(226, 222);
+            this.grbQueryOption.Size = new System.Drawing.Size(226, 249);
             this.grbQueryOption.TabIndex = 14;
             this.grbQueryOption.TabStop = false;
             this.grbQueryOption.Text = "Query Option";
@@ -359,7 +361,7 @@
             // 
             this.dtpEndTime.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpEndTime.Location = new System.Drawing.Point(72, 193);
+            this.dtpEndTime.Location = new System.Drawing.Point(72, 196);
             this.dtpEndTime.Name = "dtpEndTime";
             this.dtpEndTime.Size = new System.Drawing.Size(140, 22);
             this.dtpEndTime.TabIndex = 15;
@@ -367,7 +369,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 196);
+            this.label7.Location = new System.Drawing.Point(6, 199);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(57, 14);
             this.label7.TabIndex = 14;
@@ -387,7 +389,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 173);
+            this.label6.Location = new System.Drawing.Point(5, 176);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(62, 14);
             this.label6.TabIndex = 13;
@@ -415,7 +417,7 @@
             // 
             this.dtpStartTime.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpStartTime.Location = new System.Drawing.Point(73, 168);
+            this.dtpStartTime.Location = new System.Drawing.Point(73, 171);
             this.dtpStartTime.Name = "dtpStartTime";
             this.dtpStartTime.Size = new System.Drawing.Size(140, 22);
             this.dtpStartTime.TabIndex = 12;
@@ -485,7 +487,7 @@
             // chkUseSql
             // 
             this.chkUseSql.AutoSize = true;
-            this.chkUseSql.Location = new System.Drawing.Point(5, 249);
+            this.chkUseSql.Location = new System.Drawing.Point(5, 275);
             this.chkUseSql.Name = "chkUseSql";
             this.chkUseSql.Size = new System.Drawing.Size(64, 18);
             this.chkUseSql.TabIndex = 11;
@@ -496,21 +498,34 @@
             // txtSql
             // 
             this.txtSql.Enabled = false;
-            this.txtSql.Location = new System.Drawing.Point(6, 273);
+            this.txtSql.Location = new System.Drawing.Point(6, 299);
             this.txtSql.Multiline = true;
             this.txtSql.Name = "txtSql";
-            this.txtSql.Size = new System.Drawing.Size(226, 80);
+            this.txtSql.Size = new System.Drawing.Size(226, 66);
             this.txtSql.TabIndex = 10;
             // 
             // backgroundWorker1
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
+            // chkDisplayFixureid
+            // 
+            this.chkDisplayFixureid.AutoSize = true;
+            this.chkDisplayFixureid.Checked = true;
+            this.chkDisplayFixureid.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDisplayFixureid.Location = new System.Drawing.Point(6, 224);
+            this.chkDisplayFixureid.Name = "chkDisplayFixureid";
+            this.chkDisplayFixureid.Size = new System.Drawing.Size(116, 18);
+            this.chkDisplayFixureid.TabIndex = 16;
+            this.chkDisplayFixureid.Text = "DisplayFixtureID";
+            this.chkDisplayFixureid.UseVisualStyleBackColor = true;
+            this.chkDisplayFixureid.CheckedChanged += new System.EventHandler(this.chkDisplayFixureid_CheckedChanged);
+            // 
             // frmYRServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1041, 531);
+            this.ClientSize = new System.Drawing.Size(1041, 545);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.menuStrip1);
@@ -582,5 +597,6 @@
         private System.Windows.Forms.ListView lstviewYieldRate;
         private System.Windows.Forms.ListView lstviewProductionOutput;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.CheckBox chkDisplayFixureid;
     }
 }

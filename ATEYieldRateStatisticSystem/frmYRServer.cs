@@ -71,12 +71,17 @@ namespace ATEYieldRateStatisticSystem
             }
 
             setListView(lstviewYieldRate, p.QueryType .YieldRate , comboType);
-            setListView(lstviewProductionOutput ,p.QueryType.ProductionOutput , comboType);
+            setListView(lstviewProductionOutput ,p.QueryType.ProductionOutput,comboType);
 
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listview"></param>
+        /// <param name="querytype"></param>
+        /// <param name="mfgtype"></param>
         private void setListView(ListView listview, p.QueryType querytype,ComboBox mfgtype)
         {
           
@@ -99,6 +104,31 @@ namespace ATEYieldRateStatisticSystem
                 listview.Columns.Add("FPY", 60, HorizontalAlignment.Center);
             }
         }
+
+        private void setListView(ListView listview, p.QueryType querytype, ComboBox mfgtype,bool displayfixtureid)
+        {
+            listview.Clear();
+            string _mfgtype = mfgtype.Text;
+            listview.MultiSelect = false;
+            listview.AutoArrange = true;
+            listview.GridLines = true;
+            listview.FullRowSelect = true;
+            listview.Columns.Add("MfgType", 60, HorizontalAlignment.Center);
+            listview.Columns.Add("Line", 60, HorizontalAlignment.Center);
+            if (displayfixtureid)
+                listview.Columns.Add("FixtureID", 120, HorizontalAlignment.Center);
+            listview.Columns.Add("Time", 240, HorizontalAlignment.Center);
+            if (querytype == p.QueryType.YieldRate)
+                listview.Columns.Add(querytype.ToString(), 80, HorizontalAlignment.Center);
+            if (querytype == p.QueryType.ProductionOutput)
+                listview.Columns.Add(querytype.ToString(), 120, HorizontalAlignment.Center);
+
+            if (querytype == p.QueryType.YieldRate)
+            {
+                listview.Columns.Add("FPY", 60, HorizontalAlignment.Center);
+            }
+        }
+
 
 
         /// <summary>
@@ -487,8 +517,19 @@ namespace ATEYieldRateStatisticSystem
             }
             else
             {
-                tabMain.SelectedTab = tabProduectionOutput;
-                loadProductionOutput(dtpStartTime.Value, dtpEndTime.Value, lstviewProductionOutput, comboType.Text);
+                if (comboQueryType.Text.Trim().ToUpper() == p.QueryType.ProductionOutput.ToString().ToUpper())
+                {
+                    tabMain.SelectedTab = tabProduectionOutput;
+                    loadProductionOutput(dtpStartTime.Value, dtpEndTime.Value, lstviewProductionOutput, comboType.Text);
+                }
+
+                if (comboQueryType.Text.Trim().ToUpper() == p.QueryType.YieldRate.ToString().ToUpper())
+                {
+                    tabMain.SelectedTab = tabYieldRate;
+                    //loadProductionOutput(dtpStartTime.Value, dtpEndTime.Value, lstviewProductionOutput, comboType.Text);
+                }
+
+                
                 MessageBox.Show("OK");
             }
         }
@@ -670,12 +711,22 @@ namespace ATEYieldRateStatisticSystem
             conn.Open();
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = conn;
-  
+
             if (mfgtype.ToUpper() == "ATE")
+            {
                 //"select line,fixtureid,count(usn) as Qty,date_format(recordtime,'%Y-%m-%d %H:00:00') as time from atedata where recordtime between " + dtpStartTime.Value .ToString ("yyyyMMddHHmmss") + " and " + dtpEndTime.Value .ToString ("yyyyMMddHHmmss") + " group by line,fixtureid,time";
-                sql = "SELECT line,fixtureid,count(usn) ,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.atedata.ToString() + " WHERE recordtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,fixtureid,time1";
+                if (chkDisplayFixureid.Checked)
+                    sql = "SELECT line,fixtureid,count(usn) ,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,fixtureid,time1";
+                else
+                    sql = "SELECT line,count(usn) ,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,time1";
+            }
             if (mfgtype.ToUpper() == "FT")
-                sql = "SELECT line,fixtureid,count(usn) ,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.ftdata.ToString() + " WHERE recordtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,fixtureid,time1";
+            {
+                if (chkDisplayFixureid .Checked)
+                    sql = "SELECT line,fixtureid,count(usn) ,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.ftdata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,fixtureid,time1";
+                else
+                    sql = "SELECT line,count(usn) ,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.ftdata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,time1";
+            }
             cmd.CommandText = sql;
             MySqlDataReader re = cmd.ExecuteReader();
             ListViewItem lt = new ListViewItem();
@@ -685,7 +736,8 @@ namespace ATEYieldRateStatisticSystem
                 {
                     lt = listview.Items.Add(mfgtype);
                     lt.SubItems.Add(re["line"].ToString());
-                    lt.SubItems.Add(re["fixtureid"].ToString());
+                    if (chkDisplayFixureid.Checked)
+                        lt.SubItems.Add(re["fixtureid"].ToString());
                     //lt.SubItems.Add("");
                     lt.SubItems.Add(byte2string((Byte[])re["time1"]));
                     lt.SubItems.Add(re["count(usn)"].ToString());
@@ -758,6 +810,12 @@ namespace ATEYieldRateStatisticSystem
             //byte[] byteArray = new byte[] { (byte)asciiCode };
             string strCharacter = asciiEncoding.GetString(byteArray);
             return (strCharacter);
+        }
+
+
+        private void chkDisplayFixureid_CheckedChanged(object sender, EventArgs e)
+        {
+            setListView(lstviewProductionOutput, p.QueryType.ProductionOutput, comboType, chkDisplayFixureid.Checked);
         }
     }
 }
