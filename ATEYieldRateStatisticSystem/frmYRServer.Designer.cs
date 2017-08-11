@@ -197,16 +197,16 @@
             this.tabYieldRate.Location = new System.Drawing.Point(4, 23);
             this.tabYieldRate.Name = "tabYieldRate";
             this.tabYieldRate.Padding = new System.Windows.Forms.Padding(3);
-            this.tabYieldRate.Size = new System.Drawing.Size(765, 456);
+            this.tabYieldRate.Size = new System.Drawing.Size(765, 478);
             this.tabYieldRate.TabIndex = 1;
             this.tabYieldRate.Text = "Yield Rate";
             this.tabYieldRate.UseVisualStyleBackColor = true;
             // 
             // lstviewYieldRate
             // 
-            this.lstviewYieldRate.Location = new System.Drawing.Point(6, 6);
+            this.lstviewYieldRate.Location = new System.Drawing.Point(6, 41);
             this.lstviewYieldRate.Name = "lstviewYieldRate";
-            this.lstviewYieldRate.Size = new System.Drawing.Size(753, 444);
+            this.lstviewYieldRate.Size = new System.Drawing.Size(753, 409);
             this.lstviewYieldRate.TabIndex = 0;
             this.lstviewYieldRate.UseCompatibleStateImageBehavior = false;
             this.lstviewYieldRate.View = System.Windows.Forms.View.Details;

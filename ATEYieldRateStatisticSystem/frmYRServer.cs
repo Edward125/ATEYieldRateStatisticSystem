@@ -527,9 +527,7 @@ namespace ATEYieldRateStatisticSystem
                 {
                     tabMain.SelectedTab = tabYieldRate;
                     //loadProductionOutput(dtpStartTime.Value, dtpEndTime.Value, lstviewProductionOutput, comboType.Text);
-                }
-
-                
+                }                
                 MessageBox.Show("OK");
             }
         }
@@ -646,26 +644,37 @@ namespace ATEYieldRateStatisticSystem
                     break;
                 case 1:
                     tabMain.SelectedTab = tabProduectionOutput;
-                    backgroundWorker1.RunWorkerAsync();
+                    //backgroundWorker1.RunWorkerAsync();
+                    DateTime st = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd ") + " 00:00:00");
+                    DateTime et = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59");
+                    loadProductionOutput(st, et, lstviewProductionOutput, "ATE");
                     break;
                 case 2:
                     tabMain.SelectedTab = tabYieldRate;
                     break;
                 case 3:
-                    tabMain.SelectedTab = tabProduectionOutput;
+                    tabMain.SelectedTab = tabProduectionOutput;    
+                    st = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd ") + " 00:00:00");
+                    et = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59");
+                    loadProductionOutput(st, et, lstviewProductionOutput, "FT");
                     break;
                 case 4:
                     tabMain.SelectedTab = tabYieldRate;
                     break;
                 case 5:
                     tabMain.SelectedTab = tabProduectionOutput;
+                    st = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd ") + " 00:00:00");
+                    et = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd") + " 23:59:59");
+                    loadProductionOutput(st, et, lstviewProductionOutput, "ATE");
                     break;
                 case 6:
                     tabMain.SelectedTab = tabYieldRate;
                     break;
                 case 7:
                     tabMain.SelectedTab = tabProduectionOutput;
-                    break;
+                    st = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd ") + " 00:00:00");
+                    et = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd") + " 23:59:59");
+                    loadProductionOutput(st, et, lstviewProductionOutput, "FT");
                 default:
                     break;
             }
