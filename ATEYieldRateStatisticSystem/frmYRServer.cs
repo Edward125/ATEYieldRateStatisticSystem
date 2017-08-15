@@ -92,6 +92,7 @@ namespace ATEYieldRateStatisticSystem
             listview.FullRowSelect = true;
             listview.Columns.Add("MfgType", 60, HorizontalAlignment.Center);
             listview.Columns.Add("Line", 60, HorizontalAlignment.Center);
+            //listview.Columns.Add("Model", 120, HorizontalAlignment.Center);
             listview.Columns.Add("FixtureID",120, HorizontalAlignment.Center);
             listview.Columns.Add("Time",240 , HorizontalAlignment.Center);
             if (querytype == p.QueryType .YieldRate )
@@ -499,6 +500,15 @@ namespace ATEYieldRateStatisticSystem
         {
             if (chkUseSql.Checked)
             {
+                //string st = "0.9875";
+                //st = st.Replace(" ", "");
+                //st = st.Replace("-", "");
+                //st = st.Replace(":", "");
+                //string et = st.Substring(0, st.Length - 4) + "5959";
+                //MessageBox.Show(st + ':' + st.Length + "," + et + ":" + et.Length);
+                //MessageBox.Show(string.Format("{0:00%}", st));
+                //MessageBox.Show(string.Format("{0:P}", 0.24583));
+                //return;
                 if (string.IsNullOrEmpty(txtSql.Text.Trim()))
                 {
                     txtSql.Focus();
@@ -527,6 +537,7 @@ namespace ATEYieldRateStatisticSystem
                 {
                     tabMain.SelectedTab = tabYieldRate;
                     //loadProductionOutput(dtpStartTime.Value, dtpEndTime.Value, lstviewProductionOutput, comboType.Text);
+                    loadYieldRate(dtpStartTime.Value, dtpEndTime.Value,lstviewYieldRate , comboType.Text);
                 }                
                 MessageBox.Show("OK");
             }
@@ -579,10 +590,9 @@ namespace ATEYieldRateStatisticSystem
             MySqlCommand cmd = new MySqlCommand((string)sql, conn);
             try
             {
-
                 conn.Open();
                 MySqlDataAdapter da = new MySqlDataAdapter();
-                da.SelectCommand = cmd;
+                da.SelectCommand = cmd;                
                 da.Fill(ds, "Query");
                 conn.Close();
                 this.Invoke((EventHandler)(delegate
@@ -601,30 +611,32 @@ namespace ATEYieldRateStatisticSystem
    
         }
 
+
+        public void queryMysqlShowDataSet(object sql ,ref  DataSet ds)
+        {
+            //DataSet ds = new DataSet();
+            List<string> result = new List<string>();
+            MySqlConnection conn = new MySqlConnection(p.connString);
+            MySqlCommand cmd = new MySqlCommand((string)sql, conn);
+            try
+            {
+                conn.Open();
+                MySqlDataAdapter da = new MySqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Query");
+                conn.Close();              
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                conn.Close();
+
+            }
+
+        }
+
         private void btnQuicklyQuery_Click(object sender, EventArgs e)
         {
-
-            //DateTime startdatevalue = dtpStartTime.Value;
-            //DateTime enddatavalue = dtpEndTime.Value;
-            //for (DateTime i = startdatevalue; i < enddatavalue; i = i.AddHours(1.0))
-            //{
-            //    MessageBox.Show(i.ToString("yyyy-MM-dd HH:mm:ss"));
-
-            //}
-            
-            //DateTime j = startdatevalue.AddHours(1);
-            //MessageBox.Show("i:" + startdatevalue.ToString("yyyy-MM-dd HH:mm:ss") + "->j:" + j.ToString("yyyy-MM-dd HH:mm:ss"));
-
-            //if (startdatevalue < enddatavalue)
-            //{
-            //    MessageBox.Show(true.ToString());
-            //}
-            //else
-            //{
-            //    MessageBox.Show(false.ToString());
-            //}
-
-           // return;
             //ATE Current Day Yield Rate ->0
             //ATE Current Day Production Output ->1
             //FT Current Day Yield Rate ->2
@@ -641,16 +653,22 @@ namespace ATEYieldRateStatisticSystem
             {   
                 case 0:
                     tabMain.SelectedTab = tabYieldRate;
+                    DateTime st = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd ") + " 00:00:00");
+                    DateTime et = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59");
+                    loadYieldRate(st, et, lstviewYieldRate, "ATE");
                     break;
                 case 1:
                     tabMain.SelectedTab = tabProduectionOutput;
                     //backgroundWorker1.RunWorkerAsync();
-                    DateTime st = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd ") + " 00:00:00");
-                    DateTime et = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59");
+                    st = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd ") + " 00:00:00");
+                    et = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59");
                     loadProductionOutput(st, et, lstviewProductionOutput, "ATE");
                     break;
                 case 2:
                     tabMain.SelectedTab = tabYieldRate;
+                    st = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd ") + " 00:00:00");
+                    et = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59");
+                    loadYieldRate(st, et, lstviewYieldRate, "FT");
                     break;
                 case 3:
                     tabMain.SelectedTab = tabProduectionOutput;    
@@ -660,6 +678,9 @@ namespace ATEYieldRateStatisticSystem
                     break;
                 case 4:
                     tabMain.SelectedTab = tabYieldRate;
+                    st = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd ") + " 00:00:00");
+                    et = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd") + " 23:59:59");
+                    loadYieldRate(st, et, lstviewYieldRate, "ATE");
                     break;
                 case 5:
                     tabMain.SelectedTab = tabProduectionOutput;
@@ -669,12 +690,16 @@ namespace ATEYieldRateStatisticSystem
                     break;
                 case 6:
                     tabMain.SelectedTab = tabYieldRate;
+                    st = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd ") + " 00:00:00");
+                    et = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd") + " 23:59:59");
+                    loadYieldRate(st, et, lstviewYieldRate, "FT");
                     break;
                 case 7:
                     tabMain.SelectedTab = tabProduectionOutput;
                     st = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd ") + " 00:00:00");
                     et = DateTime.Parse(DateTime.Now.AddDays (-1).ToString("yyyy-MM-dd") + " 23:59:59");
                     loadProductionOutput(st, et, lstviewProductionOutput, "FT");
+                    break;
                 default:
                     break;
             }
@@ -709,6 +734,14 @@ namespace ATEYieldRateStatisticSystem
 
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startdatevalue"></param>
+        /// <param name="enddatatimevalue"></param>
+        /// <param name="listview"></param>
+        /// <param name="mfgtype"></param>
         private void loadProductionOutput(DateTime  startdatevalue,DateTime  enddatatimevalue, ListView listview,string mfgtype)
         {
             listview.Items.Clear();
@@ -760,6 +793,108 @@ namespace ATEYieldRateStatisticSystem
 
         }
 
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startdatevalue"></param>
+        /// <param name="enddatatimevalue"></param>
+        /// <param name="listview"></param>
+        /// <param name="mfgtype"></param>
+        private void loadYieldRate(DateTime startdatevalue, DateTime enddatatimevalue, ListView listview, string mfgtype)
+        {
+            listview.Items.Clear();
+            DataSet ds = new DataSet();
+            string sql = string.Empty;
+            List<string> _Line = new List<string>();
+            List<string> _FixtureID = new List<string>();
+            listview.BeginUpdate();//数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度 
+
+            if (mfgtype.ToUpper() == "ATE")
+            {
+                //"select line,fixtureid,count(usn) as Qty,date_format(recordtime,'%Y-%m-%d %H:00:00') as time from atedata where recordtime between " + dtpStartTime.Value .ToString ("yyyyMMddHHmmss") + " and " + dtpEndTime.Value .ToString ("yyyyMMddHHmmss") + " group by line,fixtureid,time";
+                if (chkDisplayFixureid.Checked)
+                   // select line,model,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from atedata GROUP by line,model,time1
+                    sql = "SELECT line,fixtureid,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,fixtureid,time1";
+                else
+                    sql = "SELECT line,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.atedata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,time1";
+            }
+            if (mfgtype.ToUpper() == "FT")
+            {
+                if (chkDisplayFixureid.Checked)
+                    sql = "SELECT line,fixtureid,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.ftdata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,fixtureid,time1";
+                else
+                    sql = "SELECT line,date_format(testtime,'%Y-%m-%d %H:00:00') as time1 from " + p.DatabaseTable.ftdata.ToString() + " WHERE testtime BETWEEN '" + startdatevalue.ToString("yyyyMMddHHmmss") + "' and '" + enddatatimevalue.ToString("yyyyMMddHHmmss") + "' group by line,time1";
+            }
+
+            queryMysqlShowDataSet(sql, ref ds);       
+
+            string ln, fi, st, et;
+            ln = fi = st = et = "";
+            ListViewItem lt = new ListViewItem();
+             for (int i = 0; i < ds.Tables["Query"].Rows.Count; i++)
+            {
+
+                ln = ds.Tables["Query"].Rows[i]["line"].ToString();
+                if (chkDisplayFixureid.Checked)
+                    fi = ds.Tables["Query"].Rows[i]["fixtureid"].ToString();                 
+                st = byte2string((Byte[])ds.Tables["Query"].Rows[i]["time1"]);
+                lt = listview.Items.Add(mfgtype);
+                lt.SubItems.Add(ln);
+                if (chkDisplayFixureid .Checked)
+                    lt.SubItems.Add(fi);
+                lt.SubItems.Add(st);
+                st=st .Replace(" ", "").Replace(":", "").Replace("-", "");
+                et = st.Substring(0, st.Length - 4) + "5959".ToString();
+                
+                 //
+                if (mfgtype.ToUpper() == "ATE")
+                {
+                    if (chkDisplayFixureid.Checked)
+                        sql = "select sum(case when firstpass = 'YES' then 1 else 0 end)/count(usn) as fpy ,sum(case when testresult = 'PASS' then 1 else 0 end)/count(usn) as yr from " + p.DatabaseTable.atedata.ToString() + " where line ='" + ln + "' and fixtureid ='" + fi + "' and testtime BETWEEN '" + st + "' and '" + et + "'";
+                    else
+                        sql = "select sum(case when firstpass = 'YES' then 1 else 0 end)/count(usn) as fpy ,sum(case when testresult = 'PASS' then 1 else 0 end)/count(usn) as yr from " + p.DatabaseTable.atedata.ToString() + " where line ='" + ln + "' and testtime BETWEEN '" + st + "' and '" + et + "'";
+                }
+
+
+                if (mfgtype.ToUpper() == "FT")
+                {
+                    if (chkDisplayFixureid .Checked)
+                        sql = "select sum(case when firstpass = 'YES' then 1 else 0 end)/count(usn) as fpy ,sum(case when testresult = 'PASS' then 1 else 0 end)/count(usn) as yr from " + p.DatabaseTable.ftdata.ToString() + " where line ='" + ln + "' and fixtureid ='" + fi + "' and testtime BETWEEN '" + st + "' and '" + et + "'";
+                    else
+                        sql = "select sum(case when firstpass = 'YES' then 1 else 0 end)/count(usn) as fpy ,sum(case when testresult = 'PASS' then 1 else 0 end)/count(usn) as yr from " + p.DatabaseTable.ftdata.ToString() + " where line ='" + ln  + "' and testtime BETWEEN '" + st + "' and '" + et + "'";
+                }
+                MySqlConnection conn = new MySqlConnection(p.connString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                MySqlDataReader re = cmd.ExecuteReader();
+                
+
+                if (re.HasRows)
+                {
+                    while (re.Read())
+                    {
+                        //lt.SubItems.Add(objReader["yr"].ToString());
+                        string fpy = string.Format("{0:P}", re["fpy"]);
+                        string yr = string.Format("{0:P}", re["yr"]);
+                        lt.SubItems.Add(yr);
+                        lt.SubItems.Add(fpy);
+                    }
+                }
+
+                conn.Close();
+            }                  
+           
+            listview.EndUpdate();//结束数据处理，UI界面一次性绘制。
+
+        }
+
+
+
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             //loadProductionOutput(dtpStartTime.Value, dtpEndTime.Value, lstviewProductionOutput, comboType.Text);
@@ -793,7 +928,6 @@ namespace ATEYieldRateStatisticSystem
                     }
                 }
 
-
                 conn.Close();
                 lstviewProductionOutput.EndUpdate();//结束数据处理，UI界面一次性绘制。 
             }));
@@ -825,6 +959,7 @@ namespace ATEYieldRateStatisticSystem
         private void chkDisplayFixureid_CheckedChanged(object sender, EventArgs e)
         {
             setListView(lstviewProductionOutput, p.QueryType.ProductionOutput, comboType, chkDisplayFixureid.Checked);
+            setListView(lstviewYieldRate , p.QueryType.YieldRate , comboType, chkDisplayFixureid.Checked);
         }
     }
 }
