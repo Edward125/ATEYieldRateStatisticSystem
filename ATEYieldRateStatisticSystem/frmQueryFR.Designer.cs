@@ -1,6 +1,6 @@
 ﻿namespace ATEYieldRateStatisticSystem
 {
-    partial class frmYRServer
+    partial class frmQueryFR
     {
         /// <summary>
         /// Required designer variable.

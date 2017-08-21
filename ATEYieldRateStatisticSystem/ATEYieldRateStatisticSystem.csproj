@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="RounButton">
+      <HintPath>..\..\RoundButtonTest\RounButton\bin\Debug\RounButton.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
@@ -47,6 +50,7 @@
     </Reference>
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -77,11 +81,17 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmYRServer.cs">
+    <Compile Include="frmQueryFR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmYRServer.Designer.cs">
-      <DependentUpon>frmYRServer.cs</DependentUpon>
+    <Compile Include="frmQueryFR.Designer.cs">
+      <DependentUpon>frmQueryFR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmYRMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmYRMonitor.Designer.cs">
+      <DependentUpon>frmYRMonitor.cs</DependentUpon>
     </Compile>
     <Compile Include="IniFile.cs" />
     <Compile Include="Other.cs" />
@@ -106,8 +116,11 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmYRServer.resx">
-      <DependentUpon>frmYRServer.cs</DependentUpon>
+    <EmbeddedResource Include="frmQueryFR.resx">
+      <DependentUpon>frmQueryFR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmYRMonitor.resx">
+      <DependentUpon>frmYRMonitor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

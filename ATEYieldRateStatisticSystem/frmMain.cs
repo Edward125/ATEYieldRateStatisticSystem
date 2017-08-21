@@ -29,7 +29,9 @@ namespace ATEYieldRateStatisticSystem
             p.AppStart = p.AppStartModel.YRServer;
             IniFile.IniWriteValue(p.IniSection.SysConfig.ToString(), "AppStart", p.AppStart.ToString(), p.iniFilePath);
             this.Hide();
-            Form f = new frmYRServer();
+            //Form f = new frmQueryFR();
+            //f.Show();
+            Form f = new frmYRMonitor();
             f.Show();
         }
 

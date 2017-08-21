@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace ATEYieldRateStatisticSystem
 {
-    public partial class frmYRServer : Form
+    public partial class frmQueryFR : Form
     {
 
      //导入判断网络是否连接的 .dll  
@@ -22,7 +22,7 @@ namespace ATEYieldRateStatisticSystem
       public extern static bool InternetGetConnectedState(out int conState, int reder);  
 
 
-        public frmYRServer()
+        public frmQueryFR()
         {
             InitializeComponent();
             skinEngine1.SkinFile = p.AppFolder + @"\MacOS.ssk";
@@ -31,8 +31,10 @@ namespace ATEYieldRateStatisticSystem
         private void frmYRServer_Load(object sender, EventArgs e)
         {
          
-
-            loadUI();
+            loadUI();            
+            //frmYRMonitor f = new frmYRMonitor();
+            //this.Hide();
+            //f.Show();
         }
 
         private void chkUseSql_CheckedChanged(object sender, EventArgs e)
