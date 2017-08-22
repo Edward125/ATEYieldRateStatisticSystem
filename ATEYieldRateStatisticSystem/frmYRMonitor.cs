@@ -175,6 +175,8 @@ namespace ATEYieldRateStatisticSystem
             if (iRefreshTime == 0)
             {
                 loadAllFR();
+                loadQty("ATE");
+                loadQty("FT");
                 iRefreshTime = INTERNAL;
                 lblLastFreshInfo.Text = LastFresh + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 lblNextFreshInfo.Text = NextFresh + iRefreshTime;
@@ -186,10 +188,15 @@ namespace ATEYieldRateStatisticSystem
 
         private void chartFT_DoubleClick(object sender, EventArgs e)
         {
-          
-           if (txtFTQtyInfo.Text.Substring (txtFTQtyInfo.Text.LastIndexOf (':') +1,txtFTQtyInfo.Text.Length -txtFTQtyInfo.Text.LastIndexOf (':')-1) == "0")
+
+            if (txtFTQtyInfo.Text.Substring(txtFTQtyInfo.Text.LastIndexOf(':') + 1, txtFTQtyInfo.Text.Length - txtFTQtyInfo.Text.LastIndexOf(':') - 1) == "0")
             {
                 MessageBox.Show("There is no FT Qty. data in the database,can't view F.R. by line.", "NO DATA", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            else
+            {
+                frmFTYR f = new frmFTYR();
+                f.ShowDialog();
             }
         }
 
@@ -198,6 +205,11 @@ namespace ATEYieldRateStatisticSystem
             if (txtATEQtyInfo.Text.Substring(txtATEQtyInfo.Text.LastIndexOf(':') + 1, txtATEQtyInfo.Text.Length - txtATEQtyInfo.Text.LastIndexOf(':') - 1) == "0")
             {
                 MessageBox.Show("There is no ATE Qty. data in the database,can't view F.R. by line.", "NO DATA", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            else
+            {
+                frmATEYR f = new frmATEYR();
+                f.ShowDialog();
             }
         }
 
