@@ -147,6 +147,7 @@ namespace ATEYieldRateStatisticSystem
                 Application.Run(new frmATEClient());
             else if (p.AppStart == p.AppStartModel.YRServer)
                 Application.Run(new frmYRMonitor());
+                //Application.Run(new frmQueryFR());
             else
                 Application.Run(new frmMain());
            
