@@ -28,7 +28,7 @@ namespace ATEYieldRateStatisticSystem
         {
             loadUI();
             loadAllYR();
-            timer1.Start();
+            timer1.Start();         
         }
 
 
@@ -59,33 +59,33 @@ namespace ATEYieldRateStatisticSystem
 
             txtAS4_YR_A.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS4_YR_B.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAS4_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS4_YR_D.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtAS4_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
             txtAS5_YR_A.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS5_YR_B.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAS5_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS5_YR_D.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtAS5_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
             txtAS6_YR_A.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS6_YR_B.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAS6_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS6_YR_D.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtAS6_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
             txtAS7_YR_A.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS7_YR_B.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAS7_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS7_YR_D.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtAS7_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
             txtAS8_YR_A.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS8_YR_B.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAS8_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS8_YR_D.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtAS8_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
             txtAS9_YR_A.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS9_YR_B.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAS9_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtAS9_YR_D.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtAS9_YR_C.Font = new System.Drawing.Font("Agency FB", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
             //
             txtAS2_YR_A.Text = "NA";
@@ -110,55 +110,55 @@ namespace ATEYieldRateStatisticSystem
             txtAS4_YR_A.ForeColor = Color.BlueViolet;
             txtAS4_YR_B.Text = "NA";
             txtAS4_YR_B.ForeColor = Color.BlueViolet;
-            txtAS4_YR_C.Text = "NA";
-            txtAS4_YR_C.ForeColor = Color.BlueViolet;
             txtAS4_YR_D.Text = "NA";
             txtAS4_YR_D.ForeColor = Color.BlueViolet;
+            txtAS4_YR_C.Text = "NA";
+            txtAS4_YR_C.ForeColor = Color.BlueViolet;
 
             txtAS5_YR_A.Text = "NA";
             txtAS5_YR_A.ForeColor = Color.BlueViolet;
             txtAS5_YR_B.Text = "NA";
             txtAS5_YR_B.ForeColor = Color.BlueViolet;
-            txtAS5_YR_C.Text = "NA";
-            txtAS5_YR_C.ForeColor = Color.BlueViolet;
             txtAS5_YR_D.Text = "NA";
             txtAS5_YR_D.ForeColor = Color.BlueViolet;
+            txtAS5_YR_C.Text = "NA";
+            txtAS5_YR_C.ForeColor = Color.BlueViolet;
 
             txtAS6_YR_A.Text = "NA";
             txtAS6_YR_A.ForeColor = Color.BlueViolet;
             txtAS6_YR_B.Text = "NA";
             txtAS6_YR_B.ForeColor = Color.BlueViolet;
-            txtAS6_YR_C.Text = "NA";
-            txtAS6_YR_C.ForeColor = Color.BlueViolet;
             txtAS6_YR_D.Text = "NA";
             txtAS6_YR_D.ForeColor = Color.BlueViolet;
+            txtAS6_YR_C.Text = "NA";
+            txtAS6_YR_C.ForeColor = Color.BlueViolet;
 
             txtAS7_YR_A.Text = "NA";
             txtAS7_YR_A.ForeColor = Color.BlueViolet;
             txtAS7_YR_B.Text = "NA";
             txtAS7_YR_B.ForeColor = Color.BlueViolet;
-            txtAS7_YR_C.Text = "NA";
-            txtAS7_YR_C.ForeColor = Color.BlueViolet;
             txtAS7_YR_D.Text = "NA";
             txtAS7_YR_D.ForeColor = Color.BlueViolet;
+            txtAS7_YR_C.Text = "NA";
+            txtAS7_YR_C.ForeColor = Color.BlueViolet;
 
             txtAS8_YR_A.Text = "NA";
             txtAS8_YR_A.ForeColor = Color.BlueViolet;
             txtAS8_YR_B.Text = "NA";
             txtAS8_YR_B.ForeColor = Color.BlueViolet;
-            txtAS8_YR_C.Text = "NA";
-            txtAS8_YR_C.ForeColor = Color.BlueViolet;
             txtAS8_YR_D.Text = "NA";
             txtAS8_YR_D.ForeColor = Color.BlueViolet;
+            txtAS8_YR_C.Text = "NA";
+            txtAS8_YR_C.ForeColor = Color.BlueViolet;
 
             txtAS9_YR_A.Text = "NA";
             txtAS9_YR_A.ForeColor = Color.BlueViolet;
             txtAS9_YR_B.Text = "NA";
             txtAS9_YR_B.ForeColor = Color.BlueViolet;
-            txtAS9_YR_C.Text = "NA";
-            txtAS9_YR_C.ForeColor = Color.BlueViolet;
             txtAS9_YR_D.Text = "NA";
             txtAS9_YR_D.ForeColor = Color.BlueViolet;
+            txtAS9_YR_C.Text = "NA";
+            txtAS9_YR_C.ForeColor = Color.BlueViolet;
 
             //
             lblLastFreshInfo.Text = LastFresh + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -192,22 +192,22 @@ namespace ATEYieldRateStatisticSystem
                            queryYr4Display(sql, line, item, txtAS3_YR_B, txtAS3_YR_A, txtAS3_YR_C, txtAS3_YR_D);
                             break;
                         case "AS4":
-                            queryYr4Display(sql, line, item, txtAS4_YR_B, txtAS4_YR_A, txtAS4_YR_C, txtAS4_YR_D);
+                            queryYr4Display(sql, line, item, txtAS4_YR_B, txtAS4_YR_A, txtAS4_YR_D, txtAS4_YR_C);
                             break;
                         case "AS5":
-                            queryYr4Display(sql, line, item, txtAS5_YR_B, txtAS5_YR_A, txtAS5_YR_C, txtAS5_YR_D);
+                            queryYr4Display(sql, line, item, txtAS5_YR_B, txtAS5_YR_A, txtAS5_YR_D, txtAS5_YR_C);
                             break;
                         case "AS6":
-                            queryYr4Display(sql, line, item, txtAS6_YR_B, txtAS6_YR_A, txtAS6_YR_C, txtAS6_YR_D);
+                            queryYr4Display(sql, line, item, txtAS6_YR_B, txtAS6_YR_A, txtAS6_YR_D, txtAS6_YR_C);
                             break;
                         case "AS7":
-                            queryYr4Display(sql, line, item, txtAS7_YR_B, txtAS7_YR_A, txtAS7_YR_C, txtAS7_YR_D);
+                            queryYr4Display(sql, line, item, txtAS7_YR_B, txtAS7_YR_A, txtAS7_YR_D, txtAS7_YR_C);
                             break;
                         case "AS8":
-                            queryYr4Display(sql, line, item, txtAS8_YR_B, txtAS8_YR_A, txtAS8_YR_C, txtAS8_YR_D);
+                            queryYr4Display(sql, line, item, txtAS8_YR_B, txtAS8_YR_A, txtAS8_YR_D, txtAS8_YR_C);
                             break;
                         case "AS9":
-                            queryYr4Display(sql, line, item, txtAS9_YR_B, txtAS9_YR_A, txtAS9_YR_C, txtAS9_YR_D);
+                            queryYr4Display(sql, line, item, txtAS9_YR_B, txtAS9_YR_A, txtAS9_YR_D, txtAS9_YR_C);
                             break;
                         default:
                             break;
@@ -305,6 +305,16 @@ namespace ATEYieldRateStatisticSystem
 
             }
             timer1.Start();
+        }
+
+        private void txtAS7_YR_C_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtAS7_YR_D_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
