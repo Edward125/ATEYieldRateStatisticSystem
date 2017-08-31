@@ -98,6 +98,25 @@ namespace ATEYieldRateStatisticSystem
         {
            // MessageBox.Show(DateTime.Now.ToString("yyyyMMddHHmmss"));
             loadUI();
+
+            if (string.IsNullOrEmpty(txtAutoLookLogPath.Text.Trim()))
+                return;
+            else
+            {
+                string inipath = txtAutoLookLogPath.Text.Trim() + @"\path.ini";
+                if (System.IO.File.Exists(inipath))
+                {
+                    getTestlogPathFromAutoLog(inipath);
+                }
+                else
+                {
+                    MessageBox.Show("Can't find 'path.ini' file,may be u select a wrong folder.", "Can't Find File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtAutoLookLogPath.SelectAll();
+                    this.txtAutoLookLogPath.Focus();
+                    return;
+                }
+
+            }
             PressStartButton();
         }
 
@@ -597,6 +616,12 @@ namespace ATEYieldRateStatisticSystem
                 listbox.Items.Add(item);
             }));
 
+            this.Invoke((EventHandler)(delegate
+            {
+                p.saveLog(item);
+            }));
+
+            
 
             if (listbox.Items.Count > 1)
             {

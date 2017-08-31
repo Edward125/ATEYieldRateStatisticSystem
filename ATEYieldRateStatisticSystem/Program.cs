@@ -6,11 +6,20 @@ using Edward;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using Shortcut;
+using WindowsStartup.Utils;
+using Microsoft.Win32;
+using System;
+using System.IO;
 
 namespace ATEYieldRateStatisticSystem
 {
     static class Program
     {
+
+       static  string AppName = "ATEYieldRateStatisticSystem";
+       static  string AppFile = Application.ExecutablePath;
+
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -142,12 +151,42 @@ namespace ATEYieldRateStatisticSystem
             System.Threading.Thread.Sleep(1000);
             // close the splash screen'
             SplashForm.CloseSplash();
-            //
+
+            //創建桌面快捷方式
+            //Shortcut.Shortcut.CreateShortcut(Shortcut.Shortcut.GetDeskDir() + "\\ATEYieldRateStatisticSystem.lnk",Application.StartupPath + @"\\ATEYieldRateStatisticSystem", Shortcut.Shortcut.GetDeskDir(), "ATEYieldRateStatisticSystem", AppDomain.CurrentDomain.BaseDirectory + "favicon.ico");
+            Shortcut.Shortcut.CreateDesktopShortcut(Application.StartupPath  + "\\ATEYieldRateStatisticSystem.lnk", "ATEYieldRateStatisticSystem");
+            
+            //創建開機啟動
+            //UICmd("正在读取 全局用户开始菜单启动文件夹");
+            p.saveLog("正在读取 全局用户开始菜单启动文件夹");
+            string commonStartup = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup);
+           // UICmd("CommonStartup：" + commonStartup);
+            if (ShortcutTool.Create(commonStartup, AppName, AppFile))
+                p.saveLog ("添加 全局用户开始菜单启动 成功");             
+            else
+                p.saveLog ("添加 全局用户开始菜单启动 失败");
+            p.saveLog ("正在读取 当前用户开始菜单启动文件夹");
+            string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            //UICmd("Startup：" + startup);
+            p.saveLog ("Startup：" + startup);
+            if (ShortcutTool.Create(startup, AppName, AppFile))
+                //UICmd("添加 当前用户开始菜单启动 成功");
+                p.saveLog ("添加 当前用户开始菜单启动 成功");
+            else
+                //UICmd("添加 当前用户开始菜单启动 失败");
+                p.saveLog ("添加 当前用户开始菜单启动 失败");
+
+
+
+
+
             if (p.AppStart == p.AppStartModel.ATEClient)
                 Application.Run(new frmATEClient());
             else if (p.AppStart == p.AppStartModel.YRServer)
                 Application.Run(new frmYRMonitor());
                 //Application.Run(new frmQueryFR());
+                //Application.Run(new frmFTYR());
+                //Application.Run(new frmYRbyLine());
             else
                 Application.Run(new frmMain());
            
@@ -257,12 +296,6 @@ namespace ATEYieldRateStatisticSystem
             }
             return true;
         }
-
-
-        /// <summary>
-        /// download skin file
-        /// </summary>
-        /// <returns></returns>
         private static bool downloadSkin()
         {
             string filePath = p.AppFolder + @"\MacOS.ssk";

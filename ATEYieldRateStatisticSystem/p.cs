@@ -22,6 +22,7 @@ namespace ATEYieldRateStatisticSystem
         #region 参数
 
         public static string AppFolder = @".\ATEYieldRate";
+        public static string LogFolder = AppFolder + @"\Log";
         public static string iniFilePath = AppFolder + @"\ATEYieldRate.ini";
         public static AppStartModel AppStart;
         
@@ -457,6 +458,24 @@ namespace ATEYieldRateStatisticSystem
   
 
             }
+
+            if (!Directory.Exists(LogFolder))
+            {
+
+                try
+                {
+                    Directory.CreateDirectory(LogFolder);
+                }
+                catch (Exception)
+                {
+
+                    return false;
+                }
+
+
+            }
+
+
 
             return true;
         }
@@ -2038,5 +2057,23 @@ remark) VALUES ('" + _line  + "','"
             return sf;
         }
 
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logcontent"></param>
+        public static void saveLog(string logcontent)
+        {
+            string logpath = LogFolder + @"\" + DateTime.Now.ToString("yyyyMMdd") + ".log";
+            StreamWriter sw = new StreamWriter(logpath, true, Encoding.UTF8);
+            sw.WriteLine(logcontent);
+            sw.Close();
+        }
+
+
+
+
+    
     }
 }

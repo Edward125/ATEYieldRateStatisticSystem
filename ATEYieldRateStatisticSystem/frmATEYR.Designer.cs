@@ -1030,7 +1030,6 @@
             this.txtAS7_YR_C.TabIndex = 89;
             this.txtAS7_YR_C.Text = "99.99%";
             this.txtAS7_YR_C.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtAS7_YR_C.TextChanged += new System.EventHandler(this.txtAS7_YR_D_TextChanged);
             // 
             // txtAS7_YR_D
             // 
@@ -1045,7 +1044,6 @@
             this.txtAS7_YR_D.TabIndex = 88;
             this.txtAS7_YR_D.Text = "99.99%";
             this.txtAS7_YR_D.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtAS7_YR_D.TextChanged += new System.EventHandler(this.txtAS7_YR_C_TextChanged);
             // 
             // txtAS7_YR_A
             // 

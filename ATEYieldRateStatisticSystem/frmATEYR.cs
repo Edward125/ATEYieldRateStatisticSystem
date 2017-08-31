@@ -307,14 +307,6 @@ namespace ATEYieldRateStatisticSystem
             timer1.Start();
         }
 
-        private void txtAS7_YR_C_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtAS7_YR_D_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+    
     }
 }

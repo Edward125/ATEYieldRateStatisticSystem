@@ -208,7 +208,8 @@ namespace ATEYieldRateStatisticSystem
             }
             else
             {
-                frmATEYR f = new frmATEYR();
+                //frmATEYR f = new frmATEYR();
+                frmYRbyLine f = new frmYRbyLine();
                 f.ShowDialog();
             }
         }
