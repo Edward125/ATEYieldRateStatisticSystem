@@ -158,23 +158,23 @@ namespace ATEYieldRateStatisticSystem
             
             //創建開機啟動
             //UICmd("正在读取 全局用户开始菜单启动文件夹");
-            p.saveLog("正在读取 全局用户开始菜单启动文件夹");
+            p.saveLog(DateTime.Now.ToString ("HH:mm:ss") + "->" +"正在读取 全局用户开始菜单启动文件夹");
             string commonStartup = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup);
            // UICmd("CommonStartup：" + commonStartup);
             if (ShortcutTool.Create(commonStartup, AppName, AppFile))
-                p.saveLog ("添加 全局用户开始菜单启动 成功");             
+                p.saveLog (DateTime.Now.ToString ("HH:mm:ss") + "->"+"添加 全局用户开始菜单启动 成功");             
             else
-                p.saveLog ("添加 全局用户开始菜单启动 失败");
-            p.saveLog ("正在读取 当前用户开始菜单启动文件夹");
+                p.saveLog(DateTime.Now.ToString("HH:mm:ss") + "->" + "添加 全局用户开始菜单启动 失败");
+            p.saveLog(DateTime.Now.ToString("HH:mm:ss") + "->" + "正在读取 当前用户开始菜单启动文件夹");
             string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
             //UICmd("Startup：" + startup);
-            p.saveLog ("Startup：" + startup);
+            p.saveLog(DateTime.Now.ToString("HH:mm:ss") + "->" + "Startup：" + startup);
             if (ShortcutTool.Create(startup, AppName, AppFile))
                 //UICmd("添加 当前用户开始菜单启动 成功");
-                p.saveLog ("添加 当前用户开始菜单启动 成功");
+                p.saveLog(DateTime.Now.ToString("HH:mm:ss") + "->" + "添加 当前用户开始菜单启动 成功");
             else
                 //UICmd("添加 当前用户开始菜单启动 失败");
-                p.saveLog ("添加 当前用户开始菜单启动 失败");
+                p.saveLog(DateTime.Now.ToString("HH:mm:ss") + "->" + "添加 当前用户开始菜单启动 失败");
 
 
 
@@ -183,10 +183,11 @@ namespace ATEYieldRateStatisticSystem
             if (p.AppStart == p.AppStartModel.ATEClient)
                 Application.Run(new frmATEClient());
             else if (p.AppStart == p.AppStartModel.YRServer)
-                Application.Run(new frmYRMonitor());
-                //Application.Run(new frmQueryFR());
-                //Application.Run(new frmFTYR());
-                //Application.Run(new frmYRbyLine());
+                //Application.Run(new frmYRMonitor());
+                Application.Run(new frmYROverAll());
+            //Application.Run(new frmQueryFR());
+            //Application.Run(new frmFTYR());
+            //Application.Run(new frmYRbyLine());
             else
                 Application.Run(new frmMain());
            

@@ -108,6 +108,12 @@
     <Compile Include="frmYRMonitor.Designer.cs">
       <DependentUpon>frmYRMonitor.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmYROverAll.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmYROverAll.Designer.cs">
+      <DependentUpon>frmYROverAll.cs</DependentUpon>
+    </Compile>
     <Compile Include="IniFile.cs" />
     <Compile Include="Other.cs" />
     <Compile Include="p.cs" />
@@ -147,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmYRMonitor.resx">
       <DependentUpon>frmYRMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmYROverAll.resx">
+      <DependentUpon>frmYROverAll.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
