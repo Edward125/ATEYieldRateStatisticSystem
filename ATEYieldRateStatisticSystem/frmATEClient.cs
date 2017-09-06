@@ -99,6 +99,8 @@ namespace ATEYieldRateStatisticSystem
            // MessageBox.Show(DateTime.Now.ToString("yyyyMMddHHmmss"));
             loadUI();
 
+          
+
             if (string.IsNullOrEmpty(txtAutoLookLogPath.Text.Trim()))
                 return;
             else
@@ -117,6 +119,7 @@ namespace ATEYieldRateStatisticSystem
                 }
 
             }
+
             PressStartButton();
         }
 
@@ -701,11 +704,27 @@ namespace ATEYieldRateStatisticSystem
                 this.Invoke((EventHandler)delegate
                 {
                     updateMsg(lstStatus, "File Change," + file + " changed");
-                    //readTestLogContent(file);
-                    Thread t = new Thread(readTestLogContent);
-                    t.Name = "ReadTestLog";
-                    //t.IsBackground = true;
-                    t.Start(file);
+
+                    if (file.ToUpper() == "PATH.INI")
+                    {
+                        string inipath = txtAutoLookLogPath.Text.Trim() + @"\path.ini";
+                        if (System.IO.File.Exists(inipath))
+                        {
+                            getTestlogPathFromAutoLog(inipath);
+                        }
+                    }
+                    else
+                    {
+                        //readTestLogContent(file);
+                        Thread t = new Thread(readTestLogContent);
+                        t.Name = "ReadTestLog";
+                        //t.IsBackground = true;
+                        t.Start(file);
+                    }
+
+
+
+                   
                     //t.Join();
 
                     //updateMsg(lstStatus, t.Name + ",start...");
@@ -851,6 +870,10 @@ namespace ATEYieldRateStatisticSystem
             //    st = sr.ReadLine();
             //}
             //sr.Close();
+
+
+            //if (!File.Exists((string)file))
+            //    return;
 
             string[] temp = File.ReadAllLines((string)file);
             int _lastline = -1; //获取实际最后一行,防止文本最后有空格

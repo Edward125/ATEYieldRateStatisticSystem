@@ -344,8 +344,8 @@ namespace ATEYieldRateStatisticSystem
                     }
 
 
-                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break;
                 case "172.0.1.171":
                     try
@@ -356,8 +356,8 @@ namespace ATEYieldRateStatisticSystem
                     {
 
                     }
-                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break;
                 case "172.0.1.172":
                     try
@@ -368,8 +368,8 @@ namespace ATEYieldRateStatisticSystem
                     {
 
                     }
-                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break;
                 case "7.7.7.7":
                     try
@@ -380,8 +380,8 @@ namespace ATEYieldRateStatisticSystem
                     {
 
                     }
-                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break ;
                 case "8.8.8.8":
                     try
@@ -392,8 +392,8 @@ namespace ATEYieldRateStatisticSystem
                     {
 
                     }
-                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + TE_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break;
                 case "10.62.22.2":
                     try
@@ -404,8 +404,8 @@ namespace ATEYieldRateStatisticSystem
                     {
 
                     }
-                    connString = @"server=" +OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" +OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break;
                 case "10.62.22.3":
                     try
@@ -416,8 +416,8 @@ namespace ATEYieldRateStatisticSystem
                     {
 
                     }
-                    connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break;
                 default:
                     try
@@ -428,8 +428,8 @@ namespace ATEYieldRateStatisticSystem
                     {
 
                     }
-                    connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=3";
-                    connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=3";
+                    connString = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;database=" + DataBaseName + ";connectiontimeout=10";
+                    connstringNoDB = @"server=" + OA_IP + ";user id=" + DataBaseID + ";password=" + DataBasePwd + ";persistsecurityinfo=True;connectiontimeout=10";
                     break;
             }
 
