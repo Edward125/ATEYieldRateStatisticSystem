@@ -430,22 +430,22 @@
             // lblShiftYR
             // 
             this.lblShiftYR.AutoSize = true;
-            this.lblShiftYR.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblShiftYR.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblShiftYR.ForeColor = System.Drawing.Color.Red;
-            this.lblShiftYR.Location = new System.Drawing.Point(60, 49);
+            this.lblShiftYR.Location = new System.Drawing.Point(60, 52);
             this.lblShiftYR.Name = "lblShiftYR";
-            this.lblShiftYR.Size = new System.Drawing.Size(49, 19);
+            this.lblShiftYR.Size = new System.Drawing.Size(43, 17);
             this.lblShiftYR.TabIndex = 7;
             this.lblShiftYR.Text = "0.00%";
             // 
             // lblShiftFPY
             // 
             this.lblShiftFPY.AutoSize = true;
-            this.lblShiftFPY.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblShiftFPY.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblShiftFPY.ForeColor = System.Drawing.Color.Red;
-            this.lblShiftFPY.Location = new System.Drawing.Point(60, 22);
+            this.lblShiftFPY.Location = new System.Drawing.Point(60, 25);
             this.lblShiftFPY.Name = "lblShiftFPY";
-            this.lblShiftFPY.Size = new System.Drawing.Size(49, 19);
+            this.lblShiftFPY.Size = new System.Drawing.Size(43, 17);
             this.lblShiftFPY.TabIndex = 6;
             this.lblShiftFPY.Text = "0.00%";
             // 

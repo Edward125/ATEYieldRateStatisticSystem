@@ -911,6 +911,12 @@ namespace ATEYieldRateStatisticSystem
 
             this.Invoke((EventHandler)delegate
             {
+
+                //
+                if (lstviewBarcode.Items.Count > 1000)
+                    lstviewBarcode.Items.RemoveAt(0);
+
+
 #if DEBUG
                 updateMsg(lstStatus, lastlinestr);
 #endif
