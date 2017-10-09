@@ -2012,17 +2012,35 @@ remark) VALUES ('" + _line  + "','"
         /// <param name="member">分子</param>
         /// <param name="denominator">分母</param>
         /// <returns></returns>
-        public static string CalcPCT(Int32  member, Int32  denominator)
+        public static string CalcPCT(Int32 member, Int32 denominator)
         {
             try
             {
-                return string.Format("{0:0.00%}",(double) member / denominator);
+                return string.Format("{0:0.00%}", (double)member / denominator);
             }
             catch (Exception)
             {
                 return "0.00%";
             }
         }
+
+        ///// <summary>
+        ///// calc percentage 
+        ///// </summary>
+        ///// <param name="member">分子</param>
+        ///// <param name="denominator">分母</param>
+        ///// <returns></returns>
+        //public static double  CalcPCT(Int32 member, Int32 denominator)
+        //{
+        //    try
+        //    {
+        //        return  (double)member / denominator;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return 0.0;
+        //    }
+        //}
         
         /// <summary>
         /// 

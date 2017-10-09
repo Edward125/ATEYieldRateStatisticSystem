@@ -140,7 +140,8 @@ namespace ATEYieldRateStatisticSystem
         private void gdrawYR(PaintEventArgs e, double ateyr,double ftyr)
         {
 
-            Graphics g = e.Graphics; //创建画板,这里的画板是由Form提供的. 
+           Graphics g = e.Graphics; //创建画板,这里的画板是由Form提供的. 
+            
             g.Clear(this.BackColor);
 
             //ate

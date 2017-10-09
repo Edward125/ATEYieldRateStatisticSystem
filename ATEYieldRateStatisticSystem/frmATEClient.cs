@@ -32,7 +32,23 @@ namespace ATEYieldRateStatisticSystem
         List<String> files = new List<string>(); //AutoLog记录待处理文件的队列
 
 
-        
+        double yr = 0;
+        double fpy = 0;
+
+
+
+        ///// <summary>
+        ///// 防止頁面閃爍
+        ///// </summary>
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        CreateParams cp = base.CreateParams;
+        //        cp.ExStyle |= 0x02000000;
+        //        return cp;
+        //    }
+        //}
 
 
 
@@ -158,7 +174,7 @@ namespace ATEYieldRateStatisticSystem
 
             this.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")" + "-" + username + "(Line:" + p.PCBLine + "),IP:" + p.getIP(username, p.IPType.IPV4)[0];
 
-
+            notifyIcon1.Text = Application.ProductName + "-ATE Client...(Ver:" + Application.ProductVersion + ")";
 
 
             txtAutoLookLogPath.SetWatermark("DbClick here to select AutoLookIyet config file folder path...");
@@ -383,6 +399,11 @@ namespace ATEYieldRateStatisticSystem
             timerDetectNet.Enabled = true;
             timerDetectNet.Start();
             updateFPY();
+
+            //p.Delay(5000);
+           //this.WindowState = FormWindowState.Minimized;
+
+
             return true;
         }
 
@@ -856,9 +877,7 @@ namespace ATEYieldRateStatisticSystem
             m_timer.Change(TimeoutMillis, Timeout.Infinite);
 
         }
-
-
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -1781,8 +1800,14 @@ namespace ATEYieldRateStatisticSystem
                     shiftfistpass = p.queryCount(sql);
                     sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000'  and testresult = 'PASS'";
                     shiftpass = p.queryCount(sql);
+                    grbShiftYieldRate.Text = "Day Yield Rate";
                     lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
                     lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
+                    //yr = p.CalcPCT(shiftpass, shifttotal);
+                    //fpy = p.CalcPCT(shiftfistpass, shifttotal);
+                    
+                    
+
                     return;
                 }
                 if (p.getCurrentShift() == p.Shift.Nshift)
@@ -1793,8 +1818,11 @@ namespace ATEYieldRateStatisticSystem
                     shiftfistpass = p.queryCount(sql);
                     sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000'  and testresult = 'PASS'";
                     shiftpass = p.queryCount(sql);
+                    grbShiftYieldRate.Text = "Night Yield Rate";
                     lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
                     lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
+                    //yr = p.CalcPCT(shiftpass, shifttotal);
+                    //fpy = p.CalcPCT(shiftfistpass, shifttotal);
                     return;
                 }                
             }
@@ -1809,8 +1837,11 @@ namespace ATEYieldRateStatisticSystem
                     shiftfistpass = p.queryCount(sql);
                     sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000'  and testresult = 'PASS'";
                     shiftpass = p.queryCount(sql);
+                    grbShiftYieldRate.Text = "Day Yield Rate";
                     lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
                     lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
+                    //yr = p.CalcPCT(shiftpass, shifttotal);
+                    //fpy = p.CalcPCT(shiftfistpass, shifttotal);
                     return;
                 }
                 if (p.getCurrentShift() == p.Shift.Nshift)
@@ -1821,8 +1852,11 @@ namespace ATEYieldRateStatisticSystem
                     shiftfistpass = p.queryCount(sql);
                     sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000'  and testresult = 'PASS'";
                     shiftpass = p.queryCount(sql);
+                    grbShiftYieldRate.Text = "Night Yield Rate";
                     lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
                     lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
+                    //yr = p.CalcPCT(shiftpass, shifttotal);
+                    //fpy = p.CalcPCT(shiftfistpass, shifttotal);
                     return;
                 }
             }
@@ -1833,6 +1867,205 @@ namespace ATEYieldRateStatisticSystem
 
         }
 
+        private void btnChangeShift_Click(object sender, EventArgs e)
+        {
+
+
+
+
+            string sql = "";
+            Int32 shifttotal = 0;
+            Int32 shiftfistpass = 0;
+            Int32 shiftpass = 0;
+
+            if (p.StartEndTime == p.StartEndTimeType.Day800)
+            {
+                if (p.getCurrentShift() == p.Shift.DShift)
+                {
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000'";
+                    //shifttotal = p.queryCount(sql);
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000' and firstpass = 'YES' and testresult = 'PASS'";
+                    //shiftfistpass = p.queryCount(sql);
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000'  and testresult = 'PASS'";
+                    //shiftpass = p.queryCount(sql);
+                    //grbShiftYieldRate.Text = "Day Yield Rate";
+
+
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000'";
+                    shifttotal = p.queryCount(sql);
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and firstpass = 'YES' and testresult = 'PASS'";
+                    shiftfistpass = p.queryCount(sql);
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000'  and testresult = 'PASS'";
+                    shiftpass = p.queryCount(sql);
+                    grbShiftYieldRate.Text = "Night Yield Rate";
+
+
+                    lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
+                    lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
+                    //yr = p.CalcPCT(shiftpass, shifttotal);
+                    //fpy = p.CalcPCT(shiftfistpass, shifttotal);
+                    return;
+                }
+                if (p.getCurrentShift() == p.Shift.Nshift)
+                {
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000'";
+                    //shifttotal = p.queryCount(sql);
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and firstpass = 'YES' and testresult = 'PASS'";
+                    //shiftfistpass = p.queryCount(sql);
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000'  and testresult = 'PASS'";
+                    //shiftpass = p.queryCount(sql);
+                    //grbShiftYieldRate.Text = "Night Yield Rate";
+
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000'";
+                    shifttotal = p.queryCount(sql);
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000' and firstpass = 'YES' and testresult = 'PASS'";
+                    shiftfistpass = p.queryCount(sql);
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000'  and testresult = 'PASS'";
+                    shiftpass = p.queryCount(sql);
+                    grbShiftYieldRate.Text = "Day Yield Rate";
+
+                    lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
+                    lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
+                    //yr = p.CalcPCT(shiftpass, shifttotal);
+                    //fpy = p.CalcPCT(shiftfistpass, shifttotal);
+                    return;
+                }
+            }
+
+            if (p.StartEndTime == p.StartEndTimeType.Day830)
+            {
+                if (p.getCurrentShift() == p.Shift.DShift)
+                {
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000'";
+                    //shifttotal = p.queryCount(sql);
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000' and firstpass = 'YES' and testresult = 'PASS'";
+                    //shiftfistpass = p.queryCount(sql);
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000'  and testresult = 'PASS'";
+                    //shiftpass = p.queryCount(sql);
+                    //grbShiftYieldRate.Text = "Day Yield Rate";
+
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000'";
+                    shifttotal = p.queryCount(sql);
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and firstpass = 'YES' and testresult = 'PASS'";
+                    shiftfistpass = p.queryCount(sql);
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000'  and testresult = 'PASS'";
+                    shiftpass = p.queryCount(sql);
+                    grbShiftYieldRate.Text = "Night Yield Rate";
+
+                    lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
+                    lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
+                    //yr = p.CalcPCT(shiftpass, shifttotal);
+                    //fpy = p.CalcPCT(shiftfistpass, shifttotal);
+                    return;
+                }
+                if (p.getCurrentShift() == p.Shift.Nshift)
+                {
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000'";
+                    //shifttotal = p.queryCount(sql);
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and firstpass = 'YES' and testresult = 'PASS'";
+                    //shiftfistpass = p.queryCount(sql);
+                    //sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000'  and testresult = 'PASS'";
+                    //shiftpass = p.queryCount(sql);
+                    //grbShiftYieldRate.Text = "Night Yield Rate";
+
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000'";
+                    shifttotal = p.queryCount(sql);
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000' and firstpass = 'YES' and testresult = 'PASS'";
+                    shiftfistpass = p.queryCount(sql);
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000'  and testresult = 'PASS'";
+                    shiftpass = p.queryCount(sql);
+                    grbShiftYieldRate.Text = "Day Yield Rate";
+
+                    lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
+                    lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
+                    //yr = p.CalcPCT(shiftpass, shifttotal);
+                    //fpy = p.CalcPCT(shiftfistpass, shifttotal);
+                    return;
+                }
+            }
+
+
+
+
+        }
+
+
+        private void gdrawYR(PaintEventArgs e, double yr, double fpy)
+        {
+
+           // Graphics g = e.Graphics; //创建画板,这里的画板是由Form提供的. 
+            Graphics g = this.grbShiftYieldRate.CreateGraphics();
+            g.Clear(this.BackColor);
+
+            //ate
+            Color color = changecolorbyyr(yr);
+            //Pen p = new Pen(color, 25);//定义了一个蓝色,宽度为的画笔        
+            //g.DrawEllipse(p, 100, 150, 260, 260);//在画板上画椭圆,起始坐标为(10,10),外接矩形的宽为,高为
+            //p = new Pen(color, 1);
+            //g.DrawRectangle(p, 70, 120, 320, 320);
+            System.Drawing.Font font = new System.Drawing.Font("Agency FB", 50F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            SolidBrush brush = new SolidBrush(color);
+            g.DrawString(string.Format("{0:P}", yr), font, brush, 10F, 20F);
+
+            //ft
+            color = changecolorbyyr(fpy);
+            //p = new Pen(color, 25);//定义了一个蓝色,宽度为的画笔   
+            //g.DrawEllipse(p, 450, 150, 260, 260);//在画板上画椭圆,起始坐标为(10,10),外接矩形的宽为,高为   
+            //p = new Pen(color, 1);
+            //g.DrawRectangle(p, 420, 120, 320, 320);
+            brush = new SolidBrush(color);
+            g.DrawString(string.Format("{0:P}", fpy), font, brush, 30F, 20F);
+            //
+            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="yr"></param>
+        /// <returns></returns>
+        private Color changecolorbyyr(double yr)
+        {
+            Color _color = Color.DimGray;
+
+            if (yr >= 0.985)
+                _color = Color.Green;
+            else if (yr>= 0.95)
+                _color = Color.DarkOrange;
+            else
+                _color = Color.Red;
+
+            if (yr == 0)
+                _color = Color.DimGray;
+
+            return _color;
+        }
+
+        private void frmATEClient_Paint(object sender, PaintEventArgs e)
+        {
+            //gdrawYR(e, yr, fpy);
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                notifyIcon1.Visible = false;
+                this.ShowInTaskbar = true;
+            }  
+        }
+
+        private void frmATEClient_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();
+                this.ShowInTaskbar = false;
+                this.notifyIcon1.Visible = true;
+            } 
+        }
 
     }  
 }
