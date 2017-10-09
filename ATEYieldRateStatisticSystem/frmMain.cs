@@ -31,7 +31,7 @@ namespace ATEYieldRateStatisticSystem
             this.Hide();
             //Form f = new frmQueryFR();
             //f.Show();
-            Form f = new frmYRMonitor();
+            Form f = new frmYROverAll();
             f.Show();
         }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmQueryFR));
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tssmFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +52,7 @@
             this.btnQuicklyQuery = new System.Windows.Forms.Button();
             this.comboQuicklyQuery = new System.Windows.Forms.ComboBox();
             this.grbQueryOption = new System.Windows.Forms.GroupBox();
+            this.chkDisplayFixureid = new System.Windows.Forms.CheckBox();
             this.comboFixtureID = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.comboQueryType = new System.Windows.Forms.ComboBox();
@@ -72,7 +74,6 @@
             this.chkUseSql = new System.Windows.Forms.CheckBox();
             this.txtSql = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.chkDisplayFixureid = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabUseSql.SuspendLayout();
@@ -177,7 +178,7 @@
             this.tabUseSql.Location = new System.Drawing.Point(4, 23);
             this.tabUseSql.Name = "tabUseSql";
             this.tabUseSql.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUseSql.Size = new System.Drawing.Size(765, 456);
+            this.tabUseSql.Size = new System.Drawing.Size(765, 478);
             this.tabUseSql.TabIndex = 0;
             this.tabUseSql.Text = "Sql Result";
             this.tabUseSql.UseVisualStyleBackColor = true;
@@ -319,6 +320,19 @@
             this.grbQueryOption.TabIndex = 14;
             this.grbQueryOption.TabStop = false;
             this.grbQueryOption.Text = "Query Option";
+            // 
+            // chkDisplayFixureid
+            // 
+            this.chkDisplayFixureid.AutoSize = true;
+            this.chkDisplayFixureid.Checked = true;
+            this.chkDisplayFixureid.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDisplayFixureid.Location = new System.Drawing.Point(6, 224);
+            this.chkDisplayFixureid.Name = "chkDisplayFixureid";
+            this.chkDisplayFixureid.Size = new System.Drawing.Size(116, 18);
+            this.chkDisplayFixureid.TabIndex = 16;
+            this.chkDisplayFixureid.Text = "DisplayFixtureID";
+            this.chkDisplayFixureid.UseVisualStyleBackColor = true;
+            this.chkDisplayFixureid.CheckedChanged += new System.EventHandler(this.chkDisplayFixureid_CheckedChanged);
             // 
             // comboFixtureID
             // 
@@ -508,20 +522,7 @@
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
-            // chkDisplayFixureid
-            // 
-            this.chkDisplayFixureid.AutoSize = true;
-            this.chkDisplayFixureid.Checked = true;
-            this.chkDisplayFixureid.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkDisplayFixureid.Location = new System.Drawing.Point(6, 224);
-            this.chkDisplayFixureid.Name = "chkDisplayFixureid";
-            this.chkDisplayFixureid.Size = new System.Drawing.Size(116, 18);
-            this.chkDisplayFixureid.TabIndex = 16;
-            this.chkDisplayFixureid.Text = "DisplayFixtureID";
-            this.chkDisplayFixureid.UseVisualStyleBackColor = true;
-            this.chkDisplayFixureid.CheckedChanged += new System.EventHandler(this.chkDisplayFixureid_CheckedChanged);
-            // 
-            // frmYRServer
+            // frmQueryFR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -530,8 +531,9 @@
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "frmYRServer";
+            this.Name = "frmQueryFR";
             this.Text = "frmYRServer";
             this.Load += new System.EventHandler(this.frmYRServer_Load);
             this.menuStrip1.ResumeLayout(false);

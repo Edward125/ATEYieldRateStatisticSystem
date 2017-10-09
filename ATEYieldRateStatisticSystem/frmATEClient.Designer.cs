@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmATEClient));
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstviewBarcode = new System.Windows.Forms.ListView();
@@ -62,12 +63,13 @@
             this.tsslModel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslUPN = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslNetDB = new System.Windows.Forms.ToolStripStatusLabel();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.grbShiftYieldRate = new System.Windows.Forms.GroupBox();
             this.lblShiftYR = new System.Windows.Forms.Label();
             this.lblShiftFPY = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.timerDetectNet = new System.Windows.Forms.Timer(this.components);
+            this.btnChangeShift = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -76,7 +78,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.fswTestlog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fswAutoLook)).BeginInit();
             this.statusStrip1.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.grbShiftYieldRate.SuspendLayout();
             this.SuspendLayout();
             // 
             // skinEngine1
@@ -380,25 +382,26 @@
             this.tsslNetDB.Size = new System.Drawing.Size(49, 17);
             this.tsslNetDB.Text = "NetDB:";
             // 
-            // groupBox5
+            // grbShiftYieldRate
             // 
-            this.groupBox5.Controls.Add(this.lblShiftYR);
-            this.groupBox5.Controls.Add(this.lblShiftFPY);
-            this.groupBox5.Controls.Add(this.label11);
-            this.groupBox5.Controls.Add(this.label10);
-            this.groupBox5.Location = new System.Drawing.Point(558, 11);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(129, 117);
-            this.groupBox5.TabIndex = 4;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "YiedRate";
+            this.grbShiftYieldRate.Controls.Add(this.btnChangeShift);
+            this.grbShiftYieldRate.Controls.Add(this.lblShiftYR);
+            this.grbShiftYieldRate.Controls.Add(this.lblShiftFPY);
+            this.grbShiftYieldRate.Controls.Add(this.label11);
+            this.grbShiftYieldRate.Controls.Add(this.label10);
+            this.grbShiftYieldRate.Location = new System.Drawing.Point(558, 11);
+            this.grbShiftYieldRate.Name = "grbShiftYieldRate";
+            this.grbShiftYieldRate.Size = new System.Drawing.Size(129, 117);
+            this.grbShiftYieldRate.TabIndex = 4;
+            this.grbShiftYieldRate.TabStop = false;
+            this.grbShiftYieldRate.Text = "YiedRate";
             // 
             // lblShiftYR
             // 
             this.lblShiftYR.AutoSize = true;
             this.lblShiftYR.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblShiftYR.ForeColor = System.Drawing.Color.Red;
-            this.lblShiftYR.Location = new System.Drawing.Point(60, 78);
+            this.lblShiftYR.Location = new System.Drawing.Point(60, 51);
             this.lblShiftYR.Name = "lblShiftYR";
             this.lblShiftYR.Size = new System.Drawing.Size(49, 19);
             this.lblShiftYR.TabIndex = 7;
@@ -409,7 +412,7 @@
             this.lblShiftFPY.AutoSize = true;
             this.lblShiftFPY.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblShiftFPY.ForeColor = System.Drawing.Color.Red;
-            this.lblShiftFPY.Location = new System.Drawing.Point(60, 36);
+            this.lblShiftFPY.Location = new System.Drawing.Point(60, 23);
             this.lblShiftFPY.Name = "lblShiftFPY";
             this.lblShiftFPY.Size = new System.Drawing.Size(49, 19);
             this.lblShiftFPY.TabIndex = 6;
@@ -419,7 +422,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 83);
+            this.label11.Location = new System.Drawing.Point(6, 55);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(50, 14);
             this.label11.TabIndex = 3;
@@ -429,7 +432,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(4, 39);
+            this.label10.Location = new System.Drawing.Point(4, 26);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(54, 14);
             this.label10.TabIndex = 2;
@@ -440,12 +443,21 @@
             this.timerDetectNet.Interval = 2000;
             this.timerDetectNet.Tick += new System.EventHandler(this.timerDetectNet_Tick);
             // 
+            // btnChangeShift
+            // 
+            this.btnChangeShift.Location = new System.Drawing.Point(9, 77);
+            this.btnChangeShift.Name = "btnChangeShift";
+            this.btnChangeShift.Size = new System.Drawing.Size(100, 32);
+            this.btnChangeShift.TabIndex = 8;
+            this.btnChangeShift.Text = "ChangeShift";
+            this.btnChangeShift.UseVisualStyleBackColor = true;
+            // 
             // frmATEClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(699, 616);
-            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.grbShiftYieldRate);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -453,8 +465,9 @@
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmATEClient";
-            this.Text = "frmATEClient";
+            this.Text = "S";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmATEClient_FormClosing);
             this.Load += new System.EventHandler(this.frmATEClient_Load);
             this.groupBox1.ResumeLayout(false);
@@ -468,8 +481,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.fswAutoLook)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.grbShiftYieldRate.ResumeLayout(false);
+            this.grbShiftYieldRate.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -509,12 +522,13 @@
         private System.Windows.Forms.ToolStripStatusLabel tsslModel;
         private System.Windows.Forms.ToolStripStatusLabel tsslUPN;
         private System.Windows.Forms.ToolStripStatusLabel tsslStartTime;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox grbShiftYieldRate;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lblShiftYR;
         private System.Windows.Forms.Label lblShiftFPY;
         private System.Windows.Forms.ToolStripStatusLabel tsslNetDB;
         private System.Windows.Forms.Timer timerDetectNet;
+        private System.Windows.Forms.Button btnChangeShift;
     }
 }

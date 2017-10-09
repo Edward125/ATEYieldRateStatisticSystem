@@ -43,6 +43,10 @@ namespace ATEYieldRateStatisticSystem
         private void loadUI()
         {
             int n = 0;
+            textBox1.Text = "11";
+            textBox1.SelectAll();
+            textBox1.Focus();
+            this.Text = "ATE & FT Overall Yield Rate(" + DateTime.Now.ToString("yyyy-MM-dd") + ")" + "-ver:" + Application.ProductVersion;
             if (InternetGetConnectedState(out n, 0))
             {
                 loadAllFR();
@@ -53,6 +57,7 @@ namespace ATEYieldRateStatisticSystem
                 loadQty("FT");
                 this.Invalidate();
                 timer1.Enabled = true;
+                timer1.Start();
             }
             else
             {
@@ -205,9 +210,15 @@ namespace ATEYieldRateStatisticSystem
 
             Qty = p.queryMysqlCount(p.connString, sql);
             if (mfgtype.ToUpper() == "ATE")
-                txtATEQtyInfo.Text = DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00 ~ Now, Production Qty.:" + Qty;
+            {
+               // txtATEQtyInfo.Text = DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00 ~ Now, Production Qty.:" + Qty;
+                lblATEQtyInfo.Text = DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00 ~ Now, Production Qty.:" + Qty;
+            }
             if (mfgtype.ToUpper() == "FT")
-                txtFTQtyInfo.Text = DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00 ~ Now, Production Qty.:" + Qty;
+            {
+               // txtFTQtyInfo.Text = DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00 ~ Now, Production Qty.:" + Qty;
+                lblFTQtyInfo.Text = DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00 ~ Now, Production Qty.:" + Qty;
+            }
         }
 
         /// <summary>
@@ -324,6 +335,62 @@ namespace ATEYieldRateStatisticSystem
                   _color = Color.DimGray; 
 
             return _color;
+        }
+
+        private void frmYROverAll_DoubleClick(object sender, EventArgs e)
+        {
+            Form f = new frmYRbyLine();
+            f.ShowDialog();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Start();
+            iRefreshTime--;
+            lblNextFreshInfo.Text = NextFresh + iRefreshTime;
+            if (iRefreshTime == 0)
+            {
+                loadAllFR();
+                loadQty("ATE");
+                loadQty("FT");
+                iRefreshTime = INTERNAL;
+                lblLastFreshInfo.Text = LastFresh + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                lblNextFreshInfo.Text = NextFresh + iRefreshTime;
+
+            }
+            timer1.Start();
+        }
+
+        private void frmYROverAll_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Are you sure to exit the program?if YES,the test data will not be collected by the program...", "Exit or Not", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dr == DialogResult.Yes)
+            {
+                try
+                {
+                    Environment.Exit(0);
+                }
+                catch (Exception)
+                {
+                    // throw;
+                }
+
+            }
+            else
+                e.Cancel = true;
+        }
+
+        private void 当日YRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form f = new frmYRbyLine();
+            f.ShowDialog();
+        }
+
+        private void 条件查询ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form f = new frmQueryFR();
+            f.ShowDialog();
         }
     }
 }

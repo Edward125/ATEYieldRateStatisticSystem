@@ -49,7 +49,7 @@ namespace ATEYieldRateStatisticSystem
         private void loadUI()
         {
             //
-            textBox1.Focus();
+           // textBox1.Focus();
             //FT as2-1
             txtFTYRAS21A.Font = new System.Drawing.Font("Agency FB", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             txtFTYRAS21B.Font = new System.Drawing.Font("Agency FB", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -531,6 +531,8 @@ namespace ATEYieldRateStatisticSystem
             //
             lblLastFreshInfo.Text = LastFresh + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             lblNextFreshInfo.Text = NextFresh + iRefreshTime;
+
+            this.Text = "ATE & FT Overall Yield Rate by Line(" + DateTime.Now.ToString("yyyy-MM-dd") + ")-ver:" + Application.ProductVersion;
         }
 
         private void loadAllYR()
@@ -620,7 +622,7 @@ namespace ATEYieldRateStatisticSystem
             {
                 foreach (string item in fixture)
                 {
-                    sql = "select sum(case when testresult = 'PASS' then 1 else 0 end)/count(usn) as yr from " + p.DatabaseTable.atedata.ToString() + " where line ='" + line + "' and fixtureid ='" + item + "' and  testtime BETWEEN '" + DateTime.Now.ToString("yyyyMMdd") + "000000" + "' and '" + DateTime.Now.ToString("yyyyMMdd") + "235959" + "'";
+                    sql = "select sum(case when testresult = 'PASS' then 1 else 0 end)/count(usn) as yr from " + p.DatabaseTable.ftdata.ToString() + " where line ='" + line + "' and fixtureid ='" + item + "' and  testtime BETWEEN '" + DateTime.Now.ToString("yyyyMMdd") + "000000" + "' and '" + DateTime.Now.ToString("yyyyMMdd") + "235959" + "'";
                     switch (line.ToUpper().Trim())
                     {
                         case "AP2":
@@ -774,8 +776,18 @@ namespace ATEYieldRateStatisticSystem
             {
                 while (re.Read())
                 {
-                    double o_yr = Convert.ToDouble(re["yr"]);
-                    string yr = string.Format("{0:P}", re["yr"]);
+                     double o_yr  = 0.0;
+                    try
+                    {
+                        o_yr = Convert.ToDouble(re["yr"]);
+                    }
+                    catch (Exception)
+                    {
+
+                        o_yr = 0.0;
+                    }
+                 
+                    string yr = string.Format("{0:P}", o_yr );
                     if (fixtureid.ToUpper().Contains(line + "-1-A") )
                     {                      
                         FT1A.Text = yr;

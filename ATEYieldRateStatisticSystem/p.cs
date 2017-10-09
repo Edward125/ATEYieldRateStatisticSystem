@@ -2016,7 +2016,7 @@ remark) VALUES ('" + _line  + "','"
         {
             try
             {
-                return string.Format("{0:0.00%}", member / denominator);
+                return string.Format("{0:0.00%}",(double) member / denominator);
             }
             catch (Exception)
             {

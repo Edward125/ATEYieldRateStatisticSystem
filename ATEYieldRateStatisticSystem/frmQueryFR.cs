@@ -75,6 +75,8 @@ namespace ATEYieldRateStatisticSystem
             setListView(lstviewYieldRate, p.QueryType .YieldRate , comboType);
             setListView(lstviewProductionOutput ,p.QueryType.ProductionOutput,comboType);
 
+            this.Text = "Query YR & Production by condition-ver.:" + Application.ProductVersion;
+
         }
 
 

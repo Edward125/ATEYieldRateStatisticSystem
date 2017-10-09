@@ -121,6 +121,8 @@ namespace ATEYieldRateStatisticSystem
             }
 
             PressStartButton();
+
+           // updateFPY();
         }
 
         /// <summary>
@@ -1773,26 +1775,26 @@ namespace ATEYieldRateStatisticSystem
             {
                 if (p.getCurrentShift() == p.Shift.DShift)
                 {
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000'";
                     shifttotal = p.queryCount(sql);
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000' and firstpass = 'YES' and testresult = 'PASS'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000' and firstpass = 'YES' and testresult = 'PASS'";
                     shiftfistpass = p.queryCount(sql);
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000'  and testresult = 'PASS'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and '" + DateTime.Now.ToString("yyyyMMdd") + "200000'  and testresult = 'PASS'";
                     shiftpass = p.queryCount(sql);
-                    lblShiftFPY.Text = p.CalcPCT(shifttotal, shiftfistpass);
-                    lblShiftYR.Text = p.CalcPCT(shifttotal, shiftpass);
+                    lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
+                    lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
                     return;
                 }
                 if (p.getCurrentShift() == p.Shift.Nshift)
                 {
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000'";
                     shifttotal = p.queryCount(sql);
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and firstpass = 'YES' and testresult = 'PASS'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000' and firstpass = 'YES' and testresult = 'PASS'";
                     shiftfistpass = p.queryCount(sql);
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000'  and testresult = 'PASS'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "200000' and '" + DateTime.Now.ToString("yyyyMMdd") + "080000'  and testresult = 'PASS'";
                     shiftpass = p.queryCount(sql);
-                    lblShiftFPY.Text = p.CalcPCT(shifttotal, shiftfistpass);
-                    lblShiftYR.Text = p.CalcPCT(shifttotal, shiftpass);
+                    lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
+                    lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
                     return;
                 }                
             }
@@ -1801,26 +1803,26 @@ namespace ATEYieldRateStatisticSystem
             {
                 if (p.getCurrentShift() == p.Shift.DShift)
                 {
-                    sql = "SELECT COUNT(usn) from " +  p.DatabaseTable.d_localdata .ToString () +" WHERE testresult between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000'";
+                    sql = "SELECT COUNT(usn) from " +  p.DatabaseTable.d_localdata .ToString () +" WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000'";
                     shifttotal = p.queryCount(sql);
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000' and firstpass = 'YES' and testresult = 'PASS'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000' and firstpass = 'YES' and testresult = 'PASS'";
                     shiftfistpass = p.queryCount(sql);
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000'  and testresult = 'PASS'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and '" + DateTime.Now.ToString("yyyyMMdd") + "203000'  and testresult = 'PASS'";
                     shiftpass = p.queryCount(sql);
-                    lblShiftFPY.Text = p.CalcPCT(shifttotal, shiftfistpass);
-                    lblShiftYR.Text = p.CalcPCT(shifttotal, shiftpass);
+                    lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
+                    lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
                     return;
                 }
                 if (p.getCurrentShift() == p.Shift.Nshift)
                 {
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000'";
                     shifttotal = p.queryCount(sql);
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and firstpass = 'YES' and testresult = 'PASS'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000' and firstpass = 'YES' and testresult = 'PASS'";
                     shiftfistpass = p.queryCount(sql);
-                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testresult between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000'  and testresult = 'PASS'";
+                    sql = "SELECT COUNT(usn) from " + p.DatabaseTable.d_localdata.ToString() + " WHERE testtime between '" + DateTime.Now.AddDays(-1).ToString("yyyyMMdd") + "203000' and '" + DateTime.Now.ToString("yyyyMMdd") + "083000'  and testresult = 'PASS'";
                     shiftpass = p.queryCount(sql);
-                    lblShiftFPY.Text = p.CalcPCT(shifttotal, shiftfistpass);
-                    lblShiftYR.Text = p.CalcPCT(shifttotal, shiftpass);
+                    lblShiftFPY.Text = p.CalcPCT(shiftfistpass, shifttotal);
+                    lblShiftYR.Text = p.CalcPCT(shiftpass, shifttotal);
                     return;
                 }
             }

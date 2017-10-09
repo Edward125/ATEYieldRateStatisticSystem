@@ -143,6 +143,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtFTYRAS21E = new System.Windows.Forms.TextBox();
             this.txtFTYRAS21F = new System.Windows.Forms.TextBox();
+            this.textBox18 = new System.Windows.Forms.TextBox();
             this.txtFTYRAS21G = new System.Windows.Forms.TextBox();
             this.txtFTYRAS21H = new System.Windows.Forms.TextBox();
             this.txtFTYRAS21D = new System.Windows.Forms.TextBox();
@@ -158,7 +159,6 @@
             this.txtFTYRAS22B = new System.Windows.Forms.TextBox();
             this.txtFTYRAS22A = new System.Windows.Forms.TextBox();
             this.textBox19 = new System.Windows.Forms.TextBox();
-            this.textBox18 = new System.Windows.Forms.TextBox();
             this.textBox14 = new System.Windows.Forms.TextBox();
             this.textBox15 = new System.Windows.Forms.TextBox();
             this.textBox16 = new System.Windows.Forms.TextBox();
@@ -357,7 +357,6 @@
             this.textBox161 = new System.Windows.Forms.TextBox();
             this.textBox70 = new System.Windows.Forms.TextBox();
             this.textBox71 = new System.Windows.Forms.TextBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
@@ -372,10 +371,10 @@
             this.txtATEYRAS8B = new System.Windows.Forms.TextBox();
             this.txtATEYRAS8A = new System.Windows.Forms.TextBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox29 = new System.Windows.Forms.TextBox();
             this.textBox30 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.groupBox41.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -410,11 +409,11 @@
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.groupBox9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.groupBox12.SuspendLayout();
             this.groupBox14.SuspendLayout();
             this.groupBox15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -1866,6 +1865,7 @@
             // 
             this.groupBox2.Controls.Add(this.txtFTYRAS21E);
             this.groupBox2.Controls.Add(this.txtFTYRAS21F);
+            this.groupBox2.Controls.Add(this.textBox18);
             this.groupBox2.Controls.Add(this.txtFTYRAS21G);
             this.groupBox2.Controls.Add(this.txtFTYRAS21H);
             this.groupBox2.Controls.Add(this.txtFTYRAS21D);
@@ -1881,7 +1881,6 @@
             this.groupBox2.Controls.Add(this.txtFTYRAS22B);
             this.groupBox2.Controls.Add(this.txtFTYRAS22A);
             this.groupBox2.Controls.Add(this.textBox19);
-            this.groupBox2.Controls.Add(this.textBox18);
             this.groupBox2.Controls.Add(this.textBox14);
             this.groupBox2.Controls.Add(this.textBox15);
             this.groupBox2.Controls.Add(this.textBox16);
@@ -1930,6 +1929,19 @@
             this.txtFTYRAS21F.TabIndex = 34;
             this.txtFTYRAS21F.Text = "99.99%";
             this.txtFTYRAS21F.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox18
+            // 
+            this.textBox18.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox18.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox18.ForeColor = System.Drawing.Color.Blue;
+            this.textBox18.Location = new System.Drawing.Point(101, 124);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.ReadOnly = true;
+            this.textBox18.Size = new System.Drawing.Size(76, 27);
+            this.textBox18.TabIndex = 3;
+            this.textBox18.Text = "Module-2";
+            this.textBox18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtFTYRAS21G
             // 
@@ -2125,19 +2137,6 @@
             this.textBox19.TabIndex = 19;
             this.textBox19.Text = "Module-1";
             this.textBox19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox18
-            // 
-            this.textBox18.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox18.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox18.ForeColor = System.Drawing.Color.Blue;
-            this.textBox18.Location = new System.Drawing.Point(104, 124);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.ReadOnly = true;
-            this.textBox18.Size = new System.Drawing.Size(76, 27);
-            this.textBox18.TabIndex = 3;
-            this.textBox18.Text = "Module-2";
-            this.textBox18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox14
             // 
@@ -4839,16 +4838,6 @@
             this.textBox71.Text = "Module-2";
             this.textBox71.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(5, 15);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(521, 247);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox7.TabIndex = 5;
-            this.pictureBox7.TabStop = false;
-            // 
             // groupBox12
             // 
             this.groupBox12.Controls.Add(this.label5);
@@ -5018,17 +5007,6 @@
             this.pictureBox8.TabIndex = 0;
             this.pictureBox8.TabStop = false;
             // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Bold);
-            this.textBox1.ForeColor = System.Drawing.Color.Blue;
-            this.textBox1.Location = new System.Drawing.Point(30, 23);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(16, 25);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "A";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // textBox29
             // 
             this.textBox29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -5058,14 +5036,24 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
+            this.pictureBox7.Location = new System.Drawing.Point(5, 12);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(521, 247);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox7.TabIndex = 124;
+            this.pictureBox7.TabStop = false;
+            // 
             // frmYRbyLine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 646);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmYRbyLine";
             this.Text = "frmYRbyLine";
             this.Load += new System.EventHandler(this.frmYRbyLine_Load);
@@ -5122,7 +5110,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
             this.groupBox14.ResumeLayout(false);
@@ -5130,8 +5117,8 @@
             this.groupBox15.ResumeLayout(false);
             this.groupBox15.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -5159,7 +5146,6 @@
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox11;
@@ -5185,7 +5171,6 @@
         private System.Windows.Forms.GroupBox groupBox16;
         private System.Windows.Forms.PictureBox pictureBox9;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox3;
@@ -5483,6 +5468,7 @@
         private System.Windows.Forms.TextBox txtATEYRAS9B;
         private System.Windows.Forms.TextBox txtATEYRAS9A;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.PictureBox pictureBox7;
 
 
 

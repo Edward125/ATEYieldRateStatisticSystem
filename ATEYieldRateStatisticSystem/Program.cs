@@ -9,8 +9,7 @@ using System.Reflection;
 using Shortcut;
 using WindowsStartup.Utils;
 using Microsoft.Win32;
-using System;
-using System.IO;
+
 
 namespace ATEYieldRateStatisticSystem
 {
